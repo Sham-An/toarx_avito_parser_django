@@ -14,7 +14,7 @@ python manage.py migrate создает дефолтные миграции (д�
 
 python manage.py createsuperuser
 
-https://youtu.be/dKdkuYXylx8?t=1144
+ https://youtu.be/dKdkuYXylx8?t=1144
 
 
 
