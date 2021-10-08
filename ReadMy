@@ -1,0 +1,20 @@
+Список команд
+django-admin -h
+
+!!!!!!!! manage.py & django-admin ОДНО и то-же
+django-admin стартует проект, дальше пользуется локальный manage.py
+
+django-admin startproject avito (создаем avito. удаляем _init_.py)
+
+python manage.py startapp aparser (создаем апарсер. Основной каталог) >
+регистрируем в avito/avito/settings + ALLOWED_HOSTS = ['*',]
+
+python manage.py migrate создает дефолтные миграции (для админки)
+
+
+python manage.py createsuperuser
+
+https://youtu.be/dKdkuYXylx8?t=1144
+
+
+
