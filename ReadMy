@@ -16,5 +16,7 @@ python manage.py createsuperuser
 
  https://youtu.be/dKdkuYXylx8?t=1144
 
+python manage.py parse_avito
+https://youtu.be/dKdkuYXylx8?t=1465
 
-
+разобраться с parse_avito.py

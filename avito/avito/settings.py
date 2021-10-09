@@ -121,3 +121,34 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Логирование
+LOGGING = {
+    'disable_existing_loggers': True,
+    'version': 1,
+    'formatters': {
+        'verbose': {
+            # 'format': '%(levelname)s %(module)s.%(funcName)s: | %(asctime)s | %(message)s',
+            'format': "%(asctime)s:%(levelname)s:%(name)s:%(message)s",
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+# https://docs.djangoproject.com/en/2.2/ref/settings/#data-upload-max-number-fields
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None

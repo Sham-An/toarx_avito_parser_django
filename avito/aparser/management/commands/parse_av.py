@@ -1,49 +1,30 @@
 import datetime
 import urllib.parse
-from logging import getLogger
+from collections import namedtuple
 
 import bs4
 import requests
+
 from django.core.management.base import BaseCommand
 from django.core.management.base import CommandError
 
-from aparser.constants import STATUS_NEW
-from aparser.constants import STATUS_READY
-from aparser.models import Product
-from aparser.models import Task
+InnerBlock = namedtuple('Block', 'title,price,currency,date,url')
 
 
-logger = getLogger(__name__)
+class Block(InnerBlock):
+
+    def __str__(self):
+        return f'{self.title}\t{self.price} {self.currency}\t{self.date}\t{self.url}'
 
 
 class AvitoParser:
-    PAGE_LIMIT = 10
-    print('1')
 
     def __init__(self):
-        print('2')
         self.session = requests.Session()
         self.session.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
             'Accept-Language': 'ru',
         }
-        print('3')
-        self.task = None
-
-    def find_task(self):
-        print('5!!!!!!!!')
-        print(Task)
-        obj = Task.objects.filter(status=STATUS_NEW).first()
-        print(self)
-        if not obj:
-            raise CommandError('no tasks found!!!!')
-        self.task = obj
-        logger.info(f'Работаем над заданием {self.task}')
-
-    def finish_task(self):
-        self.task.status = STATUS_READY
-        self.task.save()
-        logger.info(f'Завершили задание')
 
     def get_page(self, page: int = None):
         params = {
@@ -53,16 +34,15 @@ class AvitoParser:
         if page and page > 1:
             params['p'] = page
 
-        url = self.task.url
+        # url = 'https://www.avito.ru/moskva/avtomobili/bmw/5'
+        url = 'https://www.avito.ru/moskva/odezhda_obuv_aksessuary/zhenskaya_odezhda'
         r = self.session.get(url, params=params)
-        r.raise_for_status()
-        print(r.text)
         return r.text
 
     @staticmethod
     def parse_date(item: str):
-        logger.debug('parse_date: %s', item)
         params = item.strip().split(' ')
+        # print(params)
         if len(params) == 2:
             day, time = params
             if day == 'Сегодня':
@@ -70,7 +50,7 @@ class AvitoParser:
             elif day == 'Вчера':
                 date = datetime.date.today() - datetime.timedelta(days=1)
             else:
-                logger.error('Не смогли разобрать день: %s', item)
+                print('Не смогли разобрать день:', item)
                 return
 
             time = datetime.datetime.strptime(time, '%H:%M').time()
@@ -95,27 +75,20 @@ class AvitoParser:
             }
             month = months_map.get(month_hru)
             if not month:
-                logger.error('Не смогли разобрать месяц: %s', item)
+                print('Не смогли разобрать месяц:', item)
                 return
 
-            try:
-                today = datetime.datetime.today()
-                time = datetime.datetime.strptime(time, '%H:%M')
-                return datetime.datetime(day=day, month=month, year=today.year, hour=time.hour, minute=time.minute)
-            except ValueError:
-                year = datetime.datetime.strptime(time, '%Y')
-                return datetime.datetime(day=day, month=month, year=year.year)
+            today = datetime.datetime.today()
+            time = datetime.datetime.strptime(time, '%H:%M')
+            return datetime.datetime(day=day, month=month, year=today.year, hour=time.hour, minute=time.minute)
 
         else:
-            logger.error('Не смогли разобрать формат:', item)
+            print('Не смогли разобрать формат:', item)
             return
 
     def parse_block(self, item):
         # Выбрать блок со ссылкой
-        url_block = item.select_one('a.snippet-link')
-        if not url_block:
-            raise CommandError('bad "url_block" css')
-
+        url_block = item.select_one('a.item-description-title-link')
         href = url_block.get('href')
         if href:
             url = 'https://www.avito.ru' + href
@@ -123,63 +96,42 @@ class AvitoParser:
             url = None
 
         # Выбрать блок с названием
-        title = url_block.string.strip()
-        if not title:
-            raise CommandError(f'no title for item: {url_block}')
+        title_block = item.select_one('h3.title.item-description-title span')
+        title = title_block.string.strip()
 
         # Выбрать блок с названием и валютой
         price_block = item.select_one('span.price')
-        if not price_block:
-            raise CommandError('bad "price_block" css')
-
         price_block = price_block.get_text('\n')
         price_block = list(filter(None, map(lambda i: i.strip(), price_block.split('\n'))))
         if len(price_block) == 2:
             price, currency = price_block
-            price = int(price.replace(' ', ''))
         elif len(price_block) == 1:
             # Бесплатно
             price, currency = 0, None
         else:
             price, currency = None, None
-            logger.error(f'Что-то пошло не так при поиске цены: {price_block}, {url}')
+            print(f'Что-то пошло не так при поиске цены: {price_block}, {url}')
 
         # Выбрать блок с датой размещения объявления
         date = None
         date_block = item.select_one('div.item-date div.js-item-date.c-2')
-        if not date_block:
-            raise CommandError('bad "date_block" css')
-
         absolute_date = date_block.get('data-absolute-date')
         if absolute_date:
             date = self.parse_date(item=absolute_date)
 
-        try:
-            p = Product.objects.get(url=url)
-            p.task = self.task
-            p.title = title
-            p.price = price
-            p.currency = currency
-            p.save()
-        except Product.DoesNotExist:
-            p = Product(
-                task=self.task,
-                url=url,
-                title=title,
-                price=price,
-                currency=currency,
-                published_date=date,
-            ).save()
-
-        logger.debug(f'product {p}')
+        return Block(
+            url=url,
+            title=title,
+            price=price,
+            currency=currency,
+            date=date,
+        )
 
     def get_pagination_limit(self):
         text = self.get_page()
         soup = bs4.BeautifulSoup(text, 'lxml')
 
         container = soup.select('a.pagination-page')
-        if not container:
-            return 1
         last_button = container[-1]
         href = last_button.get('href')
         if not href:
@@ -187,7 +139,7 @@ class AvitoParser:
 
         r = urllib.parse.urlparse(href)
         params = urllib.parse.parse_qs(r.query)
-        return min(int(params['p'][0]), self.PAGE_LIMIT)
+        return int(params['p'][0])
 
     def get_blocks(self, page: int = None):
         text = self.get_page(page=page)
@@ -196,24 +148,25 @@ class AvitoParser:
         # Запрос CSS-селектора, состоящего из множества классов, производится через select
         container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
         for item in container:
-            self.parse_block(item=item)
+            block = self.parse_block(item=item)
+            print(block)
 
     def parse_all(self):
-        # Выбрать какое-нибудь задание
-        print('4')
-        self.find_task()
-
-
         limit = self.get_pagination_limit()
-        logger.info(f'Всего страниц: {limit}')
+        print(f'Всего страниц: {limit}')
 
         for i in range(1, limit + 1):
-            logger.info(f'Работаем над страницей {i}')
             self.get_blocks(page=i)
 
-        # Завершить задание
-        self.finish_task()
 
+# def main():
+#     p = AvitoParser()
+#     p.parse_all()
+#
+#
+# if __name__ == '__main__':
+#     main()
+#
 
 class Command(BaseCommand):
     help = 'Парсинг Avito'
@@ -225,7 +178,3 @@ class Command(BaseCommand):
 def main():
     p = AvitoParser()
     p.parse_all()
-
-#
-# if __name__ == '__main__':
-#     main()
