@@ -21,20 +21,20 @@ class AvitoParser:
     print('1')
 
     def __init__(self):
-        print('2')
+        # print('2')
         self.session = requests.Session()
         self.session.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
             'Accept-Language': 'ru',
         }
-        print('3')
+        # print('3')
         self.task = None
 
     def find_task(self):
-        print('5!!!!!!!!')
-        print(Task)
+        # print('5!!!!!!!!')
+        # print(Task)
         obj = Task.objects.filter(status=STATUS_NEW).first()
-        print(self)
+        # print(self)
         if not obj:
             raise CommandError('no tasks found!!!!')
         self.task = obj
@@ -200,7 +200,7 @@ class AvitoParser:
 
     def parse_all(self):
         # Выбрать какое-нибудь задание
-        print('4')
+        #print('4')
         self.find_task()
 
 
