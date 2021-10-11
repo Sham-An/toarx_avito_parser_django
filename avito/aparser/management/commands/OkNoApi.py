@@ -127,9 +127,13 @@ for i in items: # Теперь идем по ябъявлениям:
 
         time.sleep((randint(6,14)) if index % 10 != 0 else 20)
         index += 1
-        #print(f'''4.) price {more_data_2['price']}   Addres ''')
-        #print(f'''5.) PPrice2 {more_data_2['price']['value']}  ''')
-        #print(f'''6.) Addres {more_data_2['address']}''')
+        URLs=more_data_2['sharing']
+        URLs_fb=URLs['fb']
+        print(f'''3.) sharing {URLs}    ''') #more_data_2['sharing']
+        print(f'''3.1) sharing fb {URLs_fb}    ''')  # more_data_2['sharing']
+        print(f'''4.) price {more_data_2['price']}   Addres ''')
+        print(f'''5.) PPrice2 {more_data_2['price']['value']}  ''')
+        print(f'''6.) Addres {more_data_2['address']}''')
         url_get_phone = 'https://m.avito.ru/api/1/items/' + ad_id + '/phone'    # URL для получения телефона
         phone = s.get(url_get_phone, params=params).json()                      # Сам запрос
         if phone['status'] == 'ok': phone_number = requests.utils.unquote(phone['result']['action']['uri'].split('number=')[1]) # Прверка на наличие телефона, такой странный синтсксис, чтоб уместиться в 100 сторочек кода)))
