@@ -56,7 +56,7 @@ class AvitoParser:
         url = self.task.url
         r = self.session.get(url, params=params)
         r.raise_for_status()
-        print(r.text)
+        #print('!!!!!!!!!!!!!!!!!!!!!!! get_page')
         return r.text
 
     @staticmethod
@@ -129,6 +129,7 @@ class AvitoParser:
 
         # Выбрать блок с названием и валютой
         price_block = item.select_one('span.price')
+        #print(f'Выбрать блок с названием и валютой {price_block}')
         if not price_block:
             raise CommandError('bad "price_block" css')
 
@@ -192,9 +193,11 @@ class AvitoParser:
     def get_blocks(self, page: int = None):
         text = self.get_page(page=page)
         soup = bs4.BeautifulSoup(text, 'lxml')
+        print(f'SOUP   {soup}')
 
         # Запрос CSS-селектора, состоящего из множества классов, производится через select
         container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
+        print(f'КОНТЕЙНЕР  {container}')
         for item in container:
             self.parse_block(item=item)
 
