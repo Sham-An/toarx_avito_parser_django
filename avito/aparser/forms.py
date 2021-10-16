@@ -3,6 +3,7 @@ from django import forms
 from .models import Task
 from .models import Product
 from .models import Category
+from .models import Region
 
 
 class TaskForm(forms.ModelForm):
@@ -40,7 +41,18 @@ class CategoryForm(forms.ModelForm):
         fields = (
             'name',
             'parentId',
+            'JsId'
         )
+        widgets = {
+            'name': forms.TextInput,
+        }
+
+
+class RegionForm(forms.ModelForm):
+    class Meta:
+        model = Region
+        fields = ('name', 'JsId')
+
         widgets = {
             'name': forms.TextInput,
         }

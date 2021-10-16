@@ -12,7 +12,7 @@ from aparser.constants import STATUS_READY
 from aparser.models import Product
 from aparser.models import Task
 
-
+#python manage.py parse_avito
 logger = getLogger(__name__)
 
 

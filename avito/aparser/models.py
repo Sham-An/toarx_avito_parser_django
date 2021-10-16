@@ -66,9 +66,17 @@ class Product(models.Model):
 class Category(models.Model):
     """Категории"""
     name = models.CharField("Категория", max_length=150)
+    name_en_dir = models.CharField("КатегорияEN", max_length=150,
+    null=True, blank=True,)
     #description = models.TextField("Описание")
     #url = models.SlugField(max_length=160, unique=True)
     parentId = models.PositiveSmallIntegerField()
+    #JsId = models.PositiveSmallIntegerField()
+    JsId = models.PositiveSmallIntegerField(
+        verbose_name='JsonKey',
+        null=True,
+        blank=True,
+    )
     #parentIdKey = models.ForeignKey(Category, verbose_name="Фильм", on_delete=models.CASCADE)
     def __str__(self):
         return self.name
@@ -76,3 +84,23 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+
+class Region(models.Model):
+    """Регионы"""
+    name = models.CharField("Регион", max_length=150)
+    name_en_dir = models.CharField("КатегорияEN", max_length=150,
+    null=True, blank=True,)
+    #description = models.TextField("Описание")
+    #url = models.SlugField(max_length=160, unique=True)
+    JsId = models.PositiveSmallIntegerField(
+        verbose_name='JsonKey',
+        null=True,
+        blank=True,
+    )
+    #parentIdKey = models.ForeignKey(Category, verbose_name="Фильм", on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Регион"
+        verbose_name_plural = "Регионы"
