@@ -13,7 +13,7 @@ str_json = """
             "id": "621550",
             "name": "Крым"
         },
-        {
+        
             "id": "621590",
             "name": "Алтайский край"
         },
@@ -74,10 +74,10 @@ for item in data['data']:
 
 with open("avito_category.json", encoding='utf-8') as file:
         data = json.load(file)
-with open("avito_category.json2.json", 'w') as file2:
+with open("avito_category2_json", 'w') as file2:
         json.dump(data, file2, indent=3)
 
 with open("avito_region.json", encoding='utf-8') as file:
         data = json.load(file)
-with open("avito_region.json2.json", 'w') as file2:
+with open("avito_region_json2.json", 'w') as file2:
         json.dump(data, file2, indent=3)
