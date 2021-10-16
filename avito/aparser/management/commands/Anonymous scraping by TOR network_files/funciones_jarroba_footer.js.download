@@ -1,0 +1,42 @@
+/* global screenReaderText */
+( function( $ ) {
+
+    // highlight
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    });
+
+    // para el popover del buscador
+    $(window).bind('ChangeView', function(e, data){
+        $('.change-project').popover({
+            placement : 'bottom',
+            trigger : 'click',
+            html : true,
+            content : function(){
+                var content = '';
+                content = $('#select-div').html();
+                return content;
+            }
+        }).on('shown.bs.popover', function(){
+        });
+
+        $(document).delegate('.btn-go','click', function(e){
+            e.preventDefault();
+            alert('Go Click');
+        });
+
+        $(document).delegate('.btn-cancel-option', 'click', function(e){
+            e.preventDefault();
+            var element = $(this).parents('.popover');
+            if(element.size()){
+                $(element).removeClass('in').addClass('out');
+            }
+        });
+    });
+    $(document).ready(function(){
+        $(window).trigger('ChangeView', {});
+    });
+
+} )( jQuery );

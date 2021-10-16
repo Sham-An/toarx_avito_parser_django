@@ -9,10 +9,11 @@
 
 from django.contrib import admin
 
-from .forms import TaskForm
+from .forms import TaskForm, CategoryForm
 from .forms import ProductForm
 from .models import Task
 from .models import Product
+from .models import Category
 
 
 PRICE_FILTER_STEPS = 10
@@ -71,3 +72,10 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title', 'url', 'status')
     list_filter = ('status', )
     form = TaskForm
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name', 'parentId')
+    #list_filter = ('status', )
+    form = CategoryForm

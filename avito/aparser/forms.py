@@ -2,10 +2,10 @@ from django import forms
 
 from .models import Task
 from .models import Product
+from .models import Category
 
 
 class TaskForm(forms.ModelForm):
-
     class Meta:
         model = Task
         fields = (
@@ -19,7 +19,6 @@ class TaskForm(forms.ModelForm):
 
 
 class ProductForm(forms.ModelForm):
-
     class Meta:
         model = Product
         fields = (
@@ -32,4 +31,16 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput,
             'currency': forms.TextInput,
+        }
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = (
+            'name',
+            'parentId',
+        )
+        widgets = {
+            'name': forms.TextInput,
         }

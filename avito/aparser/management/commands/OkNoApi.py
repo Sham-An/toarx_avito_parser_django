@@ -134,9 +134,13 @@ for i in items: # Теперь идем по ябъявлениям:
         print(f'''4.) price {more_data_2['price']}   Addres ''')
         print(f'''5.) PPrice2 {more_data_2['price']['value']}  ''')
         print(f'''6.) Addres {more_data_2['address']}''')
-        url_get_phone = 'https://m.avito.ru/api/1/items/' + ad_id + '/phone'    # URL для получения телефона
+        url_get_phone = 'https://m.avito.ru/api/1/items/' + ad_id + '/phone'    # URL для получения телефона https://m.avito.ru/api/1/items/2005420126/phone
+        print(f'''6.1) ПАРСИНГ ТЕЛЕФОНА url_get_phone {url_get_phone}''')
         phone = s.get(url_get_phone, params=params).json()                      # Сам запрос
-        if phone['status'] == 'ok': phone_number = requests.utils.unquote(phone['result']['action']['uri'].split('number=')[1]) # Прверка на наличие телефона, такой странный синтсксис, чтоб уместиться в 100 сторочек кода)))
+        print(f'''6.2) ПАРСИНГ ТЕЛЕФОНА phone = s.get(url_get_phone {phone}''')
+        print(f'''6.3) ПАРИНГ ТЕЛЕФОНА phone_number = requests.utils.unquote(phone['result']['action']['uri'].split('number=')[1])''')
+        if phone['status'] == 'ok':
+            phone_number = requests.utils.unquote(phone['result']['action']['uri'].split('number=')[1]) # Прверка на наличие телефона, такой странный синтсксис, чтоб уместиться в 100 сторочек кода)))
         else: phone_number = phone['result']['message']
         print(f'7.) телефон {phone_number}')
         print(f'''8.) seller {more_data_2['seller']}''')
