@@ -40,12 +40,12 @@ str_json = """
 print(type(str_json))
 
 
-data = json.loads(str_json) #loadS из строки, load из файла
-print(f"{data['status']} & {data['data']}")
+#data = json.loads(str_json) #loadS из строки, load из файла
+#print(f"{data['status']} & {data['data']}")
 #print(f"! = {data['status']} & {data['data']}")
 
-for item in data['data']:
-        print(f"{item['id']} = {item['name']}")
+#for item in data['data']:
+#        print(f"{item['id']} = {item['name']}")
 
 #Открываем файл
 with open("avito_city.json", encoding='utf-8') as file: #Без указания кодировки выдает ошибку
@@ -74,10 +74,10 @@ for item in data['data']:
 
 with open("avito_category.json", encoding='utf-8') as file:
         data = json.load(file)
-with open("avito_category2_json", 'w') as file2:
+with open("avito_category2.json", 'w') as file2:
         json.dump(data, file2, indent=3)
 
 with open("avito_region.json", encoding='utf-8') as file:
         data = json.load(file)
-with open("avito_region_json2.json", 'w') as file2:
+with open("avito_region2.json", 'w') as file2:
         json.dump(data, file2, indent=3)

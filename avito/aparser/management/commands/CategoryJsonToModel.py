@@ -1,32 +1,35 @@
 import json
+from logging import getLogger
 # from aparser.models import Category
-from aparser.models import Region
+#from aparser.models import Region
+#from aparser.models import City
 # from logging import getLogger
 # from django.core.management.base import BaseCommand
 # from django.core.management.base import CommandError
 
+logger = getLogger(__name__)
 
-class RegionAdd:
-
- #   PAGE_LIMIT = 10
-    try:
-        p = Region.objects.get(url=url)
-        p.task = self.task
-        p.title = title
-        p.price = price
-        p.currency = currency
-        p.save()
-    except Product.DoesNotExist:
-        p = Product(
-            task=self.task,
-            url=url,
-            title=title,
-            price=price,
-            currency=currency,
-            published_date=date,
-        ).save()
-
-    logger.debug(f'product {p}')
+# class RegionAdd:
+#
+#  #   PAGE_LIMIT = 10
+#     try:
+#         p = Region.objects.get(url=url)
+#         p.task = self.task
+#         p.title = title
+#         p.price = price
+#         p.currency = currency
+#         p.save()
+#     except Product.DoesNotExist:
+#         p = Product(
+#             task=self.task,
+#             url=url,
+#             title=title,
+#             price=price,
+#             currency=currency,
+#             published_date=date,
+#         ).save()
+#
+#     logger.debug(f'product {p}')
 
 
 def list_dict(dicts):
@@ -86,21 +89,54 @@ def list_region(data):
     print(all_id)
        #except AttributeError:
 
+def list_city(data):
+    all_id = []
+    print("___________22 LIST_CATEGORY 22________________")
+    for dataitems in data['data']:
+        #print(dataitems['id'], dataitems['name'])
+        #        print(dataitems)
+        #all_id.append(dataitems['id'])
+        if dataitems['id'] in all_id:
+            print('IIIIDDDD Поймали ДУБЛЯЖ!!!!!!!!!!!!!!!!!!!!!')
+            break
+        all_id.append(dataitems['id'])
+        # if 'Ипот' in datainfo['name']:
+        #    print('Поймали ИПОТЕКУ')
+        # break
+        print(dataitems['id'], dataitems['name'], dataitems['parent_Id'])
+    all_id.sort()
+    print(all_id)
+       #except AttributeError:
+
+
 
 def Open_json_category():
+
     with open("avito_category.json", encoding='utf-8') as file:
         data = json.load(file)
         #list_dict(data)
         list_category(data)
         #print(data)
 
+
 def Open_json_region():
+
     with open("avito_region.json", encoding='utf-8') as file:
         data = json.load(file)
         #list_dict(data)
         list_region(data)
         #print(data)
 
+
+def Open_json_city():
+    with open("avito_city.json", encoding='utf-8') as file:
+        data = json.load(file)
+        # list_dict(data)
+        list_city(data)
+        # print(data)
+
+
 if __name__ == '__main__':
     #Open_json_category()
-    Open_json_region()
+    #Open_json_region()
+    Open_json_city()

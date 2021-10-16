@@ -104,3 +104,24 @@ class Region(models.Model):
     class Meta:
         verbose_name = "Регион"
         verbose_name_plural = "Регионы"
+
+class City(models.Model):
+    """Населенные пункты"""
+    name = models.CharField("Населенные пункты", max_length=150)
+    name_en_dir = models.CharField("Населенные пунктыEN", max_length=150,
+    null=True, blank=True,)
+    #description = models.TextField("Описание")
+    #url = models.SlugField(max_length=160, unique=True)
+    JsId = models.PositiveSmallIntegerField(
+        verbose_name='JsonKey',
+        null=True,
+        blank=True,
+    )
+    parent_Id = models.ForeignKey(Region, verbose_name="Регион", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Населенный пункт"
+        verbose_name_plural = "Населенные пункты"
