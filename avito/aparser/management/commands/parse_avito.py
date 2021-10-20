@@ -20,20 +20,8 @@ logger = getLogger(__name__)
 class CategoryGet:
 
     def find_category(self):
-        # print('5!!!!!!!!')
-        # print(Task)
         obj = Category.objects.all() #filter(status=STATUS_NEW).first()
         print(obj)
-        #path_cat="aparser\management\commands\avito_category.json"
-
-        with open("avito_category.json", encoding='utf-8') as file:
-            data = json.load(file)
-            print(data)
-
-        # if not obj:
-        #     raise CommandError('no tasks found!!!!')
-        # self.task = obj
-        # logger.info(f'Работаем над заданием {self.task}')
 
     def list_category(self):
 
@@ -44,8 +32,17 @@ class CategoryGet:
         print("___________22 LIST_DICT 22________________")
         for dataitems in data['categories']:
             print(dataitems['id'], dataitems['name'])
-            print(dataitems)
+            print(f'Родительские {dataitems}')
             all_id.append(dataitems['id'])
+            id1 = dataitems['id']
+            name = dataitems['name']
+            parentId = 0
+            try:
+                 obj1 = Category.objects.get(id=id1)
+            except Category.DoesNotExist:
+                 obj1 = Category(id=id1, name=name, parentId=parentId)
+                 obj1.save()
+
             #print(type(dataitems['id']))
 
             if dataitems['id']>0 :
@@ -54,13 +51,16 @@ class CategoryGet:
                         print('IIIIDDDD Поймали ДУБЛЯЖ')
                         break
                     all_id.append(datainfo['id'])
-                    #if 'Ипот' in datainfo['name']:
-                    #    print('Поймали ИПОТЕКУ')
-                    # break
-                    id=datainfo['id']
+                    id = datainfo['id']
                     name = datainfo['name']
                     parentId = datainfo['parentId']
                     print(id, name, parentId)
+
+                    try:
+                        obj = Category.objects.get(id=id)
+                    except Category.DoesNotExist:
+                        obj = Category(id=id, name=name, parentId=parentId)
+                        obj.save()
                     #print(datainfo['id'], datainfo['name'], datainfo['parentId'])
                     #category_add(id)
         all_id.sort()
