@@ -120,7 +120,12 @@ class City(models.Model):
         null=True,
         blank=True,
     )
-    parent_Id = models.ForeignKey(Region, verbose_name="Регион", on_delete=models.CASCADE)
+    #parent_Id = models.ForeignKey(Region, verbose_name="Регион", on_delete=models.CASCADE)
+    parent_Id = models.PositiveSmallIntegerField(
+        verbose_name='Регион',
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.name

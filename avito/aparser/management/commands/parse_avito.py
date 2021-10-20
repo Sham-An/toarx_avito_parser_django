@@ -9,13 +9,86 @@ from django.core.management.base import CommandError
 
 from aparser.constants import STATUS_NEW
 from aparser.constants import STATUS_READY
-from aparser.models import Product
+from aparser.models import Product, Region, City
 from aparser.models import Task
 from aparser.models import Category
 import json
 
 #python manage.py parse_avito
 logger = getLogger(__name__)
+
+class CityGet:
+
+    def list_city(self):
+
+        with open("avito_city.json", encoding='utf-8') as file:
+            data = json.load(file)
+
+        all_id = []
+        print("___________22 LIST_CATEGORY 22________________")
+        for dataitems in data['data']:
+            # print(dataitems['id'], dataitems['name'])
+            #        print(dataitems)
+            # all_id.append(dataitems['id'])
+            if dataitems['id'] in all_id:
+                print('IIIIDDDD Поймали ДУБЛЯЖ!!!!!!!!!!!!!!!!!!!!!')
+                break
+            all_id.append(dataitems['id'])
+            # if 'Ипот' in datainfo['name']:
+            #    print('Поймали ИПОТЕКУ')
+            # break
+            id = dataitems['id']
+            name = dataitems['name']
+            parent_Id = dataitems['parent_Id']
+            #reg = Region.objects.get(id=parent_Id)
+            try:
+                obj = City.objects.get(id=id)
+            except City.DoesNotExist:
+                obj = City(id=id, name=name, parent_Id=parent_Id)
+                obj.save()
+
+
+            #print(dataitems['id'], dataitems['name'], dataitems['parent_Id'])
+        all_id.sort()
+        print(all_id)
+        # except AttributeError:
+
+
+class RegionGet:
+
+    def list_region(self):
+
+        with open("avito_region.json", encoding='utf-8') as file:
+            data = json.load(file)
+
+        all_id = []
+        print("___________22 LIST_CATEGORY 22________________")
+        for dataitems in data['data']:
+            print(dataitems['id'], dataitems['name'])
+            #        print(dataitems)
+            # all_id.append(dataitems['id'])
+            if dataitems['id'] in all_id:
+                print('IIIIDDDD Поймали ДУБЛЯЖ!!!!!!!!!!!!!!!!!!!!!')
+                break
+            all_id.append(dataitems['id'])
+            # if 'Ипот' in datainfo['name']:
+            #    print('Поймали ИПОТЕКУ')
+            # break
+            id = dataitems['id']
+            name = dataitems['name']
+
+            try:
+                obj = Region.objects.get(id=id)
+            except Region.DoesNotExist:
+                obj = Region(id=id, name=name)#, parentId=parentId)
+                obj.save()
+
+            #print(dataitems['id'], dataitems['name'])
+
+
+        all_id.sort()
+        print(all_id)
+
 
 class CategoryGet:
 
@@ -275,9 +348,14 @@ class Command(BaseCommand):
     help = 'Парсинг Avito'
 
     def handle(self, *args, **options):
-        cat = CategoryGet()
-        cat.find_category()
-        cat.list_category()
+        #reg = RegionGet()
+        #reg.list_region()
+        city = CityGet()
+        city.list_city()
+        #cat = CategoryGet()
+        #cat.find_category()
+        #cat.list_category()
+
         #p = AvitoParser()
         #p.parse_all()
 
