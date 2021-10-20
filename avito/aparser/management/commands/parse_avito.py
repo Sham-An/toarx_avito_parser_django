@@ -11,23 +11,76 @@ from aparser.constants import STATUS_NEW
 from aparser.constants import STATUS_READY
 from aparser.models import Product
 from aparser.models import Task
+from aparser.models import Category
+import json
 
 #python manage.py parse_avito
 logger = getLogger(__name__)
 
+class CategoryGet:
+
+    def find_category(self):
+        # print('5!!!!!!!!')
+        # print(Task)
+        obj = Category.objects.all() #filter(status=STATUS_NEW).first()
+        print(obj)
+        #path_cat="aparser\management\commands\avito_category.json"
+
+        with open("avito_category.json", encoding='utf-8') as file:
+            data = json.load(file)
+            print(data)
+
+        # if not obj:
+        #     raise CommandError('no tasks found!!!!')
+        # self.task = obj
+        # logger.info(f'Работаем над заданием {self.task}')
+
+    def list_category(self):
+
+        all_id = []
+
+        with open("avito_category.json", encoding='utf-8') as file:
+            data = json.load(file)
+        print("___________22 LIST_DICT 22________________")
+        for dataitems in data['categories']:
+            print(dataitems['id'], dataitems['name'])
+            print(dataitems)
+            all_id.append(dataitems['id'])
+            #print(type(dataitems['id']))
+
+            if dataitems['id']>0 :
+                for datainfo in dataitems['children']:
+                    if datainfo['id'] in all_id:
+                        print('IIIIDDDD Поймали ДУБЛЯЖ')
+                        break
+                    all_id.append(datainfo['id'])
+                    #if 'Ипот' in datainfo['name']:
+                    #    print('Поймали ИПОТЕКУ')
+                    # break
+                    id=datainfo['id']
+                    name = datainfo['name']
+                    parentId = datainfo['parentId']
+                    print(id, name, parentId)
+                    #print(datainfo['id'], datainfo['name'], datainfo['parentId'])
+                    #category_add(id)
+        all_id.sort()
+        print(all_id)
+           #except AttributeError:
+
+
 
 class AvitoParser:
     PAGE_LIMIT = 10
-    print('1')
+    print('1111111111111111111')
 
     def __init__(self):
-        # print('2')
+        print('222222222')
         self.session = requests.Session()
         self.session.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
             'Accept-Language': 'ru',
         }
-        # print('3')
+        print('3')
         self.task = None
 
     def find_task(self):
@@ -41,7 +94,7 @@ class AvitoParser:
         logger.info(f'Работаем над заданием {self.task}')
 
     def finish_task(self):
-        self.task.status = STATUS_READY
+        #self.task.status = STATUS_READY
         self.task.save()
         logger.info(f'Завершили задание')
 
@@ -193,7 +246,7 @@ class AvitoParser:
     def get_blocks(self, page: int = None):
         text = self.get_page(page=page)
         soup = bs4.BeautifulSoup(text, 'lxml')
-        print(f'SOUP   {soup}')
+        #print(f'SOUP   {soup}')
 
         # Запрос CSS-селектора, состоящего из множества классов, производится через select
         container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
@@ -222,12 +275,15 @@ class Command(BaseCommand):
     help = 'Парсинг Avito'
 
     def handle(self, *args, **options):
-        p = AvitoParser()
-        p.parse_all()
+        cat = CategoryGet()
+        cat.find_category()
+        cat.list_category()
+        #p = AvitoParser()
+        #p.parse_all()
 
-def main():
-    p = AvitoParser()
-    p.parse_all()
+#def main():
+    #p = AvitoParser()
+    #p.parse_all()
 
 #
 # if __name__ == '__main__':

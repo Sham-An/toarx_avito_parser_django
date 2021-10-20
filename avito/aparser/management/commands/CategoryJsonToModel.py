@@ -1,6 +1,7 @@
 import json
 from logging import getLogger
-# from aparser.models import Category
+#from aparser.models import Category
+#from aparser.models import Category
 #from aparser.models import Region
 #from aparser.models import City
 # from logging import getLogger
@@ -9,25 +10,34 @@ from logging import getLogger
 
 logger = getLogger(__name__)
 
-# class RegionAdd:
-#
-#  #   PAGE_LIMIT = 10
-#     try:
-#         p = Region.objects.get(url=url)
-#         p.task = self.task
-#         p.title = title
-#         p.price = price
-#         p.currency = currency
-#         p.save()
-#     except Product.DoesNotExist:
-#         p = Product(
-#             task=self.task,
-#             url=url,
-#             title=title,
-#             price=price,
-#             currency=currency,
-#             published_date=date,
-#         ).save()
+
+def category_add(id):
+    #models = Category
+    #cat = Category.get(pk=id)
+    print(id)
+
+# #
+# #  #   PAGE_LIMIT = 10
+# #      try:
+# #         p = Category.objects.get(url=url)
+# #         p.task = self.task
+# #         p.title = title
+# #         p.price = price
+# #         p.currency = currency
+# #         p.save()
+# #     except Product.DoesNotExist:
+#         p = Category(
+#             pk = pk,
+#             name = name,
+#             parent_Id = parent_Id,
+#             JsId = JsId,
+#             # task=self.task,
+#             # url=url,
+#             # title=title,
+#             # price=price,
+#             # currency=currency,
+#             # published_date=date,
+#         ).create()
 #
 #     logger.debug(f'product {p}')
 
@@ -64,8 +74,12 @@ def list_category(data):
                 #if 'Ипот' in datainfo['name']:
                 #    print('Поймали ИПОТЕКУ')
                 # break
-
-                print(datainfo['id'], datainfo['name'], datainfo['parentId'])
+                id=datainfo['id']
+                name = datainfo['name']
+                parentId = datainfo['parentId']
+                print(id, name, parentId)
+                #print(datainfo['id'], datainfo['name'], datainfo['parentId'])
+                category_add(id)
     all_id.sort()
     print(all_id)
        #except AttributeError:
@@ -137,6 +151,6 @@ def Open_json_city():
 
 
 if __name__ == '__main__':
-    #Open_json_category()
+    Open_json_category()
     #Open_json_region()
-    Open_json_city()
+    #Open_json_city()

@@ -1,6 +1,9 @@
 #URL https://habr.com/ru/post/537834/
 #Digger https://www.diggernaut.ru/blog/besplatny-parser-avito/
-import requests, json, sys
+import requests
+import json
+import sys
+#from .models import Category
 import time
 from random import randint
 

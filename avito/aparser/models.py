@@ -1,9 +1,11 @@
 from django.db import models
-
-from .constants import STATUS_NEW, STATUS_READY
+#from .constants import STATUS_NEW, STATUS_READY
 
 
 class Task(models.Model):
+    STATUS_NEW = 1
+    STATUS_READY = 2
+
     title = models.TextField(
         verbose_name='Название задания',
         unique=True,
@@ -62,6 +64,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
 
 class Category(models.Model):
     """Категории"""
