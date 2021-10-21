@@ -1,0 +1,467 @@
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>1. Как найти запрос, связанный с набором запросов? | 
+Документация Рецепты Django ORM 2.0 | Все о фреймворке Джанго и его 
+библиотеках</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="1. Как найти запрос, связанный с набором запросов?¶ Иногда вы хотите узнать, как Django ORM заставляет наши запросы выполняться или какой SQL соответствует коду, который вы пишете. Это очень просто. Вы можете получить str из любого queryset.query, чтобы получить sql. …">
+        <meta name="yandex-verification" content="68f4641d7f454426">
+        <meta name="google-site-verification" content="9CW6iwITflBwNEW40QCIT5dW1dl7O0PCzXeXjYurY14">
+        <link rel="stylesheet" href="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/font-awesome.css">
+        <link rel="icon" type="image/png" href="https://django.fun/favicon.png">
+        
+        
+        <link href="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/df.css" rel="stylesheet">
+        
+    
+        
+            
+        
+    
+    <link rel="canonical" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/query/">
+    
+        
+            
+        
+        <link rel="alternate" hreflang="ru" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/query/">
+    
+        
+            
+        
+        <link rel="alternate" hreflang="en" href="https://django.fun/docs/django-orm-cookbook/en/2.0/query/">
+    
+
+
+
+
+
+
+        <!-- Yandex.RTB -->
+        <script type="text/javascript" async="" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/watch.js"></script><script type="text/javascript" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/context.js" async=""></script><script type="text/javascript" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/context.js" async=""></script><script>window.yaContextCb=window.yaContextCb||[]</script>
+        <script src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/context_002.js" async=""></script>
+    <script charset="utf-8" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/c7c7fff37a4ff0e56095.js" crossorigin="anonymous" importance="high"></script><script charset="utf-8" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/3576ac44e44739a86a71.js" crossorigin="anonymous" importance="high"></script><script async="" crossorigin="anonymous" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/host.js"></script><link rel="preconnect" href="https://yastatic.net/"><link rel="preconnect" href="https://avatars.mds.yandex.net/"><link rel="preconnect" href="https://mc.yandex.ru/"><meta id="https://yastatic.net/partner-code-bundles/45069/context_static.js"><link rel="preconnect" href="https://ads.adfox.ru/"><script charset="utf-8" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/8cc118ca91d840d03772.js" crossorigin="anonymous" importance="high"></script><script charset="utf-8" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/8e60b1625076d5100817.js" crossorigin="anonymous" importance="high"></script><style nonce="">#f9c4ef07e5{width:1px;height:1px;position:relative;}</style><style nonce="">#id9185{width:1px;height:1px;top:0px;left:0px;position:absolute;}</style></head>
+
+    <body>
+
+        <header class="df-header">
+            <div class="df-header__content">
+                <a class="df-header__brand" href="https://django.fun/">Django.fun</a>
+                <span class="df-header__bar" id="df-nav-bar">☰</span>
+
+                <nav class="df-header__nav" id="df-nav">
+                    <span class="df-header__nav__close" id="df-nav-close">✕</span>
+
+                    <span>
+                        <a href="https://django.fun/docs/">Документация
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5.019" height="8.623" viewBox="0 0 5.019 8.623">
+                                <g transform="translate(-1481.168 -2218.188)">
+                                    <path d="M230.571,368.7l3.958,3.958-3.958,3.958" transform="translate(1250.95 1849.842)" fill="none" stroke="#8497bc"></path>
+                                </g>
+                            </svg>
+                        </a>
+                        <div class="df-header__submenu">
+                            <div class="df-header__submenu__content">
+                                <div class="df-header__docs">
+                                    <div class="df-header__docs__django">
+                                        <h2><a href="https://django.fun/docs/django/ru/3.2/">Документация Django</a></h2>
+                                        <p>Django (Джанго) — свободный 
+фреймворк для веб-приложений на языке Python, использующий шаблон 
+проектирования MVC. Проект поддерживается организацией Django Software 
+Foundation.
+
+Сайт на Django строится из одного или нескольких приложений, которые 
+рекомендуется делать отчуждаемыми и подключаемыми. Это одно из 
+существенных архитектурных отличий этого фреймворка от некоторых других 
+(например, Ruby on Rails). Один из основных принципов фреймворка — DRY 
+(англ. Don't repeat yourself).
+
+Также, в отличие от других фреймворков, обработчики URL в Django 
+конфигурируются явно при помощи регулярных выражений.
+
+Для работы с базой данных Django использует собственный ORM, в котором 
+модель данных описывается классами Python, и по ней генерируется схема 
+базы данных.</p>
+                                        <div class="df-header__docs__django__versions">
+                                            Выберите версию
+                                            <div>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/dev/" title="Django dev">dev</a>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/3.2/" title="Django 3.2">3.2</a>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/3.1/" title="Django 3.1">3.1</a>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/2.2/" title="Django 2.2">2.2</a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="df-header__docs__libs">
+                                        <h2><a href="https://django.fun/docs/">Документация Django библиотек</a></h2>
+                                        <div class="df-header__docs__libs__content">
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/">Рецепты Django ORM</a></h3>
+                                                    <p>Рецепты Django 
+ORM - это книга о работе с моделями Django ORM и Django. Django ORM 
+является одним из ключевых столпов Django. Он предоставляет абстракции …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/django-rest-framework/ru/3.12/">Django Rest Framework</a></h3>
+                                                    <p>Django Rest 
+Framework (DRF) — это библиотека, которая работает со стандартными 
+моделями Django для создания гибкого и мощного API для проекта.</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/django-cms/ru/3.9/">Django CMS</a></h3>
+                                                    <p>Django CMS - это 
+современная платформа для веб-публикаций, построенная на Django, 
+фреймворке веб-приложений «для перфекционистов с соблюдением сроков». 
+Django CMS предлагает готовую поддержку общих функций, …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/channels/ru/3/">Channels</a></h3>
+                                                    <p>Channels - это 
+проект, который использует Django и расширяет его возможности за пределы
+ HTTP - для обработки WebSockets, протоколов чата, IoT-протоколов и 
+многого другого. Он …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/asgiref/ru/3/">ASGI — спецификация и утилиты</a></h3>
+                                                    <p>ASGI 
+(Asynchronous Server Gateway Interface) является духовным наследником 
+WSGI, предназначенным для обеспечения стандартного интерфейса между 
+асинхронными веб-серверами, платформами и приложениями Python. WSGI 
+предоставил стандарт для …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/social-docs/ru/0.1/">Python Social Auth</a></h3>
+                                                    <p>Python Social 
+Auth - это простой в настройке механизм социальной 
+аутентификации/регистрации с поддержкой нескольких платформ и 
+провайдеров аутентификации. Созданный с использованием базового кода из 
+django-social-auth, …</p>
+                                                </div>
+                                            
+                                        </div>
+                                        <p><strong><a href="https://django.fun/docs/">Перейти к полному списке библиотек →</a></strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+
+                    <span>
+                        <a href="https://django.fun/articles/">Статьи
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5.019" height="8.623" viewBox="0 0 5.019 8.623">
+                                <g transform="translate(-1481.168 -2218.188)">
+                                    <path d="M230.571,368.7l3.958,3.958-3.958,3.958" transform="translate(1250.95 1849.842)" fill="none" stroke="#8497bc"></path>
+                                </g>
+                            </svg>
+                        </a>
+                        <div class="df-header__submenu">
+                            <div class="df-header__submenu__content">
+                                <div class="df-header__docs__libs">
+                                    <h2><a href="https://django.fun/articles/">Статьи о Django</a></h2>
+                                    <div class="df-header__docs__libs__content">
+                                        <div>
+                                            <h3><a href="https://django.fun/news/">Новости</a></h3>
+                                            <p>Новости Django. Будьте всегда в курсе последних изменений и событий.</p>
+                                        </div>
+                                        <div>
+                                            <h3><a href="https://django.fun/tutorials/">Руководства</a></h3>
+                                            <p>Учебники по фреймворку Django, его функциям, вариантам использования и общим полезным вещам фреймворка.</p>
+                                        </div>
+                                        <div>
+                                            <h3><a href="https://django.fun/tips/">Советы</a></h3>
+                                            <p>Различные маленькие подсказки, подсказки, необычное использование Django - небольшие полезные вещи.</p>
+                                        </div>
+                                        <div>
+                                            <h3><a href="https://django.fun/videos/">Видео</a></h3>
+                                            <p>Видеоуроки по фреймворку Django, основам и использованию Python и Django.</p>
+                                        </div>
+                                        <div></div>
+                                        <div>
+                                            <h3><a href="https://django.fun/python/">Python</a></h3>
+                                            <p>Учебники по Python, его функциям, вариантам использования и общим полезным вещам.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+
+
+                    <span><a href="https://django.fun/qa/">Вопросы и ответы</a></span>
+
+                    <span><a href="https://django.fun/ru/cbv/">Классы-представления Django</a></span>
+                </nav>
+
+            </div>
+        </header>
+
+        
+    <div class="df-container">
+        
+        
+
+<!-- Yandex.RTB R-A-395615-13 -->
+<div id="yandex_rtb_R-A-395615-13"><div></div></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.render({
+    renderTo: 'yandex_rtb_R-A-395615-13',
+    blockId: 'R-A-395615-13'
+  })
+})</script>
+
+
+        <div class="df-docs__doc sidebar-right">
+            <div roles="sidebar">
+                
+    <div role="complementary">
+    
+        <h2><strong><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/">Рецепты Django ORM 2.0</a></strong></h2>
+    
+        
+        
+
+
+<!-- Yandex.RTB R-A-395615-3 -->
+<div id="yandex_rtb_R-A-395615-3"><div></div></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-395615-3",
+                renderTo: "yandex_rtb_R-A-395615-3",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+
+
+
+
+    
+
+
+        
+            <h3>Содержание</h3>
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/introduction/">Введение</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Как найти запрос, связанный с набором запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/or_query/">2. Как делать OR-запросы в Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/and_query/">3. Как делать AND-запросы в Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/notequal_query/">4. Как сделать NOT запрос в Django queryset?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/union/">5. Как выполнить объединение двух наборов запросов из одной или разных моделей?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/select_some_fields/">6. Как выбрать только некоторые поля в наборе запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/subquery/">7. Как сделать подзапросное выражение в Django?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/f_query/">8. Как отфильтровать набор запросов с критериями на основе сравнения значений их полей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/filefield/">9. Как отфильтровать поле FileField без какого-либо файла?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/join/">10. Как выполнять операции объединения в django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/second_largest/">11. Как найти вторую по величине запись с помощью Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/duplicate/">12. Найти строки с дублирующимися значениями полей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/distinct/">13. Как найти значения разных полей из набора запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/query_relatedtool/">14. Как использовать объекты <code class="code docutils literal notranslate"><span class="pre">Q</span></code> для сложных запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/aggregation/">15. Как группировать записи в Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/random/">16. Как эффективно выбрать случайный объект из модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/func_expressions/">17. Как использовать произвольные функции базы данных в кверисетах?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/multiple_objects/">1. Как создать несколько объектов в одном запросе?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/copy/">2. Как скопировать или клонировать существующий объект модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/singleton/">3. Как сделать так, чтобы можно было создать только один объект?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/update_denormalized_fields/">4. Как обновить денормализованные поля в других моделях при сохранении?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/truncate/">5. Как выполнить операцию truncate like с помощью Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/signals/">6. Какие сигналы подает Django во время создания или обновления объекта?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/datetime/">7. Как преобразовать строку в дату и сохранить в базе данных?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/asc_or_desc/">1. Как упорядочить набор запросов по возрастанию или убыванию?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/case_insensitive/">2. Как упорядочить набор запросов без учета регистра?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/order_by_two/">3. Как сделать сортировку по двум полям</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/order_by_related_model/">4. Как сделать сортировку по полю из связанной модели (с внешним ключом)?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/order_by_annotated_field/">5. Как сделать сортировку по аннотированному (вычисляемому) полю?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/one_to_one/">1. Как моделировать отношения один на один?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/one_to_many/">2. Как смоделировать отношения «один ко многим»?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/many_to_many/">3. Как смоделировать отношения «многие ко многим»?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/self_fk/">4. Как включить самоссылающийся ключ ForeignKey в модель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/existing_database/">5. Как преобразовать существующие базы данных в модели Django?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/database_view/">6. Как добавить модель для представления базы данных?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/generic_models/">7. Как создать общую модель, которая может быть связана с любым типом сущности? (Например, категория или комментарий?).</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/table_name/">8. Как указать имя таблицы для модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/column_name/">9. Как указать имя столбца для поля модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/null_vs_blank/">10. В чем разница между <code class="code docutils literal notranslate"><span class="pre">null=True</span></code> и <code class="code docutils literal notranslate"><span class="pre">blank=True</span></code>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/uuid/">11. Как использовать UUID вместо ID в качестве первичного ключа?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/slugfield/">12. Как использовать поле slug в django для большей читабельности?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/multiple_databases/">13. Как добавить несколько баз данных в приложение django?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/numqueries/">1. Как убедитьтся, что функция использовала фиксированное количество запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/keepdb/">2. Как ускорить тестирование путем повторного использования базы данных между прогонами теста?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/refresh_from_db/">3. Как перезагрузить объект модели из базы данных?</a></li>
+</ul>
+
+            
+        
+    
+        
+            <h3>Extra</h3>
+            <ul>
+                
+                    
+                        <li><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/genindex/">Алфавитный указатель</a></li>
+                    
+                
+            </ul>
+        
+
+        
+        
+
+
+<!-- Yandex.RTB R-A-395615-2 -->
+<div id="yandex_rtb_R-A-395615-2"><div></div></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-395615-2",
+                renderTo: "yandex_rtb_R-A-395615-2",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+
+    </div>
+
+                
+            </div>
+            <div role="main">
+                
+    <div id="version-switcher">
+        <ul id="doc-languages" class="language-switcher">
+            
+                
+            
+                
+                    <li class="other">
+                        
+                            
+                        
+                        <a href="https://django.fun/docs/django-orm-cookbook/en/2.0/query/">en</a>
+                    </li>
+                
+            
+            <li class="current" title="Click on the links on the left to switch to another language.">
+                    <span>Язык: <strong>ru</strong></span>
+            </li>
+        </ul>
+
+        <ul id="doc-versions" class="version-switcher">
+            
+                
+            
+            <li class="current">
+                <span>Версия:
+                    <strong>2.0</strong>
+                </span>
+            </li>
+        </ul>
+    </div>
+    
+    
+        
+        <div id="docs-content">
+            <div class="section" id="how-to-find-the-query-associated-with-a-queryset">
+<h1><span class="section-number">1. </span>Как найти запрос, связанный с набором запросов?<a class="headerlink" href="#how-to-find-the-query-associated-with-a-queryset" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Иногда вы хотите узнать, как Django ORM заставляет наши запросы 
+выполняться или какой SQL соответствует коду, который вы пишете. Это 
+очень просто. Вы можете получить <code class="code docutils literal notranslate"><span class="pre">str</span></code> из любого <code class="code docutils literal notranslate"><span class="pre">queryset.query</span></code>, чтобы получить sql.</p>
+<p>У вас есть модель под названием <code class="code docutils literal notranslate"><span class="pre">Event</span></code>. Для получения всех записей вы напишете что-то вроде <code class="code docutils literal notranslate"><span class="pre">Event.objects.all()</span></code>, затем сделаете <code class="code docutils literal notranslate"><span class="pre">str(queryset.query)</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">queryset</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+<span class="go">SELECT "events_event"."id", "events_event"."epic_id",</span>
+<span class="go">    "events_event"."details", "events_event"."years_ago"</span>
+<span class="go">    FROM "events_event"</span>
+</pre></div>
+</div>
+<img alt="../_images/sql_query.png" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/sql_query.png">
+<p>Пример 2</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">years_ago__gt</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">queryset</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+<span class="go">SELECT "events_event"."id", "events_event"."epic_id", "events_event"."details",</span>
+<span class="go">"events_event"."years_ago" FROM "events_event"</span>
+<span class="go">WHERE "events_event"."years_ago" &gt; 5</span>
+</pre></div>
+</div>
+</div>
+
+        </div>
+    
+    
+    
+        <div class="browse-horizontal">
+            
+                <div class="left"><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/introduction/"><i class="icon icon-chevron-left"></i> Введение</a></div>
+            
+            
+                <div class="right"><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/or_query/"><span class="section-number">2. </span>Как делать OR-запросы в Django ORM? <i class="icon icon-chevron-right"></i></a></div>
+            
+        </div>
+    
+
+
+                <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Вернуться на верх</a>
+            </div>
+        </div>
+    </div>
+
+
+        <footer>
+            <div class="df-footer">
+                <div class="df-container">
+                    © Django.Fun 2017-2021 | 
+                    Django.Fun не связан с Django Software Foundation. 
+Django - зарегистрированная торговая марка Django Software Foundation. 
+                </div>
+            </div>
+        </footer>
+    
+
+    <script src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/df.js"></script>
+    
+    
+        <!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter46974723 = new Ya.Metrika({ id:46974723, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/46974723" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+    
+
+<div style="position: fixed; left: -99px;"><div id="f9c4ef07e5"><iframe scrolling="no" allowtransparency="true" hidefocus="true" tabindex="-1" marginwidth="0" marginheight="0" style="opacity: 1;" src="1.%20%D0%9A%D0%B0%D0%BA%20%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81,%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%20%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D0%BE%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/render.htm" id="id9185" frameborder="no"></iframe></div></div></body></html>

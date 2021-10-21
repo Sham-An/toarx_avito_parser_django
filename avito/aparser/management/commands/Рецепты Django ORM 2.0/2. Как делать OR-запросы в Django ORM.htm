@@ -1,0 +1,499 @@
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>2. Как делать OR-запросы в Django ORM? | Документация Рецепты Django ORM 2.0 | Все о фреймворке Джанго и его библиотеках</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="2. Как делать OR-запросы в Django ORM?¶ Если вы используете django.contrib.auth, у вас будет таблица под названием auth_user. В ней будут поля username, first_name, last_name и другие. Частым требованием является выполнение фильтрации OR с двумя и более условиями. Скажем, вы …">
+        <meta name="yandex-verification" content="68f4641d7f454426">
+        <meta name="google-site-verification" content="9CW6iwITflBwNEW40QCIT5dW1dl7O0PCzXeXjYurY14">
+        <link rel="stylesheet" href="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/font-awesome.css">
+        <link rel="icon" type="image/png" href="https://django.fun/favicon.png">
+        
+        
+        <link href="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/df.css" rel="stylesheet">
+        
+    
+        
+            
+        
+    
+    <link rel="canonical" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/or_query/">
+    
+        
+            
+        
+        <link rel="alternate" hreflang="ru" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/or_query/">
+    
+        
+            
+        
+        <link rel="alternate" hreflang="en" href="https://django.fun/docs/django-orm-cookbook/en/2.0/or_query/">
+    
+
+
+
+
+
+
+        <!-- Yandex.RTB -->
+        <script type="text/javascript" async="" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/watch.js"></script><script type="text/javascript" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/context.js" async=""></script><script type="text/javascript" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/context.js" async=""></script><script>window.yaContextCb=window.yaContextCb||[]</script>
+        <script src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/context_002.js" async=""></script>
+    <script charset="utf-8" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/c7c7fff37a4ff0e56095.js" crossorigin="anonymous" importance="high"></script><script charset="utf-8" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/3576ac44e44739a86a71.js" crossorigin="anonymous" importance="high"></script><script async="" crossorigin="anonymous" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/host.js"></script><link rel="preconnect" href="https://yastatic.net/"><link rel="preconnect" href="https://avatars.mds.yandex.net/"><link rel="preconnect" href="https://mc.yandex.ru/"><meta id="https://yastatic.net/partner-code-bundles/45069/context_static.js"><link rel="preconnect" href="https://ads.adfox.ru/"><script charset="utf-8" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/8cc118ca91d840d03772.js" crossorigin="anonymous" importance="high"></script><script charset="utf-8" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/8e60b1625076d5100817.js" crossorigin="anonymous" importance="high"></script><style nonce="">#f2913820df{width:1px;height:1px;position:relative;}</style><style nonce="">#id3214{width:1px;height:1px;top:0px;left:0px;position:absolute;}</style><style type="text/css">.e836862e2{opacity: !important;white-space:normal !important;visibility:visible !important}.e836862e2,.e836862e2 yatag{display:block !important;font-family:inherit !important}.e836862e2,.e836862e2,.e836862e2 a,.e836862e2 b,.e836862e2 em,.e836862e2 iframe,.e836862e2 img,.e836862e2 table,.e836862e2 tbody,.e836862e2 td,.e836862e2 tr,.e836862e2 yatag{-webkit-box-sizing:content-box !important;box-sizing:content-box !important;color:inherit !important;font-size:inherit !important;font-weight:inherit !important;-webkit-hyphens:manual !important;-ms-hyphens:manual !important;hyphens:manual !important;-webkit-transition:none !important;-o-transition:none !important;transition:none !important}.e836862e2,.e836862e2 a,.e836862e2 b,.e836862e2 em,.e836862e2 iframe,.e836862e2 img,.e836862e2 table,.e836862e2 tbody,.e836862e2 td,.e836862e2 tr{background:none !important;border:none !important;border-radius:0 !important;border-spacing:0 !important;border-collapse:collapse !important;clear:none !important;float:none !important;font-variant:normal !important;letter-spacing:normal !important;line-height:normal !important;margin:0 !important;max-height:none !important;max-width:none !important;min-height:0 !important;min-width:0 !important;outline:none !important;padding:0 !important;position:static !important;text-align:left !important;text-decoration:none !important;text-indent:0 !important;text-transform:none !important;vertical-align:baseline !important;visibility:inherit !important;word-spacing:normal !important}.e836862e2,.e836862e2 a,.e836862e2 b,.e836862e2 em,.e836862e2 img,.e836862e2 table,.e836862e2 tbody,.e836862e2 td,.e836862e2 tr{height:auto !important}.e836862e2 table{display:table !important;empty-cells:hide !important;table-layout:fixed !important}.e836862e2 table,.e836862e2 td{font-size:100% !important}.e836862e2 td{display:table-cell !important;vertical-align:middle !important}.e836862e2{width:auto !important;height:auto !important;overflow:visible !important}.e836862e2 .fb0a5e2a8{position:relative !important;margin:auto !important;display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important;-webkit-box-pack:center !important;-ms-flex-pack:center !important;justify-content:center !important;-webkit-box-align:center !important;-ms-flex-align:center !important;align-items:center !important;overflow:hidden !important}.e836862e2 .d98476347,.e836862e2 .u429235a5{position:absolute !important;z-index:1 !important;top:0 !important;left:0 !important;right:0 !important;bottom:0 !important;width:100% !important;height:100% !important;display:none !important}.e836862e2 .o7676076f{position:relative !important;z-index:2 !important}.e836862e2 .ce3bac1d8{position:relative !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important}.e836862e2 .ce3bac1d8 iframe{position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important}.e836862e2 .p5e082407{position:absolute !important;width:100% !important;right:0 !important;top:0 !important;z-index:20 !important}.e836862e2 .m6fd3721f{position:absolute !important;z-index:21 !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important}.e836862e2 .xdab8562d{position:absolute !important;top:0 !important;left:0 !important;z-index:10 !important;height:16px !important;padding:0 4px !important;font-size:11px !important;line-height:16px !important;color:#000 !important;text-decoration:none !important;background:#fff !important;border:1px solid #e5e5e5 !important;border-bottom-right-radius:3px !important;cursor:pointer !important}.e836862e2 .m2e081ee9{border:1px solid #303050 !important}.e836862e2 .caf0f6e4d{max-width:100% !important;max-height:100% !important}.e836862e2 .caf0f6e4d .d98476347,.e836862e2 .caf0f6e4d .u429235a5{display:block !important}.e836862e2 .caf0f6e4d .u429235a5{-webkit-filter:blur(10px) saturate(0) contrast(400%) !important;filter:blur(10px) saturate(0) contrast(400%) !important}.e836862e2 .caf0f6e4d .d98476347{background-color:rgba(38,38,38,.9) !important}.e836862e2 .ne34c68ab{-webkit-box-pack:start !important;-ms-flex-pack:start !important;justify-content:flex-start !important}.e836862e2 .f33d0b5f,.e836862e2 .cd50fd277{visibility:hidden !important;opacity:0 !important}.e836862e2 .cd50fd277{max-width:1px !important;max-height:1px !important}.e836862e2 .fccda11d8{position:absolute !important;left:-1000px !important;top:-1000px !important;width:1px !important;height:1px !important;display:block !important}.e836862e2 .cb615700c{width:24px !important;height:24px !important;cursor:pointer !important;position:absolute !important;right:4px !important;top:4px !important;z-index:10 !important}.e836862e2 .nb94c96d9.cb615700c{display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important;-webkit-box-align:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-box-pack:center !important;-ms-flex-pack:center !important;justify-content:center !important;pointer-events:auto !important;border-radius:16px !important;-webkit-user-select:none !important;-moz-user-select:none !important;-ms-user-select:none !important;user-select:none !important;-webkit-tap-highlight-color:transparent !important}.e836862e2 .nb94c96d9.cb615700c:before{content:"" !important;position:absolute !important;width:36px !important;height:36px !important;top:50% !important;left:50% !important;-webkit-transform:translate(-50%,-50%) !important;transform:translate(-50%,-50%) !important}.e836862e2 .nb94c96d9.cb615700c.pf7a729cd:before{width:45px !important;height:45px !important;top:-4px !important;left:50% !important;-webkit-transform:translateX(-50%) !important;transform:translateX(-50%) !important}.e836862e2 .nb94c96d9.cb615700c:hover .i3466697c{opacity:.8 !important}.e836862e2 .nb94c96d9.cb615700c.ff8a60db7 .i3466697c{background-color:#fff !important;opacity:.8 !important}.e836862e2 .nb94c96d9.cb615700c.ff8a60db7 .aec6b0c32 svg{fill:#575c66 !important}.e836862e2 .nb94c96d9.cb615700c.r49281b2f,.e836862e2 .nb94c96d9.cb615700c.sbadb848d{-webkit-backdrop-filter:none !important;backdrop-filter:none !important}.e836862e2 .nb94c96d9.cb615700c.r49281b2f .i3466697c,.e836862e2 .nb94c96d9.cb615700c.sbadb848d .i3466697c{background:none !important}.e836862e2 .nb94c96d9.cb615700c.r49281b2f .aec6b0c32,.e836862e2 .nb94c96d9.cb615700c.sbadb848d .aec6b0c32{-webkit-filter:none !important;filter:none !important}.e836862e2 .nb94c96d9.cb615700c.r49281b2f:hover{background-color:#e9e9e9 !important}.e836862e2 .nb94c96d9.cb615700c.r49281b2f .aec6b0c32 svg{fill:#242526 !important}.e836862e2 .nb94c96d9.cb615700c.r49281b2f .r37717bce{color:#242526 !important}.e836862e2 .nb94c96d9.cb615700c.sbadb848d:hover{background-color:rgba(248,250,255,.2) !important}.e836862e2 .nb94c96d9.cb615700c.sbadb848d .aec6b0c32 svg{fill:#fff !important}.e836862e2 .nb94c96d9.cb615700c.sbadb848d .r37717bce{color:#fff !important}.e836862e2 .i3466697c{height:100% !important;width:100% !important;position:absolute !important;top:0 !important;left:0 !important;z-index:-1 !important;opacity:.6 !important;border-radius:inherit !important;-webkit-transition:opacity .15s !important;-o-transition:opacity .15s !important;transition:opacity .15s !important}.e836862e2 .nb94c96d9 .aec6b0c32{display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important;-webkit-box-align:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-box-pack:center !important;-ms-flex-pack:center !important;justify-content:center !important;pointer-events:none !important;-webkit-filter:drop-shadow(0 1px 1px rgba(0,0,0,.05)) drop-shadow(0 2px 2px rgba(0,0,0,.05)) drop-shadow(0 4px 4px rgba(0,0,0,.05)) drop-shadow(0 0 8px rgba(0,0,0,.05)) !important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05)) drop-shadow(0 2px 2px rgba(0,0,0,.05)) drop-shadow(0 4px 4px rgba(0,0,0,.05)) drop-shadow(0 0 8px rgba(0,0,0,.05)) !important}.e836862e2 .nb94c96d9 .aec6b0c32.aff0b5fb3 svg{fill:#fff !important}.e836862e2 .nb94c96d9 .aec6b0c32.i5fd03791 svg{fill:#242526 !important}.e836862e2 .r37717bce{display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important;-webkit-box-align:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-box-pack:center !important;-ms-flex-pack:center !important;justify-content:center !important;pointer-events:none !important}.e836862e2 .r37717bce.aff0b5fb3{color:#fff !important}.e836862e2 .r37717bce.i5fd03791{color:#242526 !important}@-webkit-keyframes g35dba61c{0%,to{opacity:0 !important;visibility:hidden !important}4%,96%{visibility:visible !important;opacity:1 !important}}@keyframes g35dba61c{0%,to{opacity:0 !important;visibility:hidden !important}4%,96%{visibility:visible !important;opacity:1 !important}}@media (hover:hover) and (pointer:fine){.e836862e2 .gf19b403d:hover .d64fc15e6{opacity:0 !important;visibility:hidden !important}.e836862e2 .gf19b403d:hover .jb9a41513{visibility:visible !important;opacity:1 !important}.e836862e2 .gf19b403d[data-active]:hover .jb9a41513{opacity:0 !important;visibility:hidden !important}.e836862e2 .gf19b403d[data-active]:hover .d64fc15e6{visibility:visible !important;opacity:1 !important}}.e836862e2 .gf19b403d.pf7a729cd{right:45px !important}.e836862e2 .gf19b403d.pf7a729cd .qb23b8aa6.d64fc15e6{-webkit-transform:translateX(41px) !important;transform:translateX(41px) !important}.e836862e2 .gf19b403d.pf7a729cd .qb23b8aa6.d64fc15e6 .l6abee65f{-webkit-transform:translateX(-43px) !important;transform:translateX(-43px) !important}.e836862e2 .gf19b403d{right:36px !important;width:32px !important}.e836862e2 .gf19b403d[data-active] svg{color:#ee4f4f !important;fill:#ee4f4f !important}.e836862e2 .gf19b403d[data-active] .d64fc15e6{-webkit-animation:g35dba61c 8s linear !important;animation:g35dba61c 8s linear !important}.e836862e2 .gf19b403d .qb23b8aa6{position:absolute !important;color:#fff !important;opacity:0 !important;visibility:hidden !important;white-space:nowrap !important;top:29px !important;right:50% !important;-webkit-transform:translateX(50%) !important;transform:translateX(50%) !important;background:#343334 !important;border-radius:6px !important;padding:0 8px !important;height:24px !important;line-height:24px !important;font-size:11px !important;-webkit-transition:all .2s !important;-o-transition:all .2s !important;transition:all .2s !important}.e836862e2 .gf19b403d .qb23b8aa6.d64fc15e6{-webkit-transform:translateX(32px) !important;transform:translateX(32px) !important;right:0 !important}.e836862e2 .gf19b403d .qb23b8aa6.d64fc15e6 .l6abee65f{right:0 !important;-webkit-transform:translateX(-34px) !important;transform:translateX(-34px) !important}.e836862e2 .gf19b403d .qb23b8aa6 .pfb78945b{font-size:11px !important}.e836862e2 .gf19b403d .qb23b8aa6 .l6abee65f{width:28px !important;height:8px !important;position:absolute !important;top:-6px !important;right:50% !important;-webkit-transform:translateX(50%) !important;transform:translateX(50%) !important;display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important;-webkit-box-align:center !important;-ms-flex-align:center !important;align-items:center !important;-webkit-box-pack:center !important;-ms-flex-pack:center !important;justify-content:center !important}.e836862e2 .gf19b403d .qb23b8aa6 .fb21846c6{color:#ffd400 !important;text-decoration:none !important;text-transform:lowercase !important}.e836862e2 .nbcb0a775{height:100% !important;width:100% !important;position:absolute !important;top:0 !important;left:0 !important;z-index:-1 !important;opacity:.6 !important;border-radius:inherit !important}.e836862e2 .f5b1cb550{display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important;cursor:pointer !important;position:absolute !important;left:4px !important;top:4px !important;z-index:10 !important;font-family:Helvetica,Arial,sans-serif !important;height:12px !important;-webkit-box-sizing:border-box !important;box-sizing:border-box !important;line-height:9px !important;padding:2px 4px !important;color:hsla(0,0%,100%,.8) !important;border-radius:16px !important;font-size:7px !important;text-transform:uppercase !important;letter-spacing:.125em !important;text-shadow:0 1px 1px rgba(0,0,0,.05),0 2px 2px rgba(0,0,0,.05),0 4px 4px rgba(0,0,0,.05),0 0 8px rgba(0,0,0,.05) !important;pointer-events:none !important}.e836862e2 .f5b1cb550,.e836862e2 .f5b1cb550>a{text-decoration:none !important}.e836862e2 .f5b1cb550>a{color:inherit !important}.e836862e2 .f5b1cb550.ff8a60db7{color:#575c66 !important}.e836862e2 .f5b1cb550.ff8a60db7 .nbcb0a775{background-color:#fff !important;opacity:.8 !important}.e836862e2 .f5b1cb550.r49281b2f,.e836862e2 .f5b1cb550.i5fd03791{color:#575c66 !important}.e836862e2 .f5b1cb550.aff0b5fb3,.e836862e2 .f5b1cb550.sbadb848d{color:#fff !important}.e836862e2 .f5b1cb550.s1a00d770,.e836862e2 .f5b1cb550.fe4438f0c{top:auto !important;left:auto !important;right:0 !important;bottom:0 !important;background:none !important;text-shadow:none !important;font-size:7px !important;padding:0 !important;line-height:normal !important;height:auto !important;opacity:.8 !important;-webkit-backdrop-filter:none !important;backdrop-filter:none !important}@media not all and (min-resolution:0.001dpcm){@supports (-webkit-appearance:none){.e836862e2 .f5b1cb550{text-shadow:0 1px 2px rgba(0,0,0,.15) !important}}}@supports ((-webkit-backdrop-filter:blur(16px)) or (backdrop-filter:blur(16px))){.e836862e2 .i3466697c,.e836862e2 .nbcb0a775{opacity:.1 !important}.e836862e2 .nb94c96d9.cb615700c,.e836862e2 .f5b1cb550{-webkit-backdrop-filter:blur(16px) !important;backdrop-filter:blur(16px) !important}.e836862e2 .nb94c96d9.cb615700c:not(.nb94c96d9.cb615700c.ff8a60db7):hover .i3466697c{opacity:.4 !important}}.e836862e2 .nbbd6fcff{margin:0 2px !important}.e836862e2 .fd8f6c33{text-decoration:none !important;pointer-events:auto !important;color:inherit !important}</style><style nonce="">#ya_partner_R-A-395615-2{width:100%;height:100%;position:relative;}</style><style nonce="">#id269{width:100%;height:100%;top:0px;left:0px;position:absolute;}</style></head>
+
+    <body>
+
+        <header class="df-header">
+            <div class="df-header__content">
+                <a class="df-header__brand" href="https://django.fun/">Django.fun</a>
+                <span class="df-header__bar" id="df-nav-bar">☰</span>
+
+                <nav class="df-header__nav" id="df-nav">
+                    <span class="df-header__nav__close" id="df-nav-close">✕</span>
+
+                    <span>
+                        <a href="https://django.fun/docs/">Документация
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5.019" height="8.623" viewBox="0 0 5.019 8.623">
+                                <g transform="translate(-1481.168 -2218.188)">
+                                    <path d="M230.571,368.7l3.958,3.958-3.958,3.958" transform="translate(1250.95 1849.842)" fill="none" stroke="#8497bc"></path>
+                                </g>
+                            </svg>
+                        </a>
+                        <div class="df-header__submenu">
+                            <div class="df-header__submenu__content">
+                                <div class="df-header__docs">
+                                    <div class="df-header__docs__django">
+                                        <h2><a href="https://django.fun/docs/django/ru/3.2/">Документация Django</a></h2>
+                                        <p>Django (Джанго) — свободный 
+фреймворк для веб-приложений на языке Python, использующий шаблон 
+проектирования MVC. Проект поддерживается организацией Django Software 
+Foundation.
+
+Сайт на Django строится из одного или нескольких приложений, которые 
+рекомендуется делать отчуждаемыми и подключаемыми. Это одно из 
+существенных архитектурных отличий этого фреймворка от некоторых других 
+(например, Ruby on Rails). Один из основных принципов фреймворка — DRY 
+(англ. Don't repeat yourself).
+
+Также, в отличие от других фреймворков, обработчики URL в Django 
+конфигурируются явно при помощи регулярных выражений.
+
+Для работы с базой данных Django использует собственный ORM, в котором 
+модель данных описывается классами Python, и по ней генерируется схема 
+базы данных.</p>
+                                        <div class="df-header__docs__django__versions">
+                                            Выберите версию
+                                            <div>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/dev/" title="Django dev">dev</a>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/3.2/" title="Django 3.2">3.2</a>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/3.1/" title="Django 3.1">3.1</a>
+                                                
+                                                    <a href="https://django.fun/docs/django/ru/2.2/" title="Django 2.2">2.2</a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="df-header__docs__libs">
+                                        <h2><a href="https://django.fun/docs/">Документация Django библиотек</a></h2>
+                                        <div class="df-header__docs__libs__content">
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/">Рецепты Django ORM</a></h3>
+                                                    <p>Рецепты Django 
+ORM - это книга о работе с моделями Django ORM и Django. Django ORM 
+является одним из ключевых столпов Django. Он предоставляет абстракции …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/django-rest-framework/ru/3.12/">Django Rest Framework</a></h3>
+                                                    <p>Django Rest 
+Framework (DRF) — это библиотека, которая работает со стандартными 
+моделями Django для создания гибкого и мощного API для проекта.</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/django-cms/ru/3.9/">Django CMS</a></h3>
+                                                    <p>Django CMS - это 
+современная платформа для веб-публикаций, построенная на Django, 
+фреймворке веб-приложений «для перфекционистов с соблюдением сроков». 
+Django CMS предлагает готовую поддержку общих функций, …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/channels/ru/3/">Channels</a></h3>
+                                                    <p>Channels - это 
+проект, который использует Django и расширяет его возможности за пределы
+ HTTP - для обработки WebSockets, протоколов чата, IoT-протоколов и 
+многого другого. Он …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/asgiref/ru/3/">ASGI — спецификация и утилиты</a></h3>
+                                                    <p>ASGI 
+(Asynchronous Server Gateway Interface) является духовным наследником 
+WSGI, предназначенным для обеспечения стандартного интерфейса между 
+асинхронными веб-серверами, платформами и приложениями Python. WSGI 
+предоставил стандарт для …</p>
+                                                </div>
+                                            
+                                                <div>
+                                                    <h3><a href="https://django.fun/docs/social-docs/ru/0.1/">Python Social Auth</a></h3>
+                                                    <p>Python Social 
+Auth - это простой в настройке механизм социальной 
+аутентификации/регистрации с поддержкой нескольких платформ и 
+провайдеров аутентификации. Созданный с использованием базового кода из 
+django-social-auth, …</p>
+                                                </div>
+                                            
+                                        </div>
+                                        <p><strong><a href="https://django.fun/docs/">Перейти к полному списке библиотек →</a></strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+
+                    <span>
+                        <a href="https://django.fun/articles/">Статьи
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5.019" height="8.623" viewBox="0 0 5.019 8.623">
+                                <g transform="translate(-1481.168 -2218.188)">
+                                    <path d="M230.571,368.7l3.958,3.958-3.958,3.958" transform="translate(1250.95 1849.842)" fill="none" stroke="#8497bc"></path>
+                                </g>
+                            </svg>
+                        </a>
+                        <div class="df-header__submenu">
+                            <div class="df-header__submenu__content">
+                                <div class="df-header__docs__libs">
+                                    <h2><a href="https://django.fun/articles/">Статьи о Django</a></h2>
+                                    <div class="df-header__docs__libs__content">
+                                        <div>
+                                            <h3><a href="https://django.fun/news/">Новости</a></h3>
+                                            <p>Новости Django. Будьте всегда в курсе последних изменений и событий.</p>
+                                        </div>
+                                        <div>
+                                            <h3><a href="https://django.fun/tutorials/">Руководства</a></h3>
+                                            <p>Учебники по фреймворку Django, его функциям, вариантам использования и общим полезным вещам фреймворка.</p>
+                                        </div>
+                                        <div>
+                                            <h3><a href="https://django.fun/tips/">Советы</a></h3>
+                                            <p>Различные маленькие подсказки, подсказки, необычное использование Django - небольшие полезные вещи.</p>
+                                        </div>
+                                        <div>
+                                            <h3><a href="https://django.fun/videos/">Видео</a></h3>
+                                            <p>Видеоуроки по фреймворку Django, основам и использованию Python и Django.</p>
+                                        </div>
+                                        <div></div>
+                                        <div>
+                                            <h3><a href="https://django.fun/python/">Python</a></h3>
+                                            <p>Учебники по Python, его функциям, вариантам использования и общим полезным вещам.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+
+
+                    <span><a href="https://django.fun/qa/">Вопросы и ответы</a></span>
+
+                    <span><a href="https://django.fun/ru/cbv/">Классы-представления Django</a></span>
+                </nav>
+
+            </div>
+        </header>
+
+        
+    <div class="df-container">
+        
+        
+
+<!-- Yandex.RTB R-A-395615-13 -->
+<div id="yandex_rtb_R-A-395615-13"><div></div></div>
+<script>window.yaContextCb.push(()=>{
+  Ya.Context.AdvManager.render({
+    renderTo: 'yandex_rtb_R-A-395615-13',
+    blockId: 'R-A-395615-13'
+  })
+})</script>
+
+
+        <div class="df-docs__doc sidebar-right">
+            <div roles="sidebar">
+                
+    <div role="complementary">
+    
+        <h2><strong><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/">Рецепты Django ORM 2.0</a></strong></h2>
+    
+        
+        
+
+
+<!-- Yandex.RTB R-A-395615-3 -->
+<div id="yandex_rtb_R-A-395615-3"><div></div></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-395615-3",
+                renderTo: "yandex_rtb_R-A-395615-3",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+
+
+
+
+    
+
+
+        
+            <h3>Содержание</h3>
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/introduction/">Введение</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/query/">1. Как найти запрос, связанный с набором запросов?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Как делать OR-запросы в Django ORM?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-query-in-detail">2.1. Запрос в деталях</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/and_query/">3. Как делать AND-запросы в Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/notequal_query/">4. Как сделать NOT запрос в Django queryset?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/union/">5. Как выполнить объединение двух наборов запросов из одной или разных моделей?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/select_some_fields/">6. Как выбрать только некоторые поля в наборе запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/subquery/">7. Как сделать подзапросное выражение в Django?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/f_query/">8. Как отфильтровать набор запросов с критериями на основе сравнения значений их полей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/filefield/">9. Как отфильтровать поле FileField без какого-либо файла?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/join/">10. Как выполнять операции объединения в django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/second_largest/">11. Как найти вторую по величине запись с помощью Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/duplicate/">12. Найти строки с дублирующимися значениями полей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/distinct/">13. Как найти значения разных полей из набора запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/query_relatedtool/">14. Как использовать объекты <code class="code docutils literal notranslate"><span class="pre">Q</span></code> для сложных запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/aggregation/">15. Как группировать записи в Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/random/">16. Как эффективно выбрать случайный объект из модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/func_expressions/">17. Как использовать произвольные функции базы данных в кверисетах?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/multiple_objects/">1. Как создать несколько объектов в одном запросе?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/copy/">2. Как скопировать или клонировать существующий объект модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/singleton/">3. Как сделать так, чтобы можно было создать только один объект?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/update_denormalized_fields/">4. Как обновить денормализованные поля в других моделях при сохранении?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/truncate/">5. Как выполнить операцию truncate like с помощью Django ORM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/signals/">6. Какие сигналы подает Django во время создания или обновления объекта?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/datetime/">7. Как преобразовать строку в дату и сохранить в базе данных?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/asc_or_desc/">1. Как упорядочить набор запросов по возрастанию или убыванию?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/case_insensitive/">2. Как упорядочить набор запросов без учета регистра?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/order_by_two/">3. Как сделать сортировку по двум полям</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/order_by_related_model/">4. Как сделать сортировку по полю из связанной модели (с внешним ключом)?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/order_by_annotated_field/">5. Как сделать сортировку по аннотированному (вычисляемому) полю?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/one_to_one/">1. Как моделировать отношения один на один?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/one_to_many/">2. Как смоделировать отношения «один ко многим»?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/many_to_many/">3. Как смоделировать отношения «многие ко многим»?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/self_fk/">4. Как включить самоссылающийся ключ ForeignKey в модель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/existing_database/">5. Как преобразовать существующие базы данных в модели Django?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/database_view/">6. Как добавить модель для представления базы данных?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/generic_models/">7. Как создать общую модель, которая может быть связана с любым типом сущности? (Например, категория или комментарий?).</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/table_name/">8. Как указать имя таблицы для модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/column_name/">9. Как указать имя столбца для поля модели?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/null_vs_blank/">10. В чем разница между <code class="code docutils literal notranslate"><span class="pre">null=True</span></code> и <code class="code docutils literal notranslate"><span class="pre">blank=True</span></code>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/uuid/">11. Как использовать UUID вместо ID в качестве первичного ключа?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/slugfield/">12. Как использовать поле slug в django для большей читабельности?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/multiple_databases/">13. Как добавить несколько баз данных в приложение django?</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/numqueries/">1. Как убедитьтся, что функция использовала фиксированное количество запросов?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/keepdb/">2. Как ускорить тестирование путем повторного использования базы данных между прогонами теста?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://django.fun/docs/django-orm-cookbook/ru/2.0/refresh_from_db/">3. Как перезагрузить объект модели из базы данных?</a></li>
+</ul>
+
+            
+        
+    
+        
+            <h3>Extra</h3>
+            <ul>
+                
+                    
+                        <li><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/genindex/">Алфавитный указатель</a></li>
+                    
+                
+            </ul>
+        
+
+        
+        
+
+
+<!-- Yandex.RTB R-A-395615-2 -->
+<div id="yandex_rtb_R-A-395615-2"><yatag class="bf2d31ca5 e836862e2"><yatag class="fccda11d8"></yatag><yatag class="fb0a5e2a8 cb25c0c0 j4888c75c"><yatag style="width: 240px !important; height: 400px !important;" class="o7676076f"><yatag id="ya_partner_R-A-395615-2" style="width: 240px !important; height: 400px !important; transform: none !important;" class="ce3bac1d8"><yatag class="f5b1cb550 ff8a60db7"><yatag class="nbcb0a775"></yatag>Реклама</yatag><yatag class="p5e082407 k19c2d481 f4e278181"><yatag data-close="true" class="nb94c96d9 cb615700c ff8a60db7"><yatag class="i3466697c"></yatag><yatag class="aec6b0c32"><svg width="8" height="20" fill="#fff" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="1.5"></circle><circle cx="4" cy="10" r="1.5"></circle><circle cx="4" cy="16" r="1.5"></circle></svg></yatag></yatag></yatag><iframe scrolling="no" allowtransparency="true" hidefocus="true" tabindex="-1" marginwidth="0" marginheight="0" style="opacity: 1;" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/render.htm" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-scripts allow-forms" id="id269" frameborder="no"></iframe></yatag></yatag></yatag></yatag></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-395615-2",
+                renderTo: "yandex_rtb_R-A-395615-2",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+
+
+    </div>
+
+                
+            </div>
+            <div role="main">
+                
+    <div id="version-switcher">
+        <ul id="doc-languages" class="language-switcher">
+            
+                
+            
+                
+                    <li class="other">
+                        
+                            
+                        
+                        <a href="https://django.fun/docs/django-orm-cookbook/en/2.0/or_query/">en</a>
+                    </li>
+                
+            
+            <li class="current" title="Click on the links on the left to switch to another language.">
+                    <span>Язык: <strong>ru</strong></span>
+            </li>
+        </ul>
+
+        <ul id="doc-versions" class="version-switcher">
+            
+                
+            
+            <li class="current">
+                <span>Версия:
+                    <strong>2.0</strong>
+                </span>
+            </li>
+        </ul>
+    </div>
+    
+    
+        
+        <div id="docs-content">
+            <div class="section" id="how-to-do-or-queries-in-django-orm">
+<h1><span class="section-number">2. </span>Как делать OR-запросы в Django ORM?<a class="headerlink" href="#how-to-do-or-queries-in-django-orm" title="Ссылка на этот заголовок">¶</a></h1>
+<img alt="../_images/usertable.png" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/usertable.png">
+<p>Если вы используете <code class="code docutils literal notranslate"><span class="pre">django.contrib.auth</span></code>, у вас будет таблица под названием <code class="code docutils literal notranslate"><span class="pre">auth_user</span></code>. В ней будут поля <code class="code docutils literal notranslate"><span class="pre">username</span></code>, <code class="code docutils literal notranslate"><span class="pre">first_name</span></code>, <code class="code docutils literal notranslate"><span class="pre">last_name</span></code> и другие.</p>
+<p>Частым требованием является выполнение фильтрации <code class="code docutils literal notranslate"><span class="pre">OR</span></code>
+ с двумя и более условиями. Скажем, вы хотите найти всех пользователей с
+ именем, начинающимся на „R“, и фамилией, начинающейся на „D“.</p>
+<p>Django предоставляет два варианта.</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">queryset_1</span> <span class="pre">|</span> <span class="pre">queryset_2</span></code></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">filter(Q(&lt;condition_1&gt;)|Q(&lt;condition_2&gt;)</span></code></p></li>
+</ul>
+<div class="section" id="the-query-in-detail">
+<h2><span class="section-number">2.1. </span>Запрос в деталях<a class="headerlink" href="#the-query-in-detail" title="Ссылка на этот заголовок">¶</a></h2>
+<p>SQL-запрос для приведенного выше условия будет выглядеть примерно так:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="n">SELECT</span> <span class="n">username</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">email</span> <span class="n">FROM</span> <span class="n">auth_user</span> <span class="n">WHERE</span> <span class="n">first_name</span> <span class="n">LIKE</span> <span class="s">'R%'</span> <span class="n">OR</span> <span class="n">last_name</span> <span class="n">LIKE</span> <span class="s">'D%'</span><span class="p">;</span>
+</pre></div>
+</div>
+<img alt="../_images/sqluser_result1.png" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/sqluser_result1.png">
+<p>Аналогичным образом наш ORM-запрос будет выглядеть следующим образом</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">queryset</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">first_name__startswith</span><span class="o">=</span><span class="s">'R'</span>
+    <span class="p">)</span> <span class="o">|</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="n">last_name__startswith</span><span class="o">=</span><span class="s">'D'</span>
+<span class="p">)</span>
+<span class="n">queryset</span>
+<span class="o">&lt;</span><span class="n">QuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">Ricky</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">Ritesh</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">Radha</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">Raghu</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">rishab</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Вы также можете посмотреть на сгенерированный запрос.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">queryset</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="s">'SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login",</span>
+<span class="s">"auth_user"</span><span class="o">.</span><span class="s">"is_superuser"</span><span class="p">,</span> <span class="s">"auth_user"</span><span class="o">.</span><span class="s">"username"</span><span class="p">,</span> <span class="s">"auth_user"</span><span class="o">.</span><span class="s">"first_name"</span><span class="p">,</span>
+<span class="s">"auth_user"</span><span class="o">.</span><span class="s">"last_name"</span><span class="p">,</span> <span class="s">"auth_user"</span><span class="o">.</span><span class="s">"email"</span><span class="p">,</span> <span class="s">"auth_user"</span><span class="o">.</span><span class="s">"is_staff"</span><span class="p">,</span>
+<span class="s">"auth_user"</span><span class="o">.</span><span class="s">"is_active"</span><span class="p">,</span> <span class="s">"auth_user"</span><span class="o">.</span><span class="s">"date_joined"</span> <span class="n">FROM</span> <span class="s">"auth_user"</span>
+<span class="n">WHERE</span> <span class="p">(</span><span class="s">"auth_user"</span><span class="o">.</span><span class="s">"first_name"</span><span class="p">::</span><span class="n">text</span> <span class="n">LIKE</span> <span class="n">R</span><span class="o">%</span> <span class="n">OR</span> <span class="s">"auth_user"</span><span class="o">.</span><span class="s">"last_name"</span><span class="p">::</span><span class="n">text</span> <span class="n">LIKE</span> <span class="n">D</span><span class="o">%</span><span class="p">)</span><span class="s">'</span>
+</pre></div>
+</div>
+<p>В качестве альтернативы можно использовать объекты <code class="code docutils literal notranslate"><span class="pre">Q</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Q</span>
+<span class="n">qs</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">first_name__startswith</span><span class="o">=</span><span class="s">'R'</span><span class="p">)</span><span class="o">|</span><span class="n">Q</span><span class="p">(</span><span class="n">last_name__startswith</span><span class="o">=</span><span class="s">'D'</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Если вы посмотрите на сформированный запрос, результат будет точно таким же</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre>In [9]: str(qs.query)
+Out[9]: 'SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login",
+ "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name",
+  "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff",
+  "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user"
+  WHERE ("auth_user"."first_name"::text LIKE R% OR "auth_user"."last_name"::text LIKE D%)'
+</pre></div>
+</div>
+</div>
+</div>
+
+        </div>
+    
+    
+    
+        <div class="browse-horizontal">
+            
+                <div class="left"><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/query/"><i class="icon icon-chevron-left"></i> <span class="section-number">1. </span>Как найти запрос, связанный с набором запросов?</a></div>
+            
+            
+                <div class="right"><a href="https://django.fun/docs/django-orm-cookbook/ru/2.0/and_query/"><span class="section-number">3. </span>Как делать AND-запросы в Django ORM? <i class="icon icon-chevron-right"></i></a></div>
+            
+        </div>
+    
+
+
+                <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Вернуться на верх</a>
+            </div>
+        </div>
+    </div>
+
+
+        <footer>
+            <div class="df-footer">
+                <div class="df-container">
+                    © Django.Fun 2017-2021 | 
+                    Django.Fun не связан с Django Software Foundation. 
+Django - зарегистрированная торговая марка Django Software Foundation. 
+                </div>
+            </div>
+        </footer>
+    
+
+    <script src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/df.js"></script>
+    
+    
+        <!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter46974723 = new Ya.Metrika({ id:46974723, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/46974723" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+    
+
+<div style="position: fixed; left: -99px;"><div id="f2913820df"><iframe scrolling="no" allowtransparency="true" hidefocus="true" tabindex="-1" marginwidth="0" marginheight="0" style="opacity: 1;" src="2.%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20OR-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B%20%D0%B2%20Django%20ORM%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%A0%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B%20Django%20ORM%202.0%20%D0%92%D1%81%D0%B5%20%D0%BE%20%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5%20%D0%94%D0%B6%D0%B0%D0%BD%D0%B3%D0%BE%20%D0%B8%20%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%85_files/render_002.htm" id="id3214" frameborder="no"></iframe></div></div></body></html>
