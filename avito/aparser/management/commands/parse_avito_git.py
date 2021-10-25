@@ -9,165 +9,33 @@ from django.core.management.base import CommandError
 
 from aparser.constants import STATUS_NEW
 from aparser.constants import STATUS_READY
-from aparser.models import Product, Region, City
+from aparser.models import Product
 from aparser.models import Task
-from aparser.models import Category
-import json
 
-#python manage.py parse_avito
+
 logger = getLogger(__name__)
-
-class CityGet:
-
-    def list_city(self):
-
-        with open("avito_city.json", encoding='utf-8') as file:
-            data = json.load(file)
-
-        all_id = []
-        print("___________22 LIST_CATEGORY 22________________")
-        for dataitems in data['data']:
-            # print(dataitems['id'], dataitems['name'])
-            #        print(dataitems)
-            # all_id.append(dataitems['id'])
-            if dataitems['id'] in all_id:
-                print('IIIIDDDD Поймали ДУБЛЯЖ!!!!!!!!!!!!!!!!!!!!!')
-                break
-            all_id.append(dataitems['id'])
-            # if 'Ипот' in datainfo['name']:
-            #    print('Поймали ИПОТЕКУ')
-            # break
-            id = dataitems['id']
-            name = dataitems['name']
-            parent_Id = dataitems['parent_Id']
-            #reg = Region.objects.get(id=parent_Id)
-            try:
-                obj = City.objects.get(id=id)
-            except City.DoesNotExist:
-                obj = City(id=id, name=name, parent_Id=parent_Id)
-                obj.save()
-
-
-            #print(dataitems['id'], dataitems['name'], dataitems['parent_Id'])
-        all_id.sort()
-        print(all_id)
-        # except AttributeError:
-
-
-class RegionGet:
-
-    def list_region(self):
-
-        with open("avito_region.json", encoding='utf-8') as file:
-            data = json.load(file)
-
-        all_id = []
-        print("___________22 LIST_CATEGORY 22________________")
-        for dataitems in data['data']:
-            print(dataitems['id'], dataitems['name'])
-            #        print(dataitems)
-            # all_id.append(dataitems['id'])
-            if dataitems['id'] in all_id:
-                print('IIIIDDDD Поймали ДУБЛЯЖ!!!!!!!!!!!!!!!!!!!!!')
-                break
-            all_id.append(dataitems['id'])
-            # if 'Ипот' in datainfo['name']:
-            #    print('Поймали ИПОТЕКУ')
-            # break
-            id = dataitems['id']
-            name = dataitems['name']
-
-            try:
-                obj = Region.objects.get(id=id)
-            except Region.DoesNotExist:
-                obj = Region(id=id, name=name)#, parentId=parentId)
-                obj.save()
-
-            #print(dataitems['id'], dataitems['name'])
-
-
-        all_id.sort()
-        print(all_id)
-
-
-class CategoryGet:
-
-    def find_category(self):
-        obj = Category.objects.all() #filter(status=STATUS_NEW).first()
-        print(obj)
-
-    def list_category(self):
-
-        all_id = []
-
-        with open("avito_category.json", encoding='utf-8') as file:
-            data = json.load(file)
-        print("___________22 LIST_DICT 22________________")
-        for dataitems in data['categories']:
-            print(dataitems['id'], dataitems['name'])
-            print(f'Родительские {dataitems}')
-            all_id.append(dataitems['id'])
-            id1 = dataitems['id']
-            name = dataitems['name']
-            parentId = 0
-            try:
-                 obj1 = Category.objects.get(id=id1)
-            except Category.DoesNotExist:
-                 obj1 = Category(id=id1, name=name, parentId=parentId)
-                 obj1.save()
-
-            #print(type(dataitems['id']))
-
-            if dataitems['id']>0 :
-                for datainfo in dataitems['children']:
-                    if datainfo['id'] in all_id:
-                        print('IIIIDDDD Поймали ДУБЛЯЖ')
-                        break
-                    all_id.append(datainfo['id'])
-                    id = datainfo['id']
-                    name = datainfo['name']
-                    parentId = datainfo['parentId']
-                    print(id, name, parentId)
-
-                    try:
-                        obj = Category.objects.get(id=id)
-                    except Category.DoesNotExist:
-                        obj = Category(id=id, name=name, parentId=parentId)
-                        obj.save()
-                    #print(datainfo['id'], datainfo['name'], datainfo['parentId'])
-                    #category_add(id)
-        all_id.sort()
-        print(all_id)
-           #except AttributeError:
-
 
 
 class AvitoParser:
     PAGE_LIMIT = 10
-    print('1111111111111111111')
 
     def __init__(self):
-        print('222222222')
         self.session = requests.Session()
         self.session.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
             'Accept-Language': 'ru',
         }
-        print('3')
         self.task = None
 
     def find_task(self):
-        # print('5!!!!!!!!')
-        # print(Task)
         obj = Task.objects.filter(status=STATUS_NEW).first()
-        # print(self)
         if not obj:
-            raise CommandError('no tasks found!!!!')
+            raise CommandError('no tasks found')
         self.task = obj
         logger.info(f'Работаем над заданием {self.task}')
 
     def finish_task(self):
-        #self.task.status = STATUS_READY
+        self.task.status = STATUS_READY
         self.task.save()
         logger.info(f'Завершили задание')
 
@@ -182,7 +50,6 @@ class AvitoParser:
         url = self.task.url
         r = self.session.get(url, params=params)
         r.raise_for_status()
-        #print('!!!!!!!!!!!!!!!!!!!!!!! get_page')
         return r.text
 
     @staticmethod
@@ -255,7 +122,6 @@ class AvitoParser:
 
         # Выбрать блок с названием и валютой
         price_block = item.select_one('span.price')
-        #print(f'Выбрать блок с названием и валютой {price_block}')
         if not price_block:
             raise CommandError('bad "price_block" css')
 
@@ -283,11 +149,11 @@ class AvitoParser:
 
         try:
             p = Product.objects.get(url=url)
+            print(f' Product.objects.get {p}')
             p.task = self.task
             p.title = title
             p.price = price
             p.currency = currency
-            print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try: p.save()')
             p.save()
         except Product.DoesNotExist:
             p = Product(
@@ -298,8 +164,7 @@ class AvitoParser:
                 currency=currency,
                 published_date=date,
             ).save()
-            print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! except Product.DoesNotExist:')
-
+        print(f'Новый объект !!!!!!!!!')
         logger.debug(f'product {p}')
 
     def get_pagination_limit(self):
@@ -320,23 +185,21 @@ class AvitoParser:
 
     def get_blocks(self, page: int = None):
         text = self.get_page(page=page)
-        soup = bs4.BeautifulSoup(text, 'lxml')
-        #print(f'SOUP   {soup}')
 
+        soup = bs4.BeautifulSoup(text, 'lxml')
+        #print(f' soup {soup}')
         # Запрос CSS-селектора, состоящего из множества классов, производится через select
         container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
-        print(f'КОНТЕЙНЕР  {container}')
         for item in container:
             self.parse_block(item=item)
 
     def parse_all(self):
         # Выбрать какое-нибудь задание
-        #print('4')
         self.find_task()
 
-
-        limit = self.get_pagination_limit()
-        logger.info(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Всего страниц: {limit}')
+        #limit = self.get_pagination_limit()
+        limit = 10
+        logger.info(f'Всего страниц: {limit}')
 
         for i in range(1, limit + 1):
             logger.info(f'Работаем над страницей {i}')
@@ -350,21 +213,5 @@ class Command(BaseCommand):
     help = 'Парсинг Avito'
 
     def handle(self, *args, **options):
-        #reg = RegionGet()
-        #reg.list_region()
-        city = CityGet()
-        city.list_city()
-        #cat = CategoryGet()
-        #cat.find_category()
-        #cat.list_category()
-
-        #p = AvitoParser()
-        #p.parse_all()
-
-#def main():
-    #p = AvitoParser()
-    #p.parse_all()
-
-#
-# if __name__ == '__main__':
-#     main()
+        p = AvitoParser()
+        p.parse_all()

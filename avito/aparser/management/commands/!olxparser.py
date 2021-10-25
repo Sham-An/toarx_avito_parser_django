@@ -5,6 +5,33 @@ from bs4 import BeautifulSoup
 from random import randint
 import threading
 #index = 1
+################ VARNING!!!!!!!!!!!!!!
+
+    # #       Beautiful Soup
+    # soup = BeautifulSoup(text)
+    # film_list = soup.find('div', {'class': 'profileFilmsList'})
+    #
+    # #           lxml
+    # tree = html.fromstring(text)
+    # film_list_lxml = tree.xpath('//div[@class = "profileFilmsList"]')[0]
+
+    # #        Beatiful Soup
+    # movie_link = item.find('div', {'class': 'nameRus'}).find('a').get('href')
+    # movie_desc = item.find('div', {'class': 'nameRus'}).find('a').text
+    #
+    # #          lxml
+    # movie_link = item_lxml.xpath('.//div[@class = "nameRus"]/a/@href')[0]
+    # movie_desc = item_lxml.xpath('.//div[@class = "nameRus"]/a/text()')[0]
+
+    # Еще небольшой хинт для debug'a: для того, чтобы посмотреть, что внутри выбранной ноды в BeautifulSoup можно просто распечатать ее, а в lxml воспользоваться функцией tostring() модуля etree.
+    # # BeatifulSoup
+    # print item
+    #
+    # #lxml
+    # from lxml import etree
+    # print etree.tostring(item_lxml)
+
+    
 #БЕЗ BeautifulSoup
 
 # Debag part 2 переменные https://youtu.be/HpJYVIRuQbU
@@ -52,8 +79,12 @@ class OlxParser:
         #Пробуем BeautifulSoup
         soup = BeautifulSoup(html,features="lxml")
         #print(soup.prettify())
-        for lnk in soup.find_all('a'):
-            print("prn lnk ", lnk.get('href'))
+        #for lnk in soup.find_all('a'):
+        #    print("prn lnk ", lnk.get('href'))
+
+        #for lnk2 in soup.find_all(path):
+         #   print("prn lnk ", lnk2.text)
+
 
         print("prn text ", soup.get_text())
 

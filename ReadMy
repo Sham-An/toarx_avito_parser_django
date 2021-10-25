@@ -9,6 +9,7 @@ django-admin startproject avito (создаем avito. удаляем _init_.py)
 python manage.py startapp aparser (создаем апарсер. Основной каталог) >
 регистрируем в avito/avito/settings + ALLOWED_HOSTS = ['*',]
 
+python manage.py makemigrations --mergey
 python manage.py migrate создает дефолтные миграции (для админки)
 
 
@@ -17,6 +18,7 @@ python manage.py createsuperuser
  https://youtu.be/dKdkuYXylx8?t=1144
 
 python manage.py parse_avito
+python manage.py !parse_avito_api
 https://youtu.be/dKdkuYXylx8?t=1465
 
 разобраться с parse_avito.py

@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="verify-admitad" content="a3d6f97af6" />
+	<link rel="profile" href="http://gmpg.org/xfn/11"/>
+	<link rel="pingback" href="https://webdevblog.ru/xmlrpc.php"/>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<style type="text/css">			.heateorSssInstagramBackground{background:radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}
+											.heateor_sss_horizontal_sharing .heateorSssSharing,.heateor_sss_standard_follow_icons_container .heateorSssSharing{
+							color: #fff;
+						border-width: 0px;
+			border-style: solid;
+			border-color: transparent;
+		}
+				.heateor_sss_horizontal_sharing .heateorSssTCBackground{
+			color:#666;
+		}
+				.heateor_sss_horizontal_sharing .heateorSssSharing:hover,.heateor_sss_standard_follow_icons_container .heateorSssSharing:hover{
+						border-color: transparent;
+		}
+		.heateor_sss_vertical_sharing .heateorSssSharing,.heateor_sss_floating_follow_icons_container .heateorSssSharing{
+							color: #fff;
+						border-width: 0px;
+			border-style: solid;
+			border-color: transparent;
+		}
+				.heateor_sss_vertical_sharing .heateorSssTCBackground{
+			color:#666;
+		}
+				.heateor_sss_vertical_sharing .heateorSssSharing:hover,.heateor_sss_floating_follow_icons_container .heateorSssSharing:hover{
+						border-color: transparent;
+		}
+		
+		@media screen and (max-width:783px) {.heateor_sss_vertical_sharing{display:none!important}}@media screen and (max-width:783px) {.heateor_sss_floating_follow_icons_container{display:none!important}}</style><meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v17.3 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Оптимизация запросов Django ORM - Еще один блог веб-разработчика</title>
+	<meta name="description" content="В статье подробно описаны несколько варинтов оптимизации запросов Django ORM используя select_related и prefetch_related." />
+	<link rel="canonical" href="https://webdevblog.ru/optimizaciya-zaprosov-django-orm/" />
+	<meta property="og:locale" content="ru_RU" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Оптимизация запросов Django ORM - Еще один блог веб-разработчика" />
+	<meta property="og:description" content="В статье подробно описаны несколько варинтов оптимизации запросов Django ORM используя select_related и prefetch_related." />
+	<meta property="og:url" content="https://webdevblog.ru/optimizaciya-zaprosov-django-orm/" />
+	<meta property="og:site_name" content="Еще один блог веб-разработчика" />
+	<meta property="article:published_time" content="2020-05-26T08:10:06+00:00" />
+	<meta property="article:modified_time" content="2020-06-10T14:09:09+00:00" />
+	<meta property="og:image" content="https://webdevblog.ru/wp-content/uploads/2019/04/django_p.jpg" />
+	<meta property="og:image:width" content="1378" />
+	<meta property="og:image:height" content="562" />
+	<meta name="twitter:label1" content="Написано автором" />
+	<meta name="twitter:data1" content="OlegA" />
+	<meta name="twitter:label2" content="Примерное время для чтения" />
+	<meta name="twitter:data2" content="7 минут" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://webdevblog.ru/#website","url":"https://webdevblog.ru/","name":"\u0415\u0449\u0435 \u043e\u0434\u0438\u043d \u0431\u043b\u043e\u0433 \u0432\u0435\u0431-\u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u0447\u0438\u043a\u0430","description":"\u0417\u0430\u043c\u0435\u0442\u043a\u0438 \u043d\u0430 \u043f\u043e\u043b\u044f\u0445 \u043e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0438 \u0438 \u0432\u0435\u0431-\u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0435","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://webdevblog.ru/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"ru-RU"},{"@type":"ImageObject","@id":"https://webdevblog.ru/optimizaciya-zaprosov-django-orm/#primaryimage","inLanguage":"ru-RU","url":"https://webdevblog.ru/wp-content/uploads/2019/04/django_p.jpg","contentUrl":"https://webdevblog.ru/wp-content/uploads/2019/04/django_p.jpg","width":1378,"height":562},{"@type":"WebPage","@id":"https://webdevblog.ru/optimizaciya-zaprosov-django-orm/#webpage","url":"https://webdevblog.ru/optimizaciya-zaprosov-django-orm/","name":"\u041e\u043f\u0442\u0438\u043c\u0438\u0437\u0430\u0446\u0438\u044f \u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432 Django ORM - \u0415\u0449\u0435 \u043e\u0434\u0438\u043d \u0431\u043b\u043e\u0433 \u0432\u0435\u0431-\u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u0447\u0438\u043a\u0430","isPartOf":{"@id":"https://webdevblog.ru/#website"},"primaryImageOfPage":{"@id":"https://webdevblog.ru/optimizaciya-zaprosov-django-orm/#primaryimage"},"datePublished":"2020-05-26T08:10:06+00:00","dateModified":"2020-06-10T14:09:09+00:00","author":{"@id":"https://webdevblog.ru/#/schema/person/3f56915b55243224b794343cdcade4e6"},"description":"\u0412 \u0441\u0442\u0430\u0442\u044c\u0435 \u043f\u043e\u0434\u0440\u043e\u0431\u043d\u043e \u043e\u043f\u0438\u0441\u0430\u043d\u044b \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0432\u0430\u0440\u0438\u043d\u0442\u043e\u0432 \u043e\u043f\u0442\u0438\u043c\u0438\u0437\u0430\u0446\u0438\u0438 \u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432 Django ORM \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u044f select_related \u0438 prefetch_related.","breadcrumb":{"@id":"https://webdevblog.ru/optimizaciya-zaprosov-django-orm/#breadcrumb"},"inLanguage":"ru-RU","potentialAction":[{"@type":"ReadAction","target":["https://webdevblog.ru/optimizaciya-zaprosov-django-orm/"]}]},{"@type":"BreadcrumbList","@id":"https://webdevblog.ru/optimizaciya-zaprosov-django-orm/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"\u0413\u043b\u0430\u0432\u043d\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430","item":"https://webdevblog.ru/"},{"@type":"ListItem","position":2,"name":"\u041e\u043f\u0442\u0438\u043c\u0438\u0437\u0430\u0446\u0438\u044f \u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432 Django ORM"}]},{"@type":"Person","@id":"https://webdevblog.ru/#/schema/person/3f56915b55243224b794343cdcade4e6","name":"OlegA","image":{"@type":"ImageObject","@id":"https://webdevblog.ru/#personlogo","inLanguage":"ru-RU","url":"https://secure.gravatar.com/avatar/7feebd58910754e20bcc1cab02a8640b?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/7feebd58910754e20bcc1cab02a8640b?s=96&d=mm&r=g","caption":"OlegA"},"url":"https://webdevblog.ru/author/olega/"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="amphtml" href="https://webdevblog.ru/optimizaciya-zaprosov-django-orm/amp/" /><meta name="generator" content="AMP for WP 1.0.77.25"/><link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Еще один блог веб-разработчика &raquo; Лента" href="https://webdevblog.ru/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Еще один блог веб-разработчика &raquo; Лента комментариев" href="https://webdevblog.ru/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Еще один блог веб-разработчика &raquo; Лента комментариев к &laquo;Оптимизация запросов Django ORM&raquo;" href="https://webdevblog.ru/optimizaciya-zaprosov-django-orm/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/webdevblog.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=26150737622396779d86eaf4d148b8af"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://webdevblog.ru/wp-includes/css/dist/block-library/style.min.css?ver=26150737622396779d86eaf4d148b8af' type='text/css' media='all' />
+<link rel='stylesheet' id='titan-adminbar-styles-css'  href='https://webdevblog.ru/wp-content/plugins/anti-spam/assets/css/admin-bar.css?ver=7.2.8' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='https://webdevblog.ru/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wpdiscuz-frontend-css-css'  href='https://webdevblog.ru/wp-content/plugins/wpdiscuz/themes/default/style.css?ver=7.3.4' type='text/css' media='all' />
+<style id='wpdiscuz-frontend-css-inline-css' type='text/css'>
+ #wpdcom .wpd-blog-administrator .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-administrator .wpd-comment-author, #wpdcom .wpd-blog-administrator .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-administrator .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment.wpd-reply .wpd-comment-wrap.wpd-blog-administrator{border-left:3px solid #00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-administrator .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-administrator .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-administrator .wpd-comment-right{border-left:1px solid #00B38F}#wpdcom .wpd-blog-editor .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-editor .wpd-comment-author, #wpdcom .wpd-blog-editor .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-editor .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment.wpd-reply .wpd-comment-wrap.wpd-blog-editor{border-left:3px solid #00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-editor .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-editor .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-editor .wpd-comment-right{border-left:1px solid #00B38F}#wpdcom .wpd-blog-author .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-author .wpd-comment-author, #wpdcom .wpd-blog-author .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-author .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-author .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-author .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-author .wpd-comment-right{border-left:1px solid #00B38F}#wpdcom .wpd-blog-contributor .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-contributor .wpd-comment-author, #wpdcom .wpd-blog-contributor .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-contributor .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-contributor .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-contributor .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-contributor .wpd-comment-right{border-left:1px solid #00B38F}#wpdcom .wpd-blog-subscriber .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-subscriber .wpd-comment-author, #wpdcom .wpd-blog-subscriber .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-subscriber .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-subscriber .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom .wpd-blog-wpseo_manager .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-wpseo_manager .wpd-comment-author, #wpdcom .wpd-blog-wpseo_manager .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-wpseo_manager .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-wpseo_manager .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-wpseo_manager .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-wpseo_manager .wpd-comment-right{border-left:1px solid #00B38F}#wpdcom .wpd-blog-wpseo_editor .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-wpseo_editor .wpd-comment-author, #wpdcom .wpd-blog-wpseo_editor .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-wpseo_editor .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-wpseo_editor .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-wpseo_editor .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-wpseo_editor .wpd-comment-right{border-left:1px solid #00B38F}#wpdcom .wpd-blog-post_author .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-post_author .wpd-comment-author, #wpdcom .wpd-blog-post_author .wpd-comment-author a{color:#00B38F}#wpdcom .wpd-blog-post_author .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-post_author .wpd-avatar img{border-color:#00B38F}#wpdcom.wpd-layout-2 .wpd-comment.wpd-reply .wpd-comment-wrap.wpd-blog-post_author{border-left:3px solid #00B38F}#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-post_author .wpd-avatar img{border-bottom-color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-post_author .wpd-comment-subheader{border-top:1px dashed #00B38F}#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-post_author .wpd-comment-right{border-left:1px solid #00B38F}#wpdcom .wpd-blog-guest .wpd-comment-label{color:#ffffff;background-color:#00B38F;border:none}#wpdcom .wpd-blog-guest .wpd-comment-author, #wpdcom .wpd-blog-guest .wpd-comment-author a{color:#00B38F}#wpdcom.wpd-layout-3 .wpd-blog-guest .wpd-comment-subheader{border-top:1px dashed #00B38F}#comments, #respond, .comments-area, #wpdcom{}#wpdcom .ql-editor > *{color:#777777}#wpdcom .ql-editor::before{}#wpdcom .ql-toolbar{border:1px solid #DDDDDD;border-top:none}#wpdcom .ql-container{border:1px solid #DDDDDD;border-bottom:none}#wpdcom .wpd-form-row .wpdiscuz-item input[type="text"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="email"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="url"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="color"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="date"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime-local"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="month"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="number"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="time"], #wpdcom textarea, #wpdcom select{border:1px solid #DDDDDD;color:#777777}#wpdcom .wpd-form-row .wpdiscuz-item textarea{border:1px solid #DDDDDD}#wpdcom input::placeholder, #wpdcom textarea::placeholder, #wpdcom input::-moz-placeholder, #wpdcom textarea::-webkit-input-placeholder{}#wpdcom .wpd-comment-text{color:#777777}#wpdcom .wpd-thread-head .wpd-thread-info{border-bottom:2px solid #00B38F}#wpdcom .wpd-thread-head .wpd-thread-info.wpd-reviews-tab svg{fill:#00B38F}#wpdcom .wpd-thread-head .wpdiscuz-user-settings{border-bottom:2px solid #00B38F}#wpdcom .wpd-thread-head .wpdiscuz-user-settings:hover{color:#00B38F}#wpdcom .wpd-comment .wpd-follow-link:hover{color:#00B38F}#wpdcom .wpd-comment-status .wpd-sticky{color:#00B38F}#wpdcom .wpd-thread-filter .wpdf-active{color:#00B38F;border-bottom-color:#00B38F}#wpdcom .wpd-comment-info-bar{border:1px dashed #33c3a6;background:#e6f8f4}#wpdcom .wpd-comment-info-bar .wpd-current-view i{color:#00B38F}#wpdcom .wpd-filter-view-all:hover{background:#00B38F}#wpdcom .wpdiscuz-item .wpdiscuz-rating > label{color:#DDDDDD}#wpdcom .wpdiscuz-item .wpdiscuz-rating:not(:checked) > label:hover, .wpdiscuz-rating:not(:checked) > label:hover ~ label{}#wpdcom .wpdiscuz-item .wpdiscuz-rating > input ~ label:hover, #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:not(:checked) ~ label:hover ~ label, #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:not(:checked) ~ label:hover ~ label{color:#FFED85}#wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover, #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover, #wpdcom .wpdiscuz-item .wpdiscuz-rating > label:hover ~ input:checked ~ label, #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked + label:hover ~ label, #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover ~ label, .wpd-custom-field .wcf-active-star, #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label{color:#FFD700}#wpd-post-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-star{fill:#DDDDDD}#wpd-post-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-active{fill:#FFD700}#wpd-post-rating .wpd-rating-wrap .wpd-rate-starts svg .wpd-star{fill:#DDDDDD}#wpd-post-rating .wpd-rating-wrap .wpd-rate-starts:hover svg .wpd-star{fill:#FFED85}#wpd-post-rating.wpd-not-rated .wpd-rating-wrap .wpd-rate-starts svg:hover ~ svg .wpd-star{fill:#DDDDDD}.wpdiscuz-post-rating-wrap .wpd-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-star{fill:#DDDDDD}.wpdiscuz-post-rating-wrap .wpd-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-active{fill:#FFD700}#wpdcom .wpd-comment .wpd-follow-active{color:#ff7a00}#wpdcom .page-numbers{color:#555;border:#555 1px solid}#wpdcom span.current{background:#555}#wpdcom.wpd-layout-1 .wpd-new-loaded-comment > .wpd-comment-wrap > .wpd-comment-right{background:#FFFAD6}#wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment > .wpd-comment-wrap > .wpd-comment-right{background:#FFFAD6}#wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment.wpd-reply > .wpd-comment-wrap > .wpd-comment-right{background:transparent}#wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment.wpd-reply > .wpd-comment-wrap{background:#FFFAD6}#wpdcom.wpd-layout-3 .wpd-new-loaded-comment.wpd-comment > .wpd-comment-wrap > .wpd-comment-right{background:#FFFAD6}#wpdcom .wpd-follow:hover i, #wpdcom .wpd-unfollow:hover i, #wpdcom .wpd-comment .wpd-follow-active:hover i{color:#00B38F}#wpdcom .wpdiscuz-readmore{cursor:pointer;color:#00B38F}.wpd-custom-field .wcf-pasiv-star, #wpcomm .wpdiscuz-item .wpdiscuz-rating > label{color:#DDDDDD}.wpd-wrapper .wpd-list-item.wpd-active{border-top:3px solid #00B38F}#wpdcom.wpd-layout-2 .wpd-comment.wpd-reply.wpd-unapproved-comment .wpd-comment-wrap{border-left:3px solid #FFFAD6}#wpdcom.wpd-layout-3 .wpd-comment.wpd-reply.wpd-unapproved-comment .wpd-comment-right{border-left:1px solid #FFFAD6}#wpdcom .wpd-prim-button{background-color:#07B290;color:#FFFFFF}#wpdcom .wpd_label__check i.wpdicon-on{color:#07B290;border:1px solid #83d9c8}#wpd-bubble-wrapper #wpd-bubble-all-comments-count{color:#1DB99A}#wpd-bubble-wrapper > div{background-color:#1DB99A}#wpd-bubble-wrapper > #wpd-bubble #wpd-bubble-add-message{background-color:#1DB99A}#wpd-bubble-wrapper > #wpd-bubble #wpd-bubble-add-message::before{border-left-color:#1DB99A;border-right-color:#1DB99A}#wpd-bubble-wrapper.wpd-right-corner > #wpd-bubble #wpd-bubble-add-message::before{border-left-color:#1DB99A;border-right-color:#1DB99A}.wpd-inline-icon-wrapper path.wpd-inline-icon-first{fill:#1DB99A}.wpd-inline-icon-count{background-color:#1DB99A}.wpd-inline-icon-count::before{border-right-color:#1DB99A}.wpd-inline-form-wrapper::before{border-bottom-color:#1DB99A}.wpd-inline-form-question{background-color:#1DB99A}.wpd-inline-form{background-color:#1DB99A}.wpd-last-inline-comments-wrapper{border-color:#1DB99A}.wpd-last-inline-comments-wrapper::before{border-bottom-color:#1DB99A}.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments{background:#1DB99A}.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:hover,.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:active,.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:focus{background-color:#1DB99A}#wpdcom .ql-snow .ql-tooltip[data-mode="link"]::before{content:"Введите ссылку:"}#wpdcom .ql-snow .ql-tooltip.ql-editing a.ql-action::after{content:"Сохранить"}.comments-area{width:auto}
+</style>
+<link rel='stylesheet' id='wpdiscuz-fa-css'  href='https://webdevblog.ru/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/css/fa.min.css?ver=7.3.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wpdiscuz-combo-css-css'  href='https://webdevblog.ru/wp-content/plugins/wpdiscuz/assets/css/wpdiscuz-combo.min.css?ver=26150737622396779d86eaf4d148b8af' type='text/css' media='all' />
+<link rel='stylesheet' id='yasrcss-css'  href='https://webdevblog.ru/wp-content/plugins/yet-another-stars-rating/includes/css/yasr.css?ver=2.9.2' type='text/css' media='all' />
+<style id='yasrcss-inline-css' type='text/css'>
+
+        .yasr-star-rating {
+            background-image: url("https://webdevblog.ru/wp-content/plugins/yet-another-stars-rating/includes/img/star_2.svg");
+        }
+        .yasr-star-rating .yasr-star-value {
+            background: url("https://webdevblog.ru/wp-content/plugins/yet-another-stars-rating/includes/img/star_3.svg") ;
+        }
+    
+</style>
+<link rel='stylesheet' id='colormag_google_fonts-css'  href='//fonts.googleapis.com/css?family=Open+Sans%3A400%2C600&#038;ver=26150737622396779d86eaf4d148b8af' type='text/css' media='all' />
+<link rel='stylesheet' id='colormag_style-css'  href='https://webdevblog.ru/wp-content/themes/mycolormag/style.css?ver=26150737622396779d86eaf4d148b8af' type='text/css' media='all' />
+<link rel='stylesheet' id='colormag-fontawesome-css'  href='https://webdevblog.ru/wp-content/themes/mycolormag/fontawesome/css/font-awesome.css?ver=4.2.1' type='text/css' media='all' />
+<link rel='stylesheet' id='heateor_sss_frontend_css-css'  href='https://webdevblog.ru/wp-content/plugins/sassy-social-share/public/css/sassy-social-share-public.css?ver=3.3.24' type='text/css' media='all' />
+<link rel='stylesheet' id='heateor_sss_sharing_default_svg-css'  href='https://webdevblog.ru/wp-content/plugins/sassy-social-share/admin/css/sassy-social-share-svg.css?ver=3.3.24' type='text/css' media='all' />
+<link rel='stylesheet' id='yasrcsslightscheme-css'  href='https://webdevblog.ru/wp-content/plugins/yet-another-stars-rating/includes/css/yasr-table-light.css?ver=2.9.2' type='text/css' media='all' />
+<link rel='stylesheet' id='enlighterjs-css'  href='https://webdevblog.ru/wp-content/plugins/enlighter/cache/enlighterjs.min.css?ver=5GxC0Sl5qHwhaao' type='text/css' media='all' />
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/themes/mycolormag/js/colormag-custom.js?ver=26150737622396779d86eaf4d148b8af' id='colormag-custom-js'></script>
+<!--[if lte IE 8]>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/themes/mycolormag/js/html5shiv.min.js?ver=26150737622396779d86eaf4d148b8af' id='html5-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="https://webdevblog.ru/wp-json/" /><link rel="alternate" type="application/json" href="https://webdevblog.ru/wp-json/wp/v2/posts/3715" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://webdevblog.ru/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://webdevblog.ru/wp-includes/wlwmanifest.xml" /> 
+
+<link rel='shortlink' href='https://webdevblog.ru/?p=3715' />
+<link rel="alternate" type="application/json+oembed" href="https://webdevblog.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://webdevblog.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F&#038;format=xml" />
+<!-- Yandex.Metrika counter by Yandex Metrica Plugin -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter51917054 = new Ya.Metrika({id:51917054,
+                    webvisor:false,
+                    clickmap:false,
+                    trackLinks:false,
+                    accurateTrackBounce:false,
+                    trackHash:false,
+	                                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript>
+	<div><img src="https://mc.yandex.ru/watch/51917054" style="position:absolute; left:-9999px;" alt="" /></div>
+</noscript>
+<!-- /Yandex.Metrika counter  --><link rel="icon" href="https://webdevblog.ru/wp-content/uploads/2019/01/cropped-faviconka_ru_964-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://webdevblog.ru/wp-content/uploads/2019/01/cropped-faviconka_ru_964-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://webdevblog.ru/wp-content/uploads/2019/01/cropped-faviconka_ru_964-180x180.png" />
+<meta name="msapplication-TileImage" content="https://webdevblog.ru/wp-content/uploads/2019/01/cropped-faviconka_ru_964-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			.pull_right {
+	float: right !important;
+}
+.entry-content li {
+  line-height: 1.6;
+	font-size: 19px;
+}
+p {
+	line-height: 1.5;
+  font-size: 19px;
+}
+pre, code, kbd, var, samp, tt {
+    font-family: "Courier 10 Pitch", Courier, monospace;
+    font-size: 18px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+.post-views {
+	color: #888888;
+  font-size: 12px;
+	margin: 0 10px;
+}
+
+.EnlighterJS{
+   width: auto !important;
+   overflow-x: scroll !important;
+   word-wrap: normal !important;
+}
+.EnlighterJS li{
+  white-space: pre !important;
+}
+
+strong {
+	font-weight: bold;
+	background: #F5F5F5;
+	padding: 0 5px;
+}
+blockquote strong {
+	font-weight: bold;
+	background: #607d8b;
+	padding: 0 5px;
+}
+#secondary .widget{
+  margin-bottom: 0;
+}
+.adv {
+	background: #eaf90030;
+  padding: 10px 5px 16px 10px;
+  margin: 20px 10px;
+  border: 1px solid blue;
+  position: relative;
+  font-size: 16px;
+}
+.adv .adv_title {
+	color: blue;
+  background: white;
+  padding: 1px 10px;
+  margin-top: 9px;
+  position: absolute;
+  top: -18px;
+  border: 1px solid;
+  font-size: 10px;
+}
+.quiz-area {
+	background-color: #289dcc12;
+	padding: 10px;
+}		</style>
+		</head>
+
+<body class="post-template-default single single-post postid-3715 single-format-standard  wide">
+	
+
+<div id="page" class="hfeed site">
+		
+	
+	<header id="masthead" class="site-header clearfix ">
+		<div id="header-text-nav-container" class="clearfix">
+
+			
+			
+			
+		<div class="inner-wrap">
+
+			<div id="header-text-nav-wrap" class="clearfix">
+				<div id="header-left-section">
+										<div id="header-text" class="">
+													<h3 id="site-title">
+								<a href="https://webdevblog.ru/" title="Еще один блог веб-разработчика" rel="home">Еще один блог веб-разработчика</a>
+							</h3>
+																		<p id="site-description">Заметки на полях о программировании и веб-разработке</p>
+						<p id="site-description" style="margin: 0;font-size: 12px;margin-top: -20px;">info@webdevblog.ru 
+            			</p>
+<p style="font-size: 18px">Разработка современных веб сервисов на Django и Vue.js</p>
+						<p id="site-description" style="margin: 0;font-size: 12px;">
+              				<span style="margin-right: 20px;">Следить за блогом:</span>
+              				<a href="/feed" style="" target="_blank">
+                				<img src="/wp-content/uploads/Rss-feed.svg" width="20" height="20" alt="rss feed icon" style="margin:0">
+              				</a>
+              				<a href="https://t.me/webdevblogru/" target="_blank">
+                				<img src="/wp-content/uploads/Telegram_logo.svg" width="20" height="20" alt="rss feed icon" style="margin:0">
+              				</a>
+            			</p>
+						<!-- #site-description -->
+					</div><!-- #header-text -->
+				</div><!-- #header-left-section -->
+				<div id="header-right-section">
+									</div><!-- #header-right-section -->
+
+			</div><!-- #header-text-nav-wrap -->
+
+		</div><!-- .inner-wrap -->
+
+		
+			
+			
+		<nav id="site-navigation" class="main-navigation clearfix" role="navigation">
+			<div class="inner-wrap clearfix">
+				
+					<div class="home-icon">
+						<a href="https://webdevblog.ru/" title="Еще один блог веб-разработчика"><i class="fa fa-home"></i></a>
+					</div>
+
+					
+				<p class="menu-toggle"></p>
+				<div class="menu-primary-container"><ul id="menu-osnovnoe-menju" class="menu"><li id="menu-item-787" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-787"><a href="https://webdevblog.ru/let-s-work-together/">Об авторе</a></li>
+</ul></div>
+				
+							</div>
+		</nav>
+
+		
+		</div><!-- #header-text-nav-container -->
+
+		
+	</header>
+
+		
+	<div id="main" class="clearfix">
+		<div class="inner-wrap clearfix">
+
+	
+	<div id="primary">
+		<div id="content" class="clearfix">
+
+			
+				
+<article id="post-3715" class="post-3715 post type-post status-publish format-standard has-post-thumbnail hentry category-python tag-django tag-orm">
+	
+   
+   
+   <div class="article-content clearfix">
+
+   
+   <div class="above-entry-meta"><span class="cat-links"><a href="https://webdevblog.ru/category/python/"  rel="category tag">Python</a>&nbsp;</span></div>
+      <header class="entry-header">
+   		<h1 class="entry-title">
+   			Оптимизация запросов Django ORM   		</h1>
+   	</header>
+
+   	<div class="below-entry-meta">
+			<span class="posted-on"><a href="https://webdevblog.ru/optimizaciya-zaprosov-django-orm/" title="11:10" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2020-05-26T11:10:06+03:00">26.05.2020</time><time class="updated" datetime="2020-06-10T17:09:09+03:00">10.06.2020</time></a></span>
+			<span class="byline">
+				<span class="author vcard">
+					<i class="fa fa-user"></i>
+					<a class="url fn n"
+					   href="https://webdevblog.ru/author/olega/"
+					   title="OlegA">OlegA					</a>
+				</span>
+			</span>
+
+							<span class="comments"><a href="https://webdevblog.ru/optimizaciya-zaprosov-django-orm/#comments"><i class="fa fa-comment"></i> 1 Комментарий</a></span>
+			<span class="tag-links"><i class="fa fa-tags"></i><a href="https://webdevblog.ru/tag/django/" rel="tag">django</a>, <a href="https://webdevblog.ru/tag/orm/" rel="tag">ORM</a></span><span class="post-views">7&nbsp;846 просмотров</span></div>
+   	<div class="entry-content clearfix">
+   		<div class='code-block code-block-2' style='margin: 8px 0; clear: both;'>
+<!-- Yandex.RTB R-A-386865-1 -->
+<div id="yandex_rtb_R-A-386865-1"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-386865-1",
+                renderTo: "yandex_rtb_R-A-386865-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+<!--
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1844293074404584"
+     data-ad-slot="4373911048"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+--></div>
+<div class='heateorSssClear'></div><div  class='heateor_sss_sharing_container heateor_sss_horizontal_sharing' heateor-sss-data-href='https://webdevblog.ru/optimizaciya-zaprosov-django-orm/'heateor-sss-no-counts="1"><div class='heateor_sss_sharing_title' style="font-weight:bold" >Spread the love</div><ul class="heateor_sss_sharing_ul"><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Facebook" Title="Facebook" class="heateorSssSharing heateorSssFacebookBackground" onclick='heateorSssPopup("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssFacebookSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Vkontakte" Title="Vkontakte" class="heateorSssSharing heateorSssVkontakteBackground" onclick='heateorSssPopup("http://vkontakte.ru/share.php?&url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssVkontakteSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Email" Title="Email" class="heateorSssSharing heateorSssEmailBackground"  onclick="window.open('mailto:?subject=' + decodeURIComponent('%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM' ).replace('&', '%26') + '&body=' + decodeURIComponent('https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F' ), '_blank')"><ss style="display:block" class="heateorSssSharingSvg heateorSssEmailSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Telegram" Title="Telegram" class="heateorSssSharing heateorSssTelegramBackground" onclick='heateorSssPopup("https://telegram.me/share/url?url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F&text=%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssTelegramSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Twitter" Title="Twitter" class="heateorSssSharing heateorSssTwitterBackground" onclick='heateorSssPopup("http://twitter.com/intent/tweet?text=%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM&url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssTwitterSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" title="More" alt="More" class="heateorSssSharing heateorSssMoreBackground" onclick="heateorSssMoreSharingPopup(this, 'https://webdevblog.ru/optimizaciya-zaprosov-django-orm/', '%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM', '' )" ><ss style="display:block" class="heateorSssSharingSvg heateorSssMoreSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;margin-left:9px !important;visibility:visible;" title="Total Shares" class="heateorSssSharing heateorSssTCBackground"><div class="heateorSssTotalShareCount" style="font-size: 21.7px">4</div><div class="heateorSssTotalShareText" style="font-size: 13.3px">Поделились</div></i></li></ul><div class="heateorSssClear"></div></div><div class='heateorSssClear'></div><br/>
+<p>Оригинальная статья: Rocio Aramberri &#8212; <a href="http://schegel.net/posts/optimizing-django-orm-queries/">Optimizing Django ORM Queries</a></p>
+
+
+
+<p>Django ORM (Object Relational Mapping) &#8212; одна из самых мощных функций Django. Благодаря ей мы можем взаимодействовать с базой данных, используя код Python вместо SQL.</p>
+
+
+
+<p class="adv">
+<strong><span class="adv_title">Спонсор поста </span> Раскрутка сайта в Краснодаре &#8212; Веб-студия KubiQ:
+</strong><br><br>
+Веб-студия <a href="https://kubiq.studio/services/prodvigaem/">Kubiq.studio </a>
+предлагает услугу раскрутки сайтов в Краснодаре. 
+Ответственность при выполнении задач &#8212; наш главный козырь.
+<br>
+<br>
+В наше время у каждой успешной компании есть свой собственный интернет-ресурс. 
+Но просто создать его недостаточно. Необходимо что бы о нем узнало как можно
+больше людей. А для этого необходимо провести не менее 
+трудоемкую и сложную работу по раскрутке ресурса. 
+Только в этом случае от него будет какая та польза и с помощью него компания сможет
+составить конкуренцию другим игрокам рынка.<br>
+<br>
+</p>
+
+
+
+<p>Использование ORM дает несколько преимуществ:</p>
+
+
+
+<ul><li>Благодаря ORM у нас есть миграция: мы можем легко изменять наши таблицы, обновлять наши модели, и Django автоматически сгенерирует сценарии миграции, необходимый для обновления таблиц базы данных.</li><li>Есть транзакции: мы можем делать несколько обновлений базы данных в рамках транзакции и, если что-то не получится, легко откатиться до того состояния, которое было при запуске.</li></ul>
+
+
+
+<p>Но также у ORM есть некоторые недостатки:</p>
+
+
+
+<ul><li>Поскольку это абстракция поверх SQL, то мы не всегда знаем точно, какие SQL-запросы будут генерироваться из нашего кода Python.</li><li>Django не может угадать, когда нам нужно использовать связанную таблицу, поэтому она не будет выполнять JOINs для нас, когда они нам нужны.</li><li>ORM дает нам неверное ощущение легкости, и мы не всегда понимаем то, что мы делаем, что может создавать большую нагрузку на сервер. У нас нет простого способа узнать, что доступ к атрибуту в объекте может вызвать дополнительный запрос к базе данных, который можно было бы предотвратить с помощью JOIN.</li></ul>
+
+
+
+<p>Чтобы преодолеть недостатки, нужно поближе познакомиться с ORM и понять как она работает под капотом.</p>
+
+
+
+<h2 id="find-out-whats-happening-under-the-hood">Разбираемся как работает ORM</h2>
+
+
+
+<p>Во-первых, нам необходимо понять, что происходит в нашей системе, какие SQL запросы выполняются и какие из них наиболее сильно нагружают систему.</p>
+
+
+
+<p>Вот несколько механизмов проверки запросов SQL по мере их выполнения:</p>
+
+
+
+<h4 id="1-connectionqueries">1. connection.queries</h4>
+
+
+
+<p>Когда установлен <strong>debug = True</strong>, можно получить доступ к запросам, которые были выполнены, через <strong>connection.queries</strong>: </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> from django.db import connection
+>>> Post.objects.all()
+>>> connection.queries
+[
+   {
+      'sql': 'SELECT "blogposts_post"."id", "blogposts_post"."title", '
+             '"blogposts_post"."content", "blogposts_post"."blog_id", '
+             '"blogposts_post"."published" FROM "blogposts_post" LIMIT 21',
+      'time': '0.000'
+   }
+]
+</pre>
+
+
+
+<p><strong>connection.queries</strong> содержит список SQL-запросов в виде словарей, содержащих код SQL и время выполнения.</p>
+
+
+
+<p>Со времени список запросов может легко вырасти в большой словарь с которым будет сложно разобраться. Чтобы это исправить, Django предоставляет способ очистки:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> from django.db import reset_queries
+>>> reset_queries()
+</pre>
+
+
+
+<h4 id="2-shell_plus---print-sql">2. shell_plus –print-sql</h4>
+
+
+
+<p>Существует хорошая библиотека <a href="https://github.com/django-extensions/">django-extensions</a>, которая имеет несколько полезных функций.</p>
+
+
+
+<p>Одна из них <strong>shell_plus</strong>. Это оболочка Django с дополнительными расширениями. Если вы вызываете ее с параметром <strong>&#8212;print-sql</strong>, то будут отображаться SQL-запросы по мере их выполнения при запуске вашего кода.</p>
+
+
+
+<p>Я буду использовать <strong>shell_plus</strong> в этом посте, чтобы вы могли видеть запросы SQL, которые выполняются по мере выполнения кода.</p>
+
+
+
+<p>Вот быстрый пример того, как будет выглядеть вывод:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">$ ./manage.py shell_plus --print-sql
+>>> post = Post.objects.get(id=1)
+SELECT "blogposts_post"."id",
+     	"blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+ORDER BY "blogposts_post"."id" ASC
+LIMIT 1
+</pre>
+
+
+
+<h4 id="3-django-silk">3. django-silk</h4>
+
+
+
+<p>Так же существует инструмент профилирования django-silk (https://github.com/jazzband/django-silk). Он перехватывает запросы, записывает выполненные SQL-запросы и предоставляет способ их визуализации.</p>
+
+
+
+<p>Вы сможете просматривать запросы, просматривать список выполненных SQL-запросов и смотреть подробную информацию о конкретном запросе, в том числе о том, какая строка кода вызвала выполнение определенного запроса.</p>
+
+
+
+<h4 id="4-django-debug-toolbar">4. django-debug-toolbar</h4>
+
+
+
+<p>Библиотека django-debug-toolbar (https://github.com/jazzband/django-debug-toolbar) добавляет панель инструментов в ваш браузер, которая покажет вам много отладочной информации во время работы вашего проекта. Используя его, вы можете увидеть количество запросов SQL, которые были выполнены. Также возможно проверить эти запросы, проверить код SQL и посмотреть, в каком порядке они выполнялись и сколько времени занимал каждый из них.</p>
+
+
+
+<h2 id="optimize-your-queries">Оптимизируем наши запросы</h2>
+
+
+
+<h3 id="introducing-an-example-database-model">Используемый пример модели базы данных</h3>
+
+
+
+<p>Мы будем использовать следующие модели в качестве примера:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">class Blog(models.Model):
+   name = models.CharField(max_length=250)
+   url = models.URLField()
+
+   def __str__(self):
+       return self.name
+
+
+class Author(models.Model):
+   name = models.CharField(max_length=250)
+   email = models.EmailField()
+
+   def __str__(self):
+       return self.name
+
+
+class Post(models.Model):
+   title = models.CharField(max_length=250)
+   content = models.TextField()
+   published = models.BooleanField(default=False)
+
+   blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+   authors = models.ManyToManyField(Author, related_name="posts")
+
+   def __str__(self):
+       return self.title
+</pre>
+
+
+
+<h3 id="use-cached-foreign-key-ids">Используйте кэшированные Foreign Key id</h3>
+
+
+
+<p>Если нам просто нужно получить <strong>id</strong> поля <strong>ForeignKey</strong>, мы можем использовать кэшированный <strong>id</strong>, который Django уже кешировал для нас, через <strong>&lt;field_name&gt;_id</strong>.</p><div class='code-block code-block-3' style='margin: 8px 0; clear: both;'>
+<!-- Yandex.RTB R-A-386865-4 
+<div id="yandex_rtb_R-A-386865-4"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-386865-4",
+                renderTo: "yandex_rtb_R-A-386865-4",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1844293074404584"
+     data-ad-slot="4373911048"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+
+
+
+<p>Давайте посмотрим на это на примере:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> Post.objects.first().blog.id
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+ORDER BY "blogposts_post"."id" ASC
+LIMIT 1
+
+Execution time: 0.001668s [Database: default]
+SELECT "blogposts_blog"."id",
+      "blogposts_blog"."name",
+      "blogposts_blog"."url"
+ FROM "blogposts_blog"
+WHERE "blogposts_blog"."id" = 1
+LIMIT 21
+
+Execution time: 0.000197s [Database: default]
+</pre>
+
+
+
+<p>При обращении к <strong>id</strong> блога через вложенный объект <strong>blog</strong> будет сгенерирован новый запрос SQL для получения всего объекта <strong>blog</strong>. Но так как нам не потребуется доступ к какому-либо другому атрибуту из объекта <strong>blog</strong>, мы можем полностью избежать выполнения вышеуказанного запроса, выполнив:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> Post.objects.first().blog_id
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+ORDER BY "blogposts_post"."id" ASC
+LIMIT 1
+
+Execution time: 0.000165s [Database: default]
+</pre>
+
+
+
+<h3 id="let-django-know-what-you-will-need-in-advance">Дайте Django знать, что вам нужно заранее </h3>
+
+
+
+<h4 id="use-select_related-for-foreign-keys">Используйте select_related для ForeignKey</h4>
+
+
+
+<p>Django не может предвидеть, когда нам потребуется доступ к отношениям <strong>ForeignKey</strong> из модели, к которой мы обращаемся. Функция <strong>select_related</strong> позволяет нам точно указать Django, какие связанные модели мы хотим, чтобы он мог заранее выполнить JOINs.</p>
+
+
+
+<p>В нашем примере у нас есть модель <strong>Post</strong>. <strong>Post</strong> принадлежит определенному <strong>Blog</strong>. Это отношение представлено в базе данных через <strong>ForeignKey</strong> из <strong>Post</strong> в <strong>Blog</strong>.</p>
+
+
+
+<p>Чтобы получить доступ к определенному объекту <strong>Post</strong>, мы можем сделать следующее:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> post = Post.objects.get(id=1)
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+ORDER BY "blogposts_post"."id" ASC
+LIMIT 1
+</pre>
+
+
+
+<p>Если мы хотим получить доступ к объекту <strong>Blog</strong> из <strong>Post</strong>, мы можем сделать так:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> post.blog
+SELECT "blogposts_blog"."id",
+      "blogposts_blog"."name",
+      "blogposts_blog"."url"
+ FROM "blogposts_blog"
+WHERE "blogposts_blog"."id" = 1
+LIMIT 21
+
+Execution time: 0.000602s [Database: default]
+&lt;Blog: Rocio's Blog></pre>
+
+
+
+<p>Однако этот оператор сгенерировал новый запрос, чтобы получить информацию из <strong>blog</strong>. Но этого лучше избегать, особенно есть нужно будет обработать сотни объектов <strong>post</strong>. Для этого есть <strong>select_related</strong>. Чтобы использовать его, нам нужно обновить наш оригинальный запрос:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> post = Post.objects.select_related("blog").get(id=1)
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published",
+      "blogposts_blog"."id",
+      "blogposts_blog"."name",
+      "blogposts_blog"."url"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_blog"
+   ON ("blogposts_post"."blog_id" = "blogposts_blog"."id")
+WHERE "blogposts_post"."id" = 1
+LIMIT 21
+
+Execution time: 0.000150s [Database: default]
+</pre>
+
+
+
+<p><strong>Обратите внимание</strong>, как Django использовал <strong>JOIN</strong> в SQL запросе выше, чтобы также получить атрибуты из таблицы <strong>blog</strong>. Теперь при доступе к объекту <strong>Blog</strong> из <strong>Post</strong> ему не потребуется дополнительный запрос, поскольку он уже будет кэширован:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> post.blog
+&lt;Blog: Rocio's Blog></pre>
+
+
+
+<p><strong>select_related</strong> также работает для наборов запросов. Мы можем предварительно выбрать объект <strong>blog</strong> для всего набора запросов. Если было 50 сообщений и мы не использовали <strong>select_related</strong> для предварительного выбора объекта блога, потребовалось бы 50 запросов Django для запуска следующего кода. С <strong>select_related</strong> он просто берет один:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> posts = Post.objects.select_related("blog").all()
+>>> for post in posts:
+       post.blog
+
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published",
+      "blogposts_blog"."id",
+      "blogposts_blog"."name",
+      "blogposts_blog"."url"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_blog"
+   ON ("blogposts_post"."blog_id" = "blogposts_blog"."id")
+
+Execution time: 0.000224s [Database: default]
+</pre>
+
+
+
+<h4 id="use-prefetch_related-for-manytomany-fields">Используйте prefetch_related для полей ManyToMany</h4>
+
+
+
+<p><a href="https://docs.djangoproject.com/en/3.0/ref/models/querysets/#prefetch-related" target="_blank" rel="noreferrer noopener">prefetch_related</a> похож на <strong>select_related</strong>, но он используется для предварительного выбора полей <strong>ManyToMany</strong>. <strong>prefetch_related</strong> работает по-другому, давайте рассмотрим это на примере.</p>
+
+
+
+<p>Допустим, мы хотим получить все <strong>post</strong>, а затем распечатать авторов для каждого из сообщений. Для этого мы можем сделать следующее:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> for post in Post.objects.all():
+              post.authors.all()
+
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+
+Execution time: 0.000158s [Database: default]
+&lt;QuerySet []>
+SELECT "blogposts_author"."id",
+      "blogposts_author"."name",
+      "blogposts_author"."email"
+ FROM "blogposts_author"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_author"."id" = "blogposts_post_authors"."author_id")
+WHERE "blogposts_post_authors"."post_id" = 1
+LIMIT 21
+
+Execution time: 0.000101s [Database: default]
+&lt;QuerySet []>
+SELECT "blogposts_author"."id",
+      "blogposts_author"."name",
+      "blogposts_author"."email"
+ FROM "blogposts_author"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_author"."id" = "blogposts_post_authors"."author_id")
+WHERE "blogposts_post_authors"."post_id" = 2
+LIMIT 21
+Execution time: 0.001043s [Database: default]
+
+Execution time: 0.000101s [Database: default]
+&lt;QuerySet []>
+SELECT "blogposts_author"."id",
+      "blogposts_author"."name",
+      "blogposts_author"."email"
+ FROM "blogposts_author"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_author"."id" = "blogposts_post_authors"."author_id")
+WHERE "blogposts_post_authors"."post_id" = 3
+LIMIT 21
+Execution time: 0.001043s [Database: default]
+</pre>
+
+
+
+<p>Обратите внимание, что приведенный выше код сгенерировал 4 запроса: один для получения сообщений, а затем один запрос для каждого из сообщений для получения авторов (всего было 3 сообщения).</p>
+
+
+
+<p>Это знаменитая <strong>проблема N + 1</strong>. Для получения N сообщений, будет выполнено N + 1 запросов. В этом сценарии у нас есть 3 сообщения, которые создадут 4 запроса. Это не так много, но это может очень легко усложниться, когда мы создадим больше сообщений. С 50 сообщениями этот код будет генерировать 51 запрос.</p>
+
+
+
+<p>Чтобы избежать этого, мы можем предварительно выбрать авторов с помощью <strong>prefetch_related</strong>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> for post in Post.objects.prefetch_related("authors").all():
+              post.authors.all()
+
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+
+Execution time: 0.000158s [Database: default]
+SELECT ("blogposts_post_authors"."post_id") AS "_prefetch_related_val_post_id",
+      "blogposts_author"."id",
+      "blogposts_author"."name",
+      "blogposts_author"."email"
+ FROM "blogposts_author"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_author"."id" = "blogposts_post_authors"."author_id")
+WHERE "blogposts_post_authors"."post_id" IN (1, 2, 3)
+
+Execution time: 0.001043s [Database: default]
+</pre>
+
+
+
+<p>Теперь было выполнено только 2 запроса. Когда используется <strong>prefetch_related</strong>, Django сначала получает все сообщения <strong>Post</strong>, а затем запускает другой SQL-запрос, который извлекает всех авторов для всех сообщений.</p>
+
+
+
+<h4 id="customizing-prefetch">Настройка Prefetch</h4>
+
+
+
+<p>В некоторых сценариях простого синтаксиса <strong>prefetch_related</strong> недостаточно, чтобы Django не выполнял дополнительные запросы. Для большего контроля предварительной выборки вы можете использовать объект предварительной выборки <strong>Prefetch</strong>.</p>
+
+
+
+<p>В нашем примере базы данных есть модель <strong>Post</strong> и модель <strong>Author</strong>. Модель <strong>Post</strong> связана с моделью <strong>Author</strong> через поле <strong>ManyToMany</strong>. Допустим, мы хотели перейти от автора к автору и получить все публикации, которые были опубликованы этим автором:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> authors = Author.objects.all()
+>>> for author in authors:
+              print(author.posts.filter(published=True))
+
+SELECT "blogposts_author"."id",
+      "blogposts_author"."name",
+      "blogposts_author"."email"
+ FROM "blogposts_author"
+
+Execution time: 0.000251s [Database: default]
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_post"."id" = "blogposts_post_authors"."post_id")
+WHERE ("blogposts_post_authors"."author_id" = 1 AND "blogposts_post"."published" = 1)
+LIMIT 21
+
+Execution time: 0.000178s [Database: default]
+&lt;QuerySet [&lt;Post: Optimizing Django ORM Queries>, &lt;Post: Placeholder Post>, &lt;Post: Placeholder Post 2>, &lt;Post: Placeholder Post 3>, &lt;Post: Placeholder Post 4>, &lt;Post: Placeholder Post 6>, &lt;Post: Placeholder Post 7>, &lt;Post: Placeholder Post 8>, &lt;Post: Placeholder Post 9>]>
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_post"."id" = "blogposts_post_authors"."post_id")
+WHERE ("blogposts_post_authors"."author_id" = 2 AND "blogposts_post"."published" = 1)
+LIMIT 21
+
+Execution time: 0.000081s [Database: default]
+&lt;QuerySet [&lt;Post: Optimizing Django ORM Queries>]>
+</pre>
+
+
+
+<p>Как видите, в приведенном выше коде было сгенерировано 3 запроса: 1 для получения всех авторов, а затем 2 запроса для получения сообщений для каждого из авторов.</p>
+
+
+
+<p>Что если мы использовали <strong>prefetch_related</strong>? Кажется, это правильно:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> authors = Author.objects.prefetch_related("posts").all()
+>>> for author in authors:
+       print(author.posts.filter(published=True))
+
+SELECT "blogposts_author"."id",
+      "blogposts_author"."name",
+      "blogposts_author"."email"
+ FROM "blogposts_author"
+
+Execution time: 0.000097s [Database: default]
+SELECT ("blogposts_post_authors"."author_id") AS "_prefetch_related_val_author_id",
+      "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_post"."id" = "blogposts_post_authors"."post_id")
+WHERE "blogposts_post_authors"."author_id" IN (1, 2)
+
+Execution time: 0.000190s [Database: default]
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_post"."id" = "blogposts_post_authors"."post_id")
+WHERE ("blogposts_post_authors"."author_id" = 1 AND "blogposts_post"."published" = 1)
+LIMIT 21
+
+Execution time: 0.000074s [Database: default]
+&lt;QuerySet [&lt;Post: Optimizing Django ORM Queries>, &lt;Post: Placeholder Post>,
+&lt;Post: Placeholder Post 2>, &lt;Post: Placeholder Post 3>,
+&lt;Post: Placeholder Post 4>, &lt;Post: Placeholder Post 6>,
+&lt;Post: Placeholder Post 7>, &lt;Post: Placeholder Post 8>,
+&lt;Post: Placeholder Post 9>]>
+SELECT "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_post"."id" = "blogposts_post_authors"."post_id")
+WHERE ("blogposts_post_authors"."author_id" = 2 AND "blogposts_post"."published" = 1)
+LIMIT 21
+
+Execution time: 0.000070s [Database: default]
+&lt;QuerySet [&lt;Post: Optimizing Django ORM Queries>]>
+</pre>
+
+
+
+<p>Что только что произошло? Мы использовали <strong>prefetch_related</strong>, чтобы уменьшить количество запросов, но мы фактически увеличили его на 1.</p><div class='code-block code-block-3' style='margin: 8px 0; clear: both;'>
+<!-- Yandex.RTB R-A-386865-4 
+<div id="yandex_rtb_R-A-386865-4"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-386865-4",
+                renderTo: "yandex_rtb_R-A-386865-4",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1844293074404584"
+     data-ad-slot="4373911048"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+
+
+
+<p>Это происходит потому, что мы фильтруем сообщения с <strong>published = True</strong>. Django не может использовать наши кэшированные сообщения, так как они не были отфильтрованы при запросе. Чтобы этого не происходило, мы можем настроить набор запросов, используя объект <strong>Prefetch</strong>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">>>> authors = Author.objects.prefetch_related(
+       Prefetch(
+          "posts",
+          queryset=Post.objects.filter(published=True),
+          to_attr="published_posts",
+       )
+    )
+>>> for author in authors:
+      print(author.published_posts)
+
+SELECT "blogposts_author"."id",
+      "blogposts_author"."name",
+      "blogposts_author"."email"
+ FROM "blogposts_author"
+
+Execution time: 0.000129s [Database: default]
+SELECT ("blogposts_post_authors"."author_id") AS "_prefetch_related_val_author_id",
+      "blogposts_post"."id",
+      "blogposts_post"."title",
+      "blogposts_post"."content",
+      "blogposts_post"."blog_id",
+      "blogposts_post"."published"
+ FROM "blogposts_post"
+INNER JOIN "blogposts_post_authors"
+   ON ("blogposts_post"."id" = "blogposts_post_authors"."post_id")
+WHERE ("blogposts_post"."published" = 1 AND "blogposts_post_authors"."author_id" IN (1, 2))
+
+Execution time: 0.000089s [Database: default]
+[&lt;Post: Optimizing Django ORM Queries>, &lt;Post: Placeholder Post>,
+&lt;Post: Placeholder Post 2>, &lt;Post: Placeholder Post 3>,
+&lt;Post: Placeholder Post 4>, &lt;Post: Placeholder Post 6>,
+&lt;Post: Placeholder Post 7>, &lt;Post: Placeholder Post 8>,
+&lt;Post: Placeholder Post 9>]
+[&lt;Post: Optimizing Django ORM Queries>]
+</pre>
+
+
+
+<p>Мы использовали объект <strong>Prefetch</strong>, чтобы сообщить Django:</p>
+
+
+
+<ul><li>Использовать определенный <strong>queryset</strong> для получения сообщений &#8212; через параметр <strong>queryset</strong>. </li><li>Сохранять отфильтрованные записи в новом атрибуте (<strong>published_posts</strong>) &#8212; через параметр <strong>to_attr</strong>. </li></ul>
+
+
+
+<p>Когда выполняется <strong>author.published_posts</strong>, новые запросы не будут создаваться, поскольку все уже будет кэшировано. Независимо от количества авторов в нашей системе, операция всегда будет генерировать 2 SQL запроса.</p>
+
+
+
+<h2 id="wrapping-up">Заключение</h2>
+
+
+
+<p>Работая с Django ORM, очень важно думать о том, что происходит под капотом.</p>
+
+
+
+<p>Концепции, которые вы узнали из этого поста в блоге, помогут вам написать более оптимизированные запросы и искать возможные варианты оптимизации при просмотре кода. Однако следует помнить, что вы всегда должны обращать внимание на время, которое занимает запрос до и после оптимизации, чтобы убедиться, что оптимизация работает. Иногда меньшее количество запросов не обязательно означает меньшее время, JOIN также могут быть медленными.</p>
+<div style="text-align:center" class="yasr-auto-insert-visitor"><!--Yasr Visitor Votes Shortcode--><div id='yasr_visitor_votes_3715' class='yasr-visitor-votes'><div class="yasr-custom-text-vv-before yasr-custom-text-vv-before-3715">Была ли вам полезна эта статья?</div><div id='yasr-vv-second-row-container-14a15126569c6' 
+                                        class='yasr-vv-second-row-container'><div id='yasr-visitor-votes-rater-14a15126569c6'
+                                      class='yasr-rater-stars-vv'
+                                      data-rater-postid='3715' 
+                                      data-rating='4.7'
+                                      data-rater-starsize='32'
+                                      data-rater-readonly='false'
+                                      data-rater-nonce='9faacd1b13' 
+                                      data-issingular='true'
+                                    ></div><div class="yasr-vv-stats-text-container" id="yasr-vv-stats-text-container-14a15126569c6"><svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" 
+                                   class="yasr-dashicons-visitor-stats"
+                                   data-postid="3715" 
+                                   id="yasr-stats-dashicon-14a15126569c6">
+                                   <path d="M18 18v-16h-4v16h4zM12 18v-11h-4v11h4zM6 18v-8h-4v8h4z"></path>
+                               </svg><span id="yasr-vv-text-container-14a15126569c6" class="yasr-vv-text-container">[<span id="yasr-vv-votes-number-container-14a15126569c6">12</span> /  <span id="yasr-vv-average-container-14a15126569c6">4.7</span>]</span></div><div id='yasr-vv-loader-14a15126569c6' class='yasr-vv-container-loader'></div></div><div id='yasr-vv-bottom-container-14a15126569c6' class='yasr-vv-bottom-container'></div></div><!--End Yasr Visitor Votes Shortcode--></div><br/><div class='heateorSssClear'></div><div  class='heateor_sss_sharing_container heateor_sss_horizontal_sharing' heateor-sss-data-href='https://webdevblog.ru/optimizaciya-zaprosov-django-orm/'heateor-sss-no-counts="1"><div class='heateor_sss_sharing_title' style="font-weight:bold" >Spread the love</div><ul class="heateor_sss_sharing_ul"><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Facebook" Title="Facebook" class="heateorSssSharing heateorSssFacebookBackground" onclick='heateorSssPopup("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssFacebookSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Vkontakte" Title="Vkontakte" class="heateorSssSharing heateorSssVkontakteBackground" onclick='heateorSssPopup("http://vkontakte.ru/share.php?&url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssVkontakteSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Email" Title="Email" class="heateorSssSharing heateorSssEmailBackground"  onclick="window.open('mailto:?subject=' + decodeURIComponent('%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM' ).replace('&', '%26') + '&body=' + decodeURIComponent('https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F' ), '_blank')"><ss style="display:block" class="heateorSssSharingSvg heateorSssEmailSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Telegram" Title="Telegram" class="heateorSssSharing heateorSssTelegramBackground" onclick='heateorSssPopup("https://telegram.me/share/url?url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F&text=%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssTelegramSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" alt="Twitter" Title="Twitter" class="heateorSssSharing heateorSssTwitterBackground" onclick='heateorSssPopup("http://twitter.com/intent/tweet?text=%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM&url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F")'><ss style="display:block;border-radius:999px;" class="heateorSssSharingSvg heateorSssTwitterSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;" title="More" alt="More" class="heateorSssSharing heateorSssMoreBackground" onclick="heateorSssMoreSharingPopup(this, 'https://webdevblog.ru/optimizaciya-zaprosov-django-orm/', '%D0%9E%D0%BF%D1%82%D0%B8%D0%BC%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20Django%20ORM', '' )" ><ss style="display:block" class="heateorSssSharingSvg heateorSssMoreSvg"></ss></i></li><li class="heateorSssSharingRound"><i style="width:35px;height:35px;border-radius:999px;margin-left:9px !important;visibility:visible;" title="Total Shares" class="heateorSssSharing heateorSssTCBackground"><div class="heateorSssTotalShareCount" style="font-size: 21.7px">4</div><div class="heateorSssTotalShareText" style="font-size: 13.3px">Поделились</div></i></li></ul><div class="heateorSssClear"></div></div><div class='heateorSssClear'></div><!-- AI CONTENT END 1 -->
+   	</div>
+
+   </div>
+
+	</article>
+
+			<div class='code-block code-block-1' style='margin: 8px 0; clear: both;'>
+<!-- Yandex.RTB R-A-386865-3 -->
+<div id="yandex_rtb_R-A-386865-3"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-386865-3",
+                renderTo: "yandex_rtb_R-A-386865-3",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script></div>
+
+		</div><!-- #content -->
+
+      
+		<ul class="default-wp-page clearfix">
+			<li class="previous"><a href="https://webdevblog.ru/javascript-map-poluchaet-upsert/" rel="prev"><span class="meta-nav">&larr;</span> JavaScript Map получает upsert!</a></li>
+			<li class="next"><a href="https://webdevblog.ru/sozdanie-konechnyh-avtomatov-s-pomoshhju-korutin-v-python/" rel="next">Создание конечных автоматов с помощью корутин в Python <span class="meta-nav">&rarr;</span></a></li>
+		</ul>
+	
+      
+      
+
+<h4 class="related-posts-main-title"><i class="fa fa-thumbs-up"></i><span>Вам также может понравиться</span></h4>
+
+<div class="related-posts clearfix">
+
+      <div class="single-related-posts">
+
+               <div class="related-posts-thumbnail">
+            <a href="https://webdevblog.ru/9-django-sovetov-dlya-raboty-s-bazami-dannyh/" title="9 Django советов для работы с Базами данных">
+               <img width="390" height="205" src="https://webdevblog.ru/wp-content/uploads/2019/02/pytdjango-390x205.jpg" class="attachment-colormag-featured-post-medium size-colormag-featured-post-medium wp-post-image" alt="" loading="lazy" />            </a>
+         </div>
+      
+      <div class="article-content">
+
+         <h3 class="entry-title">
+            <a href="https://webdevblog.ru/9-django-sovetov-dlya-raboty-s-bazami-dannyh/" rel="bookmark" title="9 Django советов для работы с Базами данных">9 Django советов для работы с Базами данных</a>
+         </h3><!--/.post-title-->
+
+         <div class="below-entry-meta">
+            <span class="posted-on"><a href="https://webdevblog.ru/9-django-sovetov-dlya-raboty-s-bazami-dannyh/" title="12:22" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2019-02-04T12:22:13+03:00">04.02.2019</time></a></span>            <span class="byline"><span class="author vcard"><i class="fa fa-user"></i><a class="url fn n" href="https://webdevblog.ru/author/user783/" title="Editorial Team">Editorial Team</a></span></span>
+            <span class="comments"><i class="fa fa-comment"></i><a href="https://webdevblog.ru/9-django-sovetov-dlya-raboty-s-bazami-dannyh/#comments">1</a></span>
+         </div>
+
+      </div>
+
+   </div><!--/.related-->
+      <div class="single-related-posts">
+
+               <div class="related-posts-thumbnail">
+            <a href="https://webdevblog.ru/kak-ispolzovat-django-postgresql-i-docker/" title="Как использовать Django, PostgreSQL и Docker">
+               <img width="390" height="159" src="https://webdevblog.ru/wp-content/uploads/2019/10/dockerdjpython.jpg" class="attachment-colormag-featured-post-medium size-colormag-featured-post-medium wp-post-image" alt="" loading="lazy" />            </a>
+         </div>
+      
+      <div class="article-content">
+
+         <h3 class="entry-title">
+            <a href="https://webdevblog.ru/kak-ispolzovat-django-postgresql-i-docker/" rel="bookmark" title="Как использовать Django, PostgreSQL и Docker">Как использовать Django, PostgreSQL и Docker</a>
+         </h3><!--/.post-title-->
+
+         <div class="below-entry-meta">
+            <span class="posted-on"><a href="https://webdevblog.ru/kak-ispolzovat-django-postgresql-i-docker/" title="22:01" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2019-10-17T22:01:40+03:00">17.10.2019</time></a></span>            <span class="byline"><span class="author vcard"><i class="fa fa-user"></i><a class="url fn n" href="https://webdevblog.ru/author/user783/" title="Editorial Team">Editorial Team</a></span></span>
+            <span class="comments"><i class="fa fa-comment"></i><a href="https://webdevblog.ru/kak-ispolzovat-django-postgresql-i-docker/#comments">14</a></span>
+         </div>
+
+      </div>
+
+   </div><!--/.related-->
+      <div class="single-related-posts">
+
+               <div class="related-posts-thumbnail">
+            <a href="https://webdevblog.ru/sovremennyj-sposob-sozdanie-polzovatelskoj-modeli-user-v-django/" title="Современный способ создание настраиваемой модели User в Django">
+               <img width="390" height="205" src="https://webdevblog.ru/wp-content/uploads/2019/02/custom_user_model_django-390x205.png" class="attachment-colormag-featured-post-medium size-colormag-featured-post-medium wp-post-image" alt="" loading="lazy" />            </a>
+         </div>
+      
+      <div class="article-content">
+
+         <h3 class="entry-title">
+            <a href="https://webdevblog.ru/sovremennyj-sposob-sozdanie-polzovatelskoj-modeli-user-v-django/" rel="bookmark" title="Современный способ создание настраиваемой модели User в Django">Современный способ создание настраиваемой модели User в Django</a>
+         </h3><!--/.post-title-->
+
+         <div class="below-entry-meta">
+            <span class="posted-on"><a href="https://webdevblog.ru/sovremennyj-sposob-sozdanie-polzovatelskoj-modeli-user-v-django/" title="09:28" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2019-02-22T09:28:49+03:00">22.02.2019</time></a></span>            <span class="byline"><span class="author vcard"><i class="fa fa-user"></i><a class="url fn n" href="https://webdevblog.ru/author/user783/" title="Editorial Team">Editorial Team</a></span></span>
+            <span class="comments"><i class="fa fa-comment"></i><a href="https://webdevblog.ru/sovremennyj-sposob-sozdanie-polzovatelskoj-modeli-user-v-django/#comments">4</a></span>
+         </div>
+
+      </div>
+
+   </div><!--/.related-->
+   
+</div><!--/.post-related-->
+
+
+          <div class="wpdiscuz_top_clearing"></div>
+    <div id='comments' class='comments-area'><div id='respond' style='width: 0;height: 0;clear: both;margin: 0;padding: 0;'></div>    <div id="wpdcom" class="wpdiscuz_unauth wpd-default wpd-layout-1 wpd-comments-open">
+                    <div class="wc_social_plugin_wrapper">
+                            </div>
+            <div class="wpd-form-wrap">
+                <div class="wpd-form-head">
+                                            <div class="wpd-sbs-toggle">
+                            <i class="far fa-envelope"></i> <span class="wpd-sbs-title">Подписаться</span> <i class="fas fa-caret-down"></i>
+                        </div>
+                                            <div class="wpd-auth">
+                        <div class='wpd-social-login'><span class='wpd-connect-with'>Соединить с</span><div class='wpdiscuz-social-login-spinner'><i class='fas fa-spinner fa-pulse'></i></div><div class='wpd-clear'></div></div>                        <div class="wpd-login">
+                            <div class='wpd-sep'></div><a rel="nofollow" href="https://webdevblog.ru/log/?redirect_to=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F"><i class='fas fa-sign-in-alt'></i> авторизуйтесь</a>                        </div>
+                    </div>
+                </div>
+                            <div class="wpd-social-login-agreement" style="display: none;">
+                <div class="wpd-agreement-title">Я разрешаю создать мне учетную запись</div>
+                <div class="wpd-agreement">Когда вы первый раз заходите с помощью соцсетей, мы получаем публичную информацию из вашей учетной записи, предоставляемой провайдером услуги соцсети в рамках ваших настроек конфиденциальности. Мы также автоматически получаем ваш e-mail адрес для создания вашей учетной записи на нашем веб сайте. Когда она будет создана, вы будете авторизованы под этой учетной записью.</div>
+                <div class="wpd-agreement-buttons">
+                    <div class="wpd-agreement-buttons-right"><span class="wpd-agreement-button wpd-agreement-button-disagree">Не согласен</span><span class="wpd-agreement-button wpd-agreement-button-agree">Согласен</span></div>
+                    <div class="wpd-clear"></div>
+                </div>
+            </div>
+                                                <div class="wpdiscuz-subscribe-bar wpdiscuz-hidden">
+                                                    <form action="https://webdevblog.ru/wp-admin/admin-ajax.php?action=wpdAddSubscription" method="post" id="wpdiscuz-subscribe-form">
+                                <div class="wpdiscuz-subscribe-form-intro">Уведомление о </div>
+                                <div class="wpdiscuz-subscribe-form-option" style="width:40%;">
+                                    <select class="wpdiscuz_select" name="wpdiscuzSubscriptionType" >
+                                                                                    <option value="post">новые последующие комментарии</option>
+                                                                                                                                <option value="all_comment" >новые ответы на мои комментарии</option>
+                                                                                </select>
+                                </div>
+                                                                    <div class="wpdiscuz-item wpdiscuz-subscribe-form-email">
+                                        <input  class="email" type="email" name="wpdiscuzSubscriptionEmail" required="required" value="" placeholder="Email"/>
+                                    </div>
+                                                                    <div class="wpdiscuz-subscribe-form-button">
+                                    <input id="wpdiscuz_subscription_button" class="wpd-prim-button" type="submit" value="›" name="wpdiscuz_subscription_button" />
+                                </div> 
+                                <input type="hidden" id="wpdiscuz_subscribe_form_nonce" name="wpdiscuz_subscribe_form_nonce" value="f6c02b6f64" /><input type="hidden" name="_wp_http_referer" value="/optimizaciya-zaprosov-django-orm/" />                            </form>
+                                                </div>
+                            <div class="wpd-form wpd-form-wrapper wpd-main-form-wrapper" id='wpd-main-form-wrapper-0_0'>
+                                        <form class="wpd_comm_form wpd_main_comm_form" method="post" enctype="multipart/form-data">
+                    <div class="wpd-field-comment">
+                        <div class="wpdiscuz-item wc-field-textarea">
+                            <div class="wpdiscuz-textarea-wrap ">
+                                                                                                        <div class="wpd-avatar">
+                                        <img alt='guest' src='https://secure.gravatar.com/avatar/?s=56&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=112&#038;d=mm&#038;r=g 2x' class='avatar avatar-56 photo avatar-default' height='56' width='56' loading='lazy'/>                                    </div>
+                                                <div id="wpd-editor-wraper-0_0" style="display: none;">
+                <div id="wpd-editor-char-counter-0_0" class="wpd-editor-char-counter"></div>
+                <label style="display: none;" for="wc-textarea-0_0">Label</label>
+                <textarea id="wc-textarea-0_0" required name="wc_comment" class="wc_comment wpd-field"></textarea>
+                <div id="wpd-editor-0_0"></div>
+                    <div id="wpd-editor-toolbar-0_0">
+                            <button title="Жирный" class="ql-bold"  ></button>
+                                <button title="Курсив" class="ql-italic"  ></button>
+                                <button title="Подчеркивание" class="ql-underline"  ></button>
+                                <button title="Зачеркивание" class="ql-strike"  ></button>
+                                <button title="Упорядоченный список" class="ql-list" value='ordered' ></button>
+                                <button title="Неупорядоченный список" class="ql-list" value='bullet' ></button>
+                                <button title="Цитата" class="ql-blockquote"  ></button>
+                                <button title="Блок кода" class="ql-code-block"  ></button>
+                                <button title="Ссылка" class="ql-link"  ></button>
+                                <button title="Исходный код" class="ql-sourcecode"  data-wpde_button_name='sourcecode'>{}</button>
+                                <button title="Спойлер" class="ql-spoiler"  data-wpde_button_name='spoiler'>[+]</button>
+                            <div class="wpd-editor-buttons-right">
+                <span class='wmu-upload-wrap' wpd-tooltip='Attach an image to this comment' wpd-tooltip-position='left'><label class='wmu-add'><i class='far fa-image'></i><input style='display:none;' class='wmu-add-files' type='file' name='wmu_files[]'  accept='image/*'/></label></span>            </div>
+        </div>
+                    </div>
+                                        </div>
+                        </div>
+                    </div>
+                    <div class="wpd-form-foot" style='display:none;'>
+                        <div class="wpdiscuz-textarea-foot">
+                                                        <div class="wpdiscuz-button-actions"><div class='wmu-action-wrap'><div class='wmu-tabs wmu-images-tab wmu-hide'></div></div></div>
+                        </div>
+                                <div class="wpd-form-row">
+                    <div class="wpd-form-col-left">
+                        <div class="wpdiscuz-item wc_name-wrapper wpd-has-icon">
+                                    <div class="wpd-field-icon"><i class="fas fa-user"></i></div>
+                                    <input id="wc_name-0_0" value=""  class="wc_name wpd-field" type="text" name="wc_name" placeholder="Имя" maxlength="50" pattern='.{3,50}' title="">
+                <label for="wc_name-0_0" class="wpdlb">Имя</label>
+                            </div>
+                        <div class="wpdiscuz-item wc_email-wrapper wpd-has-icon">
+                                    <div class="wpd-field-icon"><i class="fas fa-at"></i></div>
+                                    <input id="wc_email-0_0" value=""  class="wc_email wpd-field" type="email" name="wc_email" placeholder="Email" />
+                <label for="wc_email-0_0" class="wpdlb">Email</label>
+                            </div>
+                    </div>
+                <div class="wpd-form-col-right">
+                    <div class="wc-field-submit">
+                                            
+                                            <label class="wpd_label" wpd-tooltip="Сообщать о всех новых ответах на мои комментарии">
+                            <input id="wc_notification_new_comment-0_0" class="wc_notification_new_comment-0_0 wpd_label__checkbox" value="comment" type="checkbox" name="wpdiscuz_notification_type" />
+                            <span class="wpd_label__text">
+                                <span class="wpd_label__check">
+                                    <i class="fas fa-bell wpdicon wpdicon-on"></i>
+                                    <i class="fas fa-bell-slash wpdicon wpdicon-off"></i>
+                                </span>
+                            </span>
+                        </label>
+                                                                <input id="wpd-field-submit-0_0" class="wc_comm_submit wpd_not_clicked wpd-prim-button" type="submit" name="submit" value="Оставить комментарий" />
+        </div>
+                </div>
+                    <div class="clearfix"></div>
+        </div>
+                            </div>
+                                        <input type="hidden" class="wpdiscuz_unique_id" value="0_0" name="wpdiscuz_unique_id">
+                </form>
+                        </div>
+                <div id="wpdiscuz_hidden_secondary_form" style="display: none;">
+                    <div class="wpd-form wpd-form-wrapper wpd-secondary-form-wrapper" id='wpd-secondary-form-wrapper-wpdiscuzuniqueid' style='display: none;'>
+                            <div class="wpd-secondary-forms-social-content"><div class='wpd-social-login'><span class='wpd-connect-with'>Соединить с</span><div class='wpdiscuz-social-login-spinner'><i class='fas fa-spinner fa-pulse'></i></div><div class='wpd-clear'></div></div>            <div class="wpd-social-login-agreement" style="display: none;">
+                <div class="wpd-agreement-title">Я разрешаю создать мне учетную запись</div>
+                <div class="wpd-agreement">Когда вы первый раз заходите с помощью соцсетей, мы получаем публичную информацию из вашей учетной записи, предоставляемой провайдером услуги соцсети в рамках ваших настроек конфиденциальности. Мы также автоматически получаем ваш e-mail адрес для создания вашей учетной записи на нашем веб сайте. Когда она будет создана, вы будете авторизованы под этой учетной записью.</div>
+                <div class="wpd-agreement-buttons">
+                    <div class="wpd-agreement-buttons-right"><span class="wpd-agreement-button wpd-agreement-button-disagree">Не согласен</span><span class="wpd-agreement-button wpd-agreement-button-agree">Согласен</span></div>
+                    <div class="wpd-clear"></div>
+                </div>
+            </div>
+            </div><div class="clearfix"></div>
+                                        <form class="wpd_comm_form wpd-secondary-form-wrapper" method="post" enctype="multipart/form-data">
+                    <div class="wpd-field-comment">
+                        <div class="wpdiscuz-item wc-field-textarea">
+                            <div class="wpdiscuz-textarea-wrap ">
+                                                                                                        <div class="wpd-avatar">
+                                        <img alt='guest' src='https://secure.gravatar.com/avatar/?s=56&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=112&#038;d=mm&#038;r=g 2x' class='avatar avatar-56 photo avatar-default' height='56' width='56' loading='lazy'/>                                    </div>
+                                                <div id="wpd-editor-wraper-wpdiscuzuniqueid" style="display: none;">
+                <div id="wpd-editor-char-counter-wpdiscuzuniqueid" class="wpd-editor-char-counter"></div>
+                <label style="display: none;" for="wc-textarea-wpdiscuzuniqueid">Label</label>
+                <textarea id="wc-textarea-wpdiscuzuniqueid" required name="wc_comment" class="wc_comment wpd-field"></textarea>
+                <div id="wpd-editor-wpdiscuzuniqueid"></div>
+                    <div id="wpd-editor-toolbar-wpdiscuzuniqueid">
+                            <button title="Жирный" class="ql-bold"  ></button>
+                                <button title="Курсив" class="ql-italic"  ></button>
+                                <button title="Подчеркивание" class="ql-underline"  ></button>
+                                <button title="Зачеркивание" class="ql-strike"  ></button>
+                                <button title="Упорядоченный список" class="ql-list" value='ordered' ></button>
+                                <button title="Неупорядоченный список" class="ql-list" value='bullet' ></button>
+                                <button title="Цитата" class="ql-blockquote"  ></button>
+                                <button title="Блок кода" class="ql-code-block"  ></button>
+                                <button title="Ссылка" class="ql-link"  ></button>
+                                <button title="Исходный код" class="ql-sourcecode"  data-wpde_button_name='sourcecode'>{}</button>
+                                <button title="Спойлер" class="ql-spoiler"  data-wpde_button_name='spoiler'>[+]</button>
+                            <div class="wpd-editor-buttons-right">
+                <span class='wmu-upload-wrap' wpd-tooltip='Attach an image to this comment' wpd-tooltip-position='left'><label class='wmu-add'><i class='far fa-image'></i><input style='display:none;' class='wmu-add-files' type='file' name='wmu_files[]'  accept='image/*'/></label></span>            </div>
+        </div>
+                    </div>
+                                        </div>
+                        </div>
+                    </div>
+                    <div class="wpd-form-foot" style='display:none;'>
+                        <div class="wpdiscuz-textarea-foot">
+                                                        <div class="wpdiscuz-button-actions"><div class='wmu-action-wrap'><div class='wmu-tabs wmu-images-tab wmu-hide'></div></div></div>
+                        </div>
+                                <div class="wpd-form-row">
+                    <div class="wpd-form-col-left">
+                        <div class="wpdiscuz-item wc_name-wrapper wpd-has-icon">
+                                    <div class="wpd-field-icon"><i class="fas fa-user"></i></div>
+                                    <input id="wc_name-wpdiscuzuniqueid" value=""  class="wc_name wpd-field" type="text" name="wc_name" placeholder="Имя" maxlength="50" pattern='.{3,50}' title="">
+                <label for="wc_name-wpdiscuzuniqueid" class="wpdlb">Имя</label>
+                            </div>
+                        <div class="wpdiscuz-item wc_email-wrapper wpd-has-icon">
+                                    <div class="wpd-field-icon"><i class="fas fa-at"></i></div>
+                                    <input id="wc_email-wpdiscuzuniqueid" value=""  class="wc_email wpd-field" type="email" name="wc_email" placeholder="Email" />
+                <label for="wc_email-wpdiscuzuniqueid" class="wpdlb">Email</label>
+                            </div>
+                    </div>
+                <div class="wpd-form-col-right">
+                    <div class="wc-field-submit">
+                                            
+                                            <label class="wpd_label" wpd-tooltip="Сообщать о всех новых ответах на мои комментарии">
+                            <input id="wc_notification_new_comment-wpdiscuzuniqueid" class="wc_notification_new_comment-wpdiscuzuniqueid wpd_label__checkbox" value="comment" type="checkbox" name="wpdiscuz_notification_type" />
+                            <span class="wpd_label__text">
+                                <span class="wpd_label__check">
+                                    <i class="fas fa-bell wpdicon wpdicon-on"></i>
+                                    <i class="fas fa-bell-slash wpdicon wpdicon-off"></i>
+                                </span>
+                            </span>
+                        </label>
+                                                                <input id="wpd-field-submit-wpdiscuzuniqueid" class="wc_comm_submit wpd_not_clicked wpd-prim-button" type="submit" name="submit" value="Оставить комментарий" />
+        </div>
+                </div>
+                    <div class="clearfix"></div>
+        </div>
+                            </div>
+                                        <input type="hidden" class="wpdiscuz_unique_id" value="wpdiscuzuniqueid" name="wpdiscuz_unique_id">
+                </form>
+                        </div>
+                </div>
+                    </div>
+                        <div id="wpd-threads" class="wpd-thread-wrapper">
+                <div class="wpd-thread-head">
+                    <div class="wpd-thread-info " data-comments-count="1">
+                        <span class='wpdtc' title='1'>1</span> Комментарий                    </div>
+                                        <div class="wpd-space"></div>
+                    <div class="wpd-thread-filter">
+                                                    <div class="wpd-filter wpdf-reacted wpd_not_clicked" wpd-tooltip="Популярнейший комментарий "><i class="fas fa-bolt"></i></div>
+                                                        <div class="wpd-filter wpdf-hottest wpd_not_clicked" wpd-tooltip="Цепочка актуального комментария"><i class="fas fa-fire"></i></div>
+                                                        <div class="wpd-filter wpdf-sorting">
+                                                                        <span class="wpdiscuz-sort-button wpdiscuz-date-sort-asc wpdiscuz-sort-button-active" data-sorting="oldest">Oldest</span>
+                                                                        <i class="fas fa-sort-down"></i>
+                                <div class="wpdiscuz-sort-buttons">
+                                                                            <span class="wpdiscuz-sort-button wpdiscuz-date-sort-desc" data-sorting="newest">Newest</span>
+                                                                                <span class="wpdiscuz-sort-button wpdiscuz-vote-sort-up" data-sorting="by_vote">Most Voted</span>
+                                                                        </div>
+                            </div>
+                                                </div>
+                </div>
+                <div class="wpd-comment-info-bar">
+                    <div class="wpd-current-view"><i class="fas fa-quote-left"></i> Inline Feedbacks</div>
+                    <div class="wpd-filter-view-all">View all comments</div>
+                </div>
+                                <div class="wpd-thread-list">
+                    <div id='wpd-comm-3711_0' class='wpd-comment wpd_comment_level-1'><div class="wpd-comment-wrap wpd-blog-guest">
+    <div class="wpd-comment-left ">
+    <div class="wpd-avatar ">
+    <img alt='Катя' src='https://secure.gravatar.com/avatar/64eedbd310c3c37f862d4d3958651b5c?s=64&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/64eedbd310c3c37f862d4d3958651b5c?s=128&#038;d=mm&#038;r=g 2x' class='avatar avatar-64 photo' height='64' width='64' loading='lazy'/>
+</div>
+    
+    
+</div>
+    <div id="comment-3711" class="wpd-comment-right">
+    <div class="wpd-comment-header">
+    <div class="wpd-comment-author ">
+    <a href='https://toprecepty.ru' rel='noreferrer ugc nofollow' target='_blank'>Катя</a>
+</div>
+    <div class="wpd-comment-date" title="07.06.2020 18:30">
+    <i class='far fa-clock' aria-hidden='true'></i>
+    1 год назад
+</div>
+    
+    <div class="wpd-comment-share wpd-hidden wpd-tooltip wpd-top">
+    <i class='fas fa-share-alt' aria-hidden='true'></i>
+    <div class="wpd-tooltip-content">
+        <a class='wc_tw' rel='noreferrer' target='_blank' href='https://twitter.com/intent/tweet?text=Спасибо за полезную статью, в данный момент я тоже рассматриваю ORM... &url=https%3A%2F%2Fwebdevblog.ru%2Foptimizaciya-zaprosov-django-orm%2F%23comment-3711' title='Поделиться через Twitter'><i class='fab fa-twitter wpf-cta' aria-hidden='true'></i></a><a class='wc_vk' rel='noreferrer' target='_blank' href='https://vk.com/share.php?url=https://webdevblog.ru/optimizaciya-zaprosov-django-orm/' title='Поделиться через Вконтакте'><i class='fab fa-vk wpf-cta' aria-hidden='true'></i></a><a class='wc_ok' rel='noreferrer' target='_blank' href='https://connect.ok.ru/offer?url=https://webdevblog.ru/optimizaciya-zaprosov-django-orm/' title='Поделиться через Одноклассники'><i class='fab fa-odnoklassniki wpf-cta' aria-hidden='true'></i></a>
+    </div>
+</div>
+    <div class="wpd-space"></div>
+    <div class="wpd-comment-link wpd-hidden">
+    <span wpd-tooltip='Comment Link' wpd-tooltip-position='left'><i class='fas fa-link' aria-hidden='true' data-comment-url='https://webdevblog.ru/optimizaciya-zaprosov-django-orm/#comment-3711'></i></span>
+</div>
+</div>
+    
+    <div class="wpd-comment-text">
+    <p>Спасибо за полезную статью, в данный момент я тоже рассматриваю ORM.</p>
+
+</div>
+    <div class="wpd-comment-footer">
+    <div class="wpd-vote">
+    <div class="wpd-vote-up wpd_not_clicked">
+        <svg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='plus' class='svg-inline--fa fa-plus fa-w-14' role='img' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 448 512'><path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z'></path></svg>
+    </div>
+    <div class='wpd-vote-result wpd-up' title='1'>1</div>
+    <div class="wpd-vote-down wpd_not_clicked">
+        <svg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='minus' class='svg-inline--fa fa-minus fa-w-14' role='img' xmlns='https://www.w3.org/2000/svg' viewBox='0 0 448 512'><path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z'></path></svg>
+    </div>
+</div>
+    <div class="wpd-reply-button">
+    <svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z'/><path d='M0 0h24v24H0z' fill='none'/></svg>
+    <span>Ответить</span>
+</div>
+    <div class="wpd-space"></div>
+    
+    
+</div>
+</div>
+</div><div id='wpdiscuz_form_anchor-3711_0'></div></div>                    <div class="wpdiscuz-comment-pagination">
+                                            </div>
+                </div>
+            </div>
+                </div>
+        </div>
+    <div id="wpdiscuz-loading-bar" class="wpdiscuz-loading-bar-unauth"></div>
+    <div id="wpdiscuz-comment-message" class="wpdiscuz-comment-message-unauth"></div>
+    
+	</div><!-- #primary -->
+
+	
+<div id="secondary">
+			
+		<aside id="search-2" class="widget widget_search clearfix"><form action="https://webdevblog.ru/" class="search-form searchform clearfix" method="get">
+   <div class="search-wrap">
+      <input type="text" placeholder="Поиск" class="s field" name="s">
+      <button class="search-icon" type="submit"></button>
+   </div>
+</form><!-- .searchform --></aside><aside id="text-17" class="widget widget_text clearfix">			<div class="textwidget"><p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><br />
+<!-- Медийный вертикальный --><br />
+<ins class="adsbygoogle" style="display: block;" data-ad-client="ca-pub-1844293074404584" data-ad-slot="9517888484" data-ad-format="auto" data-full-width-responsive="true"></ins><br />
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+		</aside>
+		<aside id="recent-posts-2" class="widget widget_recent_entries clearfix">
+		<h3 class="widget-title"><span>Свежие записи</span></h3>
+		<ul>
+											<li>
+					<a href="https://webdevblog.ru/vue-js-kak-perenesti-bolshoj-proekt-s-vue-2-na-vue-3/">Vue.js: как перенести большой проект с Vue 2 на Vue 3</a>
+									</li>
+											<li>
+					<a href="https://webdevblog.ru/hudshie-praktiki-v-javascript/">Худшие практики в Javascript</a>
+									</li>
+											<li>
+					<a href="https://webdevblog.ru/vue-3-kogda-svojstvo-computed-mozhet-byt-nepravilnym-instrumentom/">Vue 3: когда свойство computed может быть неправильным инструментом</a>
+									</li>
+											<li>
+					<a href="https://webdevblog.ru/vue-js-kak-ya-vyzyvaju-metod-v-komponente-izvne-komponenta-v-vue-2/">Vue.js &#8212; Как я вызываю метод в компоненте извне компонента в Vue 2</a>
+									</li>
+											<li>
+					<a href="https://webdevblog.ru/razresheniya-v-django-rest-framework/">Разрешения в Django Rest Framework</a>
+									</li>
+					</ul>
+
+		</aside><aside id="categories-2" class="widget widget_categories clearfix"><h3 class="widget-title"><span>Рубрики</span></h3>
+			<ul>
+					<li class="cat-item cat-item-83"><a href="https://webdevblog.ru/category/css/">CSS</a> (3)
+</li>
+	<li class="cat-item cat-item-5"><a href="https://webdevblog.ru/category/javascript/">JavaScript</a> (175)
+</li>
+	<li class="cat-item cat-item-17"><a href="https://webdevblog.ru/category/python/">Python</a> (117)
+</li>
+	<li class="cat-item cat-item-29"><a href="https://webdevblog.ru/category/algoritmy/">Алгоритмы</a> (38)
+</li>
+	<li class="cat-item cat-item-88"><a href="https://webdevblog.ru/category/bazy-dannyh/">Базы данных</a> (5)
+</li>
+	<li class="cat-item cat-item-86"><a href="https://webdevblog.ru/category/veb-bezopasnost/">Веб безопасность</a> (16)
+</li>
+	<li class="cat-item cat-item-1"><a href="https://webdevblog.ru/category/bez-rubriki/">Другие</a> (16)
+</li>
+	<li class="cat-item cat-item-37"><a href="https://webdevblog.ru/category/novosti/">Новости</a> (6)
+</li>
+			</ul>
+
+			</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud clearfix"><h3 class="widget-title"><span>Метки</span></h3><div class="tagcloud"><a href="https://webdevblog.ru/tag/asyncio/" class="tag-cloud-link tag-link-47 tag-link-position-1" style="font-size: 10.231884057971pt;" aria-label="asyncio (4 элемента)">asyncio</a>
+<a href="https://webdevblog.ru/tag/axios/" class="tag-cloud-link tag-link-28 tag-link-position-2" style="font-size: 12.260869565217pt;" aria-label="axios (7 элементов)">axios</a>
+<a href="https://webdevblog.ru/tag/celery/" class="tag-cloud-link tag-link-46 tag-link-position-3" style="font-size: 9.2173913043478pt;" aria-label="celery (3 элемента)">celery</a>
+<a href="https://webdevblog.ru/tag/composition/" class="tag-cloud-link tag-link-70 tag-link-position-4" style="font-size: 10.231884057971pt;" aria-label="Composition (4 элемента)">Composition</a>
+<a href="https://webdevblog.ru/tag/composition-api/" class="tag-cloud-link tag-link-63 tag-link-position-5" style="font-size: 13.68115942029pt;" aria-label="Composition API (10 элементов)">Composition API</a>
+<a href="https://webdevblog.ru/tag/dataclasses/" class="tag-cloud-link tag-link-34 tag-link-position-6" style="font-size: 9.2173913043478pt;" aria-label="Dataclasses (3 элемента)">Dataclasses</a>
+<a href="https://webdevblog.ru/tag/django/" class="tag-cloud-link tag-link-19 tag-link-position-7" style="font-size: 20.478260869565pt;" aria-label="django (50 элементов)">django</a>
+<a href="https://webdevblog.ru/tag/docker/" class="tag-cloud-link tag-link-60 tag-link-position-8" style="font-size: 9.2173913043478pt;" aria-label="docker (3 элемента)">docker</a>
+<a href="https://webdevblog.ru/tag/dom/" class="tag-cloud-link tag-link-55 tag-link-position-9" style="font-size: 10.231884057971pt;" aria-label="DOM (4 элемента)">DOM</a>
+<a href="https://webdevblog.ru/tag/django-rest-framework/" class="tag-cloud-link tag-link-36 tag-link-position-10" style="font-size: 12.260869565217pt;" aria-label="DRF (7 элементов)">DRF</a>
+<a href="https://webdevblog.ru/tag/fsm/" class="tag-cloud-link tag-link-52 tag-link-position-11" style="font-size: 9.2173913043478pt;" aria-label="FSM (3 элемента)">FSM</a>
+<a href="https://webdevblog.ru/tag/gensim/" class="tag-cloud-link tag-link-4 tag-link-position-12" style="font-size: 9.2173913043478pt;" aria-label="gensim (3 элемента)">gensim</a>
+<a href="https://webdevblog.ru/tag/graphql/" class="tag-cloud-link tag-link-41 tag-link-position-13" style="font-size: 11.04347826087pt;" aria-label="GraphQL (5 элементов)">GraphQL</a>
+<a href="https://webdevblog.ru/tag/iterators/" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 8pt;" aria-label="iterators (2 элемента)">iterators</a>
+<a href="https://webdevblog.ru/tag/jest/" class="tag-cloud-link tag-link-48 tag-link-position-15" style="font-size: 9.2173913043478pt;" aria-label="jest (3 элемента)">jest</a>
+<a href="https://webdevblog.ru/tag/lerna/" class="tag-cloud-link tag-link-6 tag-link-position-16" style="font-size: 8pt;" aria-label="lerna (2 элемента)">lerna</a>
+<a href="https://webdevblog.ru/tag/logging/" class="tag-cloud-link tag-link-45 tag-link-position-17" style="font-size: 8pt;" aria-label="logging (2 элемента)">logging</a>
+<a href="https://webdevblog.ru/tag/metaclass/" class="tag-cloud-link tag-link-90 tag-link-position-18" style="font-size: 8pt;" aria-label="metaclass (2 элемента)">metaclass</a>
+<a href="https://webdevblog.ru/tag/mongodb/" class="tag-cloud-link tag-link-89 tag-link-position-19" style="font-size: 11.04347826087pt;" aria-label="MongoDB (5 элементов)">MongoDB</a>
+<a href="https://webdevblog.ru/tag/news/" class="tag-cloud-link tag-link-22 tag-link-position-20" style="font-size: 8pt;" aria-label="news (2 элемента)">news</a>
+<a href="https://webdevblog.ru/tag/nginx/" class="tag-cloud-link tag-link-10 tag-link-position-21" style="font-size: 9.2173913043478pt;" aria-label="nginx (3 элемента)">nginx</a>
+<a href="https://webdevblog.ru/tag/nlp/" class="tag-cloud-link tag-link-20 tag-link-position-22" style="font-size: 9.2173913043478pt;" aria-label="nlp (3 элемента)">nlp</a>
+<a href="https://webdevblog.ru/tag/nuxt-js/" class="tag-cloud-link tag-link-33 tag-link-position-23" style="font-size: 8pt;" aria-label="nuxt.js (2 элемента)">nuxt.js</a>
+<a href="https://webdevblog.ru/tag/patterns/" class="tag-cloud-link tag-link-24 tag-link-position-24" style="font-size: 16.115942028986pt;" aria-label="patterns (18 элементов)">patterns</a>
+<a href="https://webdevblog.ru/tag/pipenv/" class="tag-cloud-link tag-link-25 tag-link-position-25" style="font-size: 8pt;" aria-label="pipenv (2 элемента)">pipenv</a>
+<a href="https://webdevblog.ru/tag/proxy/" class="tag-cloud-link tag-link-44 tag-link-position-26" style="font-size: 8pt;" aria-label="Proxy (2 элемента)">Proxy</a>
+<a href="https://webdevblog.ru/tag/rasa/" class="tag-cloud-link tag-link-12 tag-link-position-27" style="font-size: 8pt;" aria-label="RASA (2 элемента)">RASA</a>
+<a href="https://webdevblog.ru/tag/redis/" class="tag-cloud-link tag-link-72 tag-link-position-28" style="font-size: 9.2173913043478pt;" aria-label="Redis (3 элемента)">Redis</a>
+<a href="https://webdevblog.ru/tag/solid/" class="tag-cloud-link tag-link-27 tag-link-position-29" style="font-size: 14.086956521739pt;" aria-label="solid (11 элементов)">solid</a>
+<a href="https://webdevblog.ru/tag/sort/" class="tag-cloud-link tag-link-71 tag-link-position-30" style="font-size: 10.231884057971pt;" aria-label="sort (4 элемента)">sort</a>
+<a href="https://webdevblog.ru/tag/spread/" class="tag-cloud-link tag-link-58 tag-link-position-31" style="font-size: 8pt;" aria-label="spread (2 элемента)">spread</a>
+<a href="https://webdevblog.ru/tag/tailwindcss/" class="tag-cloud-link tag-link-81 tag-link-position-32" style="font-size: 8pt;" aria-label="tailwindcss (2 элемента)">tailwindcss</a>
+<a href="https://webdevblog.ru/tag/tdd/" class="tag-cloud-link tag-link-35 tag-link-position-33" style="font-size: 12.768115942029pt;" aria-label="TDD (8 элементов)">TDD</a>
+<a href="https://webdevblog.ru/tag/threading/" class="tag-cloud-link tag-link-38 tag-link-position-34" style="font-size: 8pt;" aria-label="threading (2 элемента)">threading</a>
+<a href="https://webdevblog.ru/tag/uwsgi/" class="tag-cloud-link tag-link-49 tag-link-position-35" style="font-size: 8pt;" aria-label="uwsgi (2 элемента)">uwsgi</a>
+<a href="https://webdevblog.ru/tag/vue-router/" class="tag-cloud-link tag-link-26 tag-link-position-36" style="font-size: 8pt;" aria-label="vue-router (2 элемента)">vue-router</a>
+<a href="https://webdevblog.ru/tag/vue-js/" class="tag-cloud-link tag-link-7 tag-link-position-37" style="font-size: 22pt;" aria-label="vue.js (72 элемента)">vue.js</a>
+<a href="https://webdevblog.ru/tag/vuex/" class="tag-cloud-link tag-link-23 tag-link-position-38" style="font-size: 12.260869565217pt;" aria-label="vuex (7 элементов)">vuex</a>
+<a href="https://webdevblog.ru/tag/webpack/" class="tag-cloud-link tag-link-18 tag-link-position-39" style="font-size: 11.753623188406pt;" aria-label="webpack (6 элементов)">webpack</a>
+<a href="https://webdevblog.ru/tag/wordpress/" class="tag-cloud-link tag-link-9 tag-link-position-40" style="font-size: 8pt;" aria-label="wordpress (2 элемента)">wordpress</a>
+<a href="https://webdevblog.ru/tag/algoritmy/" class="tag-cloud-link tag-link-69 tag-link-position-41" style="font-size: 8pt;" aria-label="Алгоритмы (2 элемента)">Алгоритмы</a>
+<a href="https://webdevblog.ru/tag/oop/" class="tag-cloud-link tag-link-62 tag-link-position-42" style="font-size: 12.260869565217pt;" aria-label="ООП (7 элементов)">ООП</a>
+<a href="https://webdevblog.ru/tag/sobesedovaniya/" class="tag-cloud-link tag-link-53 tag-link-position-43" style="font-size: 12.260869565217pt;" aria-label="Собеседования (7 элементов)">Собеседования</a>
+<a href="https://webdevblog.ru/tag/testirovanie/" class="tag-cloud-link tag-link-87 tag-link-position-44" style="font-size: 14.391304347826pt;" aria-label="Тестирование (12 элементов)">Тестирование</a>
+<a href="https://webdevblog.ru/tag/chatboty/" class="tag-cloud-link tag-link-21 tag-link-position-45" style="font-size: 8pt;" aria-label="чатботы (2 элемента)">чатботы</a></div>
+</aside><aside id="text-3" class="widget widget_text clearfix">			<div class="textwidget"><p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><br />
+<!-- 300 x 600 --><br />
+<ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 600px;" data-ad-client="ca-pub-1844293074404584" data-ad-slot="4555872008"></ins><br />
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+		</aside><aside id="views-3" class="widget widget_views clearfix"><h3 class="widget-title"><span>Популярные статьи</span></h3><ul>
+<li><a href="https://webdevblog.ru/kak-perebrat-slovar-v-python/" title="Как перебрать словарь в Python">Как перебрать словарь в Python</a> - 151&nbsp;081 Просмотры</li><li><a href="https://webdevblog.ru/jupyter-notebook-dlya-nachinajushhih-uchebnik/" title="Jupyter Notebook для начинающих: учебник">Jupyter Notebook для начинающих: учебник</a> - 150&nbsp;937 Просмотры</li><li><a href="https://webdevblog.ru/kak-ispolzovat-v-python-lyambda-funkcii/" title="Как использовать в Python лямбда-функции">Как использовать в Python лямбда-функции</a> - 120&nbsp;496 Просмотры</li><li><a href="https://webdevblog.ru/vvedenie-v-potoki-v-python/" title="Введение в потоки в Python">Введение в потоки в Python</a> - 106&nbsp;102 Просмотры</li><li><a href="https://webdevblog.ru/ispolzovanie-middleware-vo-vue/" title="Использование middleware во Vue">Использование middleware во Vue</a> - 104&nbsp;395 Просмотры</li><li><a href="https://webdevblog.ru/razbiraemsya-s-nastrojkoj-webpack-dlya-ljubogo-proekta/" title="Разбираемся с настройкой Webpack для любого проекта">Разбираемся с настройкой Webpack для любого проекта</a> - 95&nbsp;221 Просмотры</li><li><a href="https://webdevblog.ru/sozdanie-django-api-ispolzuya-django-rest-framework-apiview/" title="Создание Django API используя Django Rest Framework часть 1">Создание Django API используя Django Rest Framework часть 1</a> - 91&nbsp;761 Просмотры</li><li><a href="https://webdevblog.ru/chto-takoe-cors/" title="Что такое CORS">Что такое CORS</a> - 83&nbsp;952 Просмотры</li><li><a href="https://webdevblog.ru/logging-v-python/" title="Логирование в Python">Логирование в Python</a> - 79&nbsp;910 Просмотры</li><li><a href="https://webdevblog.ru/vvedenie-v-generatory-python/" title="Введение в генераторы Python">Введение в генераторы Python</a> - 57&nbsp;868 Просмотры</li></ul>
+</aside><aside id="text-15" class="widget widget_text clearfix">			<div class="textwidget"><p><!-- Yandex.RTB R-A-386865-5 --></p>
+<div id="yandex_rtb_R-A-386865-5"></div>
+<p><script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-386865-5",
+                renderTo: "yandex_rtb_R-A-386865-5",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script></p>
+<p><!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-1844293074404584",
+          enable_page_level_ads: true
+     });
+</script>
+----
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 600px;" data-ad-client="ca-pub-1844293074404584" data-ad-slot="4555872008"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+--></p>
+</div>
+		</aside><aside id="text-19" class="widget widget_text clearfix">			<div class="textwidget"><p><a style="display: flex; justify-content: center; align-items: center; flex-direction: column;" href="https://pythondigest.ru" target="_blank" rel="nofollow noopener"><br />
+<img loading="lazy" src="https://pythondigest.ru/static/img/logo.png" alt="logo" width="100" height="100" /><br />
+<span style="font-size: 18px;">Новости из мира Python</span><br />
+</a></p>
+</div>
+		</aside><aside id="text-23" class="widget widget_text clearfix">			<div class="textwidget"><p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><br />
+<!-- 300 x 600 --><br />
+<ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 600px;" data-ad-client="ca-pub-1844293074404584" data-ad-slot="4555872008"></ins><br />
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+		</aside>
+	</div>
+	
+
+</div><!-- .inner-wrap -->
+</div><!-- #main -->
+
+	<div class="advertisement_above_footer">
+		<div class="inner-wrap">
+			<aside id="text-13" class="widget widget_text clearfix">			<div class="textwidget"><p><!-- Yandex.RTB R-A-386865-1 --></p>
+<div id="yandex_rtb_R-A-386865-1"></div>
+<p><script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-386865-1",
+                renderTo: "yandex_rtb_R-A-386865-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script></p>
+</div>
+		</aside>		</div>
+	</div>
+
+
+
+<footer id="colophon" class="clearfix ">
+	
+	<div class="footer-socket-wrapper clearfix">
+		<div class="inner-wrap">
+			<div class="footer-socket-area">
+				<div class="footer-socket-right-section">
+									</div>
+
+				<div class="footer-socket-left-section">
+					<div class="copyright">Copyright &copy; 2019-2021 <a href="https://webdevblog.ru/" title="Еще один блог веб-разработчика" ><span>Еще один блог веб-разработчика</span></a>.<br>Перепечатывание материалов сайта с указанием первоисточника приветствуется.
+<br><br>Если вы считаете что публикация какой то статьи в этом блоге нарушает чьи-то авторские права, <a href="mailto:info@webdevblog.ru">напишите нам об этом.</a><br>If you think that the publication of any article on this blog violates someone’s copyright, <a href="mailto:info@webdevblog.ru">email to us about it</a></div>				</div>
+				<div style="float: right;">
+					<!-- Yandex.Metrika informer -->
+<a href="https://metrika.yandex.ru/stat/?id=51917054&amp;from=informer"
+target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/51917054/3_0_FFFFFFFF_EFEFEFFF_0_pageviews"
+style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="51917054" data-lang="ru" /></a>
+<!-- /Yandex.Metrika informer -->
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<a href="#masthead" id="scroll-up"><i class="fa fa-chevron-up"></i></a>
+
+</div><!-- #page -->
+
+		<!-- GA Google Analytics @ https://m0n.co/ga -->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-84824195-2', 'auto');
+			ga('send', 'pageview');
+		</script>
+
+	<a href='javascript:void(0);' id='wpdUserContentInfoAnchor' style='display:none;' rel='#wpdUserContentInfo' data-wpd-lity>wpDiscuz</a><div id='wpdUserContentInfo' style='overflow:auto;background:#FDFDF6;padding:20px;width:600px;max-width:100%;border-radius:6px;' class='lity-hide'></div><div id='wpd-bubble-wrapper'><span id='wpd-bubble-all-comments-count' title='1'>1</span><div id='wpd-bubble-count'><svg xmlns='https://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path class='wpd-bubble-count-first' d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z'/><path class='wpd-bubble-count-second' d='M0 0h24v24H0z' /></svg><span class='wpd-new-comments-count'>0</span></div><div id='wpd-bubble'><svg xmlns='https://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path class='wpd-bubble-plus-first' d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path class='wpd-bubble-plus-second' d='M0 0h24v24H0z' /></svg><div id='wpd-bubble-add-message'>Будем рады вашим мыслям, пожалуйста, прокомментируйте.<span id='wpd-bubble-add-message-close'><a href='#'>x</a></span></div></div><div id='wpd-bubble-notification'><svg xmlns='https://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path class='wpd-bubble-notification-first' d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z'/><path class='wpd-bubble-notification-second' d='M0 0h24v24H0z' /></svg><div id='wpd-bubble-notification-message'><div id='wpd-bubble-author'><div><span id='wpd-bubble-author-avatar'></span><span id='wpd-bubble-author-name'></span><span id='wpd-bubble-comment-date'>(<span class='wpd-bubble-spans'></span>)</span></div><span id='wpd-bubble-comment-close'><a href='#'>x</a></span></div><div id='wpd-bubble-comment'><span id='wpd-bubble-comment-text'></span><span id='wpd-bubble-comment-reply-link'>| <a href='#'>Reply</a></span></div></div></div></div><div id='wpd-editor-source-code-wrapper-bg'></div><div id='wpd-editor-source-code-wrapper'><textarea id='wpd-editor-source-code'></textarea><button id='wpd-insert-source-code'>Insert</button><input type='hidden' id='wpd-editor-uid' /></div><script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/anti-spam/assets/js/anti-spam.js?ver=7.2.8' id='anti-spam-script-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/webdevblog.ru\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.5.1' id='contact-form-7-js'></script>
+<script type='text/javascript' id='wpdiscuz-combo-js-js-extra'>
+/* <![CDATA[ */
+var wpdiscuzAjaxObj = {"wc_hide_replies_text":"\u0421\u043f\u0440\u044f\u0442\u0430\u0442\u044c \u043e\u0442\u0432\u0435\u0442\u044b","wc_show_replies_text":"\u041f\u0440\u043e\u0441\u043c\u043e\u0442\u0440 \u043e\u0442\u0432\u0435\u0442\u043e\u0432","wc_msg_required_fields":"\u0417\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u044b\u0435 \u043f\u043e\u043b\u044f","wc_invalid_field":"\u041d\u0435\u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043f\u043e\u043b\u044f \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u044b \u043d\u0435\u0432\u0435\u0440\u043d\u043e","wc_error_empty_text":"\u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0437\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u044d\u0442\u043e \u043f\u043e\u043b\u0435, \u0447\u0442\u043e\u0431\u044b \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c","wc_error_url_text":"url \u043d\u0435\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0439","wc_error_email_text":"\u0430\u0434\u0440\u0435\u0441 \u044d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u0439 \u043f\u043e\u0447\u0442\u044b \u043d\u0435\u0432\u0435\u0440\u0435\u043d","wc_invalid_captcha":"\u041d\u0435\u0432\u0435\u0440\u043d\u043e \u0432\u0432\u0435\u0434\u0435\u043d \u043a\u043e\u0434","wc_login_to_vote":"\u0412\u044b \u0434\u043e\u043b\u0436\u043d\u044b \u0432\u043e\u0439\u0442\u0438 , \u0447\u0442\u043e\u0431\u044b \u043f\u0440\u043e\u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u0442\u044c","wc_deny_voting_from_same_ip":"\u0412\u044b \u043d\u0435 \u043c\u043e\u0436\u0435\u0442\u0435 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u0442\u044c \u0437\u0430 \u044d\u0442\u043e\u0442 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439","wc_self_vote":"\u0412\u044b \u043d\u0435 \u043c\u043e\u0436\u0435\u0442\u0435 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u0442\u044c \u0437\u0430 \u0441\u0432\u043e\u0439 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439","wc_vote_only_one_time":"\u0412\u044b \u0443\u0436\u0435 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043b\u0438 \u0437\u0430 \u044d\u0442\u043e\u0442 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439","wc_voting_error":"\u041e\u0448\u0438\u0431\u043a\u0430 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043d\u0438\u044f","wc_comment_edit_not_possible":"Sorry, this comment is no longer possible to edit","wc_comment_not_updated":"\u0418\u0437\u0432\u0438\u043d\u0438\u0442\u0435, \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u043d\u0435 \u0431\u044b\u043b \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d","wc_comment_not_edited":"\u0412\u044b \u043d\u0435 \u0441\u0434\u0435\u043b\u0430\u043b\u0438 \u043d\u0438\u043a\u0430\u043a\u0438\u0445 \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u0439","wc_msg_input_min_length":"\u0412\u0432\u043e\u0434 \u0441\u043b\u0438\u0448\u043a\u043e\u043c \u043a\u043e\u0440\u043e\u0442\u043a\u0438\u0439","wc_msg_input_max_length":"\u0412\u0432\u043e\u0434 \u0441\u043b\u0438\u0448\u043a\u043e\u043c \u0434\u043b\u0438\u043d\u043d\u044b\u0439","wc_spoiler_title":"Spoiler Title","wc_cannot_rate_again":"You cannot rate again","wc_not_allowed_to_rate":"You're not allowed to rate here","wc_follow_user":"\u041f\u043e\u0434\u043f\u0438\u0441\u0430\u0442\u044c\u0441\u044f \u043d\u0430 \u044d\u0442\u043e\u0433\u043e \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f","wc_unfollow_user":"\u041e\u0442\u043f\u0438\u0441\u0430\u0442\u044c\u0441\u044f \u043e\u0442 \u044d\u0442\u043e\u0433\u043e \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f","wc_follow_success":"\u0412\u044b \u043d\u0430\u0447\u0430\u043b\u0438 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443 \u043d\u0430 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0438 \u044d\u0442\u043e\u0433\u043e \u0430\u0432\u0442\u043e\u0440\u0430","wc_follow_canceled":"\u0412\u044b \u043e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443 \u043d\u0430 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0438 \u044d\u0442\u043e\u0433\u043e \u0430\u0432\u0442\u043e\u0440\u0430","wc_follow_email_confirm":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0432\u0430\u0448 email \u0438 \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u0437\u0430\u043f\u0440\u043e\u0441 \u043d\u0430 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443.","wc_follow_email_confirm_fail":"\u0418\u0437\u0432\u0438\u043d\u0438\u0442\u0435, \u043c\u044b \u043d\u0435 \u043c\u043e\u0436\u0435\u043c \u043f\u0440\u0438\u0441\u043b\u0430\u0442\u044c \u043f\u0438\u0441\u044c\u043c\u043e \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d\u0438\u044f.","wc_follow_login_to_follow":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0432\u043e\u0439\u0434\u0438\u0442\u0435 \u0447\u0442\u043e\u0431\u044b \u043f\u043e\u0434\u043f\u0438\u0441\u044b\u0432\u0430\u0442\u044c\u0441\u044f \u043d\u0430 \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u0435\u0439.","wc_follow_impossible":"\u041d\u0430\u043c \u0436\u0430\u043b\u044c, \u043d\u043e \u0432\u044b \u043d\u0435 \u043c\u043e\u0436\u0435\u0442\u0435 \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u0442\u044c\u0441\u044f \u043d\u0430 \u044d\u0442\u043e\u0433\u043e \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044f.","wc_follow_not_added":"\u041d\u0435 \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u043e\u0441\u044c \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u0442\u044c\u0441\u044f. \u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u043f\u043e\u0437\u0436\u0435.","is_user_logged_in":"","commentListLoadType":"0","commentListUpdateType":"0","commentListUpdateTimer":"30","liveUpdateGuests":"0","wordpressThreadCommentsDepth":"4","wordpressIsPaginate":"","commentTextMaxLength":"0","replyTextMaxLength":"0","commentTextMinLength":"1","replyTextMinLength":"1","storeCommenterData":"100000","socialLoginAgreementCheckbox":"1","enableFbLogin":"1","fbUseOAuth2":"0","enableFbShare":"0","facebookAppID":"","facebookUseOAuth2":"0","enableGoogleLogin":"0","googleClientID":"","googleClientSecret":"","cookiehash":"8f48f7de34773bfc1acfca400362cd0f","isLoadOnlyParentComments":"0","scrollToComment":"1","commentFormView":"collapsed","enableDropAnimation":"1","isNativeAjaxEnabled":"1","enableBubble":"1","bubbleLiveUpdate":"0","bubbleHintTimeout":"45","bubbleHintHideTimeout":"10","cookieHideBubbleHint":"wpdiscuz_hide_bubble_hint","bubbleShowNewCommentMessage":"1","bubbleLocation":"content_left","firstLoadWithAjax":"0","wc_copied_to_clipboard":"Copied to clipboard!","inlineFeedbackAttractionType":"blink","loadRichEditor":"1","wpDiscuzReCaptchaSK":"","wpDiscuzReCaptchaTheme":"light","wpDiscuzReCaptchaVersion":"2.0","wc_captcha_show_for_guest":"0","wc_captcha_show_for_members":"0","wpDiscuzIsShowOnSubscribeForm":"0","wmuEnabled":"1","wmuInput":"wmu_files","wmuMaxFileCount":"1","wmuMaxFileSize":"2097152","wmuPostMaxSize":"8388608","wmuIsLightbox":"1","wmuMimeTypes":{"jpg":"image\/jpeg","jpeg":"image\/jpeg","jpe":"image\/jpeg","gif":"image\/gif","png":"image\/png","bmp":"image\/bmp","tiff":"image\/tiff","tif":"image\/tiff","ico":"image\/x-icon"},"wmuPhraseConfirmDelete":"Are you sure you want to delete this attachment?","wmuPhraseNotAllowedFile":"Not allowed file type","wmuPhraseMaxFileCount":"Maximum number of uploaded files is 1","wmuPhraseMaxFileSize":"Maximum upload file size is 2MB","wmuPhrasePostMaxSize":"Maximum post size is 8MB","msgEmptyFile":"File is empty. Please upload something more substantial. This error could also be caused by uploads being disabled in your php.ini or by post_max_size being defined as smaller than upload_max_filesize in php.ini.","msgPostIdNotExists":"ID \u0437\u0430\u043f\u0438\u0441\u0438 \u043d\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442","msgUploadingNotAllowed":"\u0418\u0437\u0432\u0438\u043d\u0438\u0442\u0435, \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0434\u043b\u044f \u044d\u0442\u043e\u0433\u043e \u043f\u043e\u0441\u0442\u0430 \u0437\u0430\u043f\u0440\u0435\u0449\u0435\u043d\u0430","msgPermissionDenied":"\u0423 \u0432\u0430\u0441 \u043d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e \u043f\u0440\u0430\u0432 \u0434\u043b\u044f \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f \u044d\u0442\u043e\u0433\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044f","wmuSecurity":"d28a3663ec","wmuKeyImages":"images","wmuSingleImageWidth":"auto","wmuSingleImageHeight":"200","version":"7.3.4","wc_post_id":"3715","isCookiesEnabled":"1","loadLastCommentId":"0","wpdiscuz_nonce":"d28a3663ec","dataFilterCallbacks":[],"phraseFilters":[],"scrollSize":"32","is_email_field_required":"0","url":"https:\/\/webdevblog.ru\/wp-admin\/admin-ajax.php","customAjaxUrl":"https:\/\/webdevblog.ru\/wp-content\/plugins\/wpdiscuz\/utils\/ajax\/wpdiscuz-ajax.php","bubbleUpdateUrl":"https:\/\/webdevblog.ru\/wp-json\/wpdiscuz\/v1\/update","restNonce":"c22eb7f2d4"};
+var wpdiscuzUCObj = {"msgConfirmDeleteComment":"\u0412\u044b \u0445\u043e\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043b\u0438\u0442\u044c \u044d\u0442\u043e\u0442 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439?","msgConfirmCancelSubscription":"\u0412\u044b \u0445\u043e\u0442\u0438\u0442\u0435 \u043e\u0442\u043c\u0435\u043d\u0438\u0442\u044c \u044d\u0442\u0443 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443?","msgConfirmCancelFollow":"\u0412\u044b \u0443\u0432\u0435\u0440\u0435\u043d\u044b \u0447\u0442\u043e \u0445\u043e\u0442\u0438\u0442\u0435 \u043e\u0442\u043c\u0435\u043d\u0438\u0442\u044c \u044d\u0442\u0443 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443?","additionalTab":"0"};
+/* ]]> */
+</script>
+<script type='text/javascript' id='wpdiscuz-combo-js-js-before'>
+        var wpdiscuzEditorOptions = {
+        modules: {
+        toolbar: "",
+        counter: {
+        uniqueID: "",
+        commentmaxcount : 0,
+        replymaxcount : 0,
+        commentmincount : 1,
+        replymincount : 1,
+        },
+		        },
+        wc_be_the_first_text: "\u041e\u0441\u0442\u0430\u0432\u044c\u0442\u0435 \u043f\u0435\u0440\u0432\u044b\u0439 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439!",
+        wc_comment_join_text: "\u041f\u0440\u0438\u0441\u043e\u0435\u0434\u0438\u043d\u0438\u0442\u044c\u0441\u044f \u043a \u043e\u0431\u0441\u0443\u0436\u0434\u0435\u043d\u0438\u044e",
+        theme: 'snow',
+        debug: 'error'
+        };
+		
+</script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/wpdiscuz/assets/js/wpdiscuz-combo.min.js?ver=7.3.4' id='wpdiscuz-combo-js-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/comment-reply.min.js?ver=26150737622396779d86eaf4d148b8af' id='comment-reply-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/themes/mycolormag/js/jquery.bxslider.min.js?ver=4.2.10' id='colormag-bxslider-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/themes/mycolormag/js/navigation.js?ver=26150737622396779d86eaf4d148b8af' id='colormag-navigation-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/themes/mycolormag/js/fitvids/jquery.fitvids.js?ver=20150311' id='colormag-fitvids-js'></script>
+<script type='text/javascript' id='heateor_sss_sharing_js-js-before'>
+function heateorSssLoadEvent(e) {var t=window.onload;if (typeof window.onload!="function") {window.onload=e}else{window.onload=function() {t();e()}}};	var heateorSssSharingAjaxUrl = 'https://webdevblog.ru/wp-admin/admin-ajax.php', heateorSssCloseIconPath = 'https://webdevblog.ru/wp-content/plugins/sassy-social-share/public/../images/close.png', heateorSssPluginIconPath = 'https://webdevblog.ru/wp-content/plugins/sassy-social-share/public/../images/logo.png', heateorSssHorizontalSharingCountEnable = 1, heateorSssVerticalSharingCountEnable = 0, heateorSssSharingOffset = -10; var heateorSssMobileStickySharingEnabled = 0;var heateorSssCopyLinkMessage = "Link copied.";var heateorSssUrlCountFetched = [], heateorSssSharesText = 'Поделились', heateorSssShareText = 'Поделиться';function heateorSssPopup(e) {window.open(e,"popUpWindow","height=400,width=600,left=400,top=100,resizable,scrollbars,toolbar=0,personalbar=0,menubar=no,location=no,directories=no,status")};var heateorSssWhatsappShareAPI = "web";
+</script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/sassy-social-share/public/js/sassy-social-share-public.js?ver=3.3.24' id='heateor_sss_sharing_js-js'></script>
+<script type='text/javascript' id='yasr-global-data-js-before'>
+var yasrCommonData = {"ajaxurl":"https:\/\/webdevblog.ru\/wp-admin\/admin-ajax.php","visitorStatsEnabled":"yes","ajaxEnabled":"no","loaderHtml":"<div id=\"loader-visitor-rating\" style=\"display: inline-block\">&nbsp;  <img src=\"https:\/\/webdevblog.ru\/wp-content\/plugins\/yet-another-stars-rating\/includes\/img\/loader.gif\" title=\"yasr-loader\" alt=\"yasr-loader\"><\/div>"}
+</script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/enlighter/cache/enlighterjs.min.js?ver=5GxC0Sl5qHwhaao' id='enlighterjs-js'></script>
+<script type='text/javascript' id='enlighterjs-js-after'>
+!function(e,n){if("undefined"!=typeof EnlighterJS){var o={"selectors":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"options":{"indent":2,"ampersandCleanup":true,"linehover":true,"rawcodeDbclick":false,"textOverflow":"break","linenumbers":false,"theme":"enlighter","language":"generic","retainCssClasses":false,"collapse":false,"toolbarOuter":"","toolbarTop":"{BTN_RAW}{BTN_COPY}{BTN_WINDOW}{BTN_WEBSITE}","toolbarBottom":""}};(e.EnlighterJSINIT=function(){EnlighterJS.init(o.selectors.block,o.selectors.inline,o.options)})()}else{(n&&(n.error||n.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}}(window,console);
+</script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/wp-embed.min.js?ver=26150737622396779d86eaf4d148b8af' id='wp-embed-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/yet-another-stars-rating/includes/js/rater-js.min.js?ver=2.9.2' id='rater-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/yet-another-stars-rating/includes/js/tippy.all.min.js?ver=3.6.0' id='tippy-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/dist/hooks.min.js?ver=a7edae857aab69d69fa10d5aef23a5de' id='wp-hooks-js'></script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-includes/js/dist/i18n.min.js?ver=5f1269854226b4dd90450db411a12b79' id='wp-i18n-js'></script>
+<script type='text/javascript' id='wp-i18n-js-after'>
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type='text/javascript' src='https://webdevblog.ru/wp-content/plugins/yet-another-stars-rating/includes/js/shortcodes/visitorVotes.js?ver=2.9.2' id='yasr-front-vv-js'></script>
+
+<!--Start VDZ Yandex Metrika Plugin-->
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter51917054 = new Ya.Metrika({ id:51917054, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true, ecommerce:"dataLayer" }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/51917054" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<!--End VDZ Yandex Metrika Plugin-->
+</body>
+</html>

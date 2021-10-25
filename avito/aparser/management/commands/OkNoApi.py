@@ -3,6 +3,7 @@ import json
 import requests
 import sys
 import time
+#import datetime
 from random import randint
 from fake_useragent import UserAgent
 #af0deccbgcgidddjgnvljitntccdduijhdinfgjgfjir
@@ -145,7 +146,11 @@ for i in items: # Теперь идем по ябъявлениям:
         print(f'7.) телефон {phone_number}')
         print(f'''8.) seller {more_data_2['seller']}''')
         print(f'''9.) Name {more_data_2['seller']['name']}''')
+        regtime = more_data_2['seller']['registrationTime']
+        #parse_date(item=absolute_date)
         print(f'''10.) registrationTime {more_data_2['seller']['registrationTime']}''')
+        print(f'''10.1) regTime {regtime}''')
+
         #connection пропускаю пока
         print(f'''11.) link {more_data_2['seller']['link']}''')
 

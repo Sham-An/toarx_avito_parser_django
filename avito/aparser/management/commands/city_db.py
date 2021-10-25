@@ -1,10 +1,10 @@
+
 import psycopg2
 import json
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
 def city_list_from_db():
+
     con = psycopg2.connect(
         database="postgres",
         user="postgres",
