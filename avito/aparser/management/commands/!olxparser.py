@@ -1,6 +1,8 @@
 import time
 import requests
 import lxml.html
+from lxml import html
+from lxml import etree
 from bs4 import BeautifulSoup
 from random import randint
 import threading
@@ -62,7 +64,11 @@ class OlxParser:
         #AVITO дерево группы
         path = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[2]//a[@itemprop="url"]'
         #path = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id and @id]'
-
+        path_title ='.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@class = "iva-item-descriptionStep-QGE8Y"]//text()'
+        #//li[@class ^='ajax_block_product']
+        path_description = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="description"]'
+        path_price = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="price"]'
+        #//div[contains(concat(' ', normalize-space(@class), ' '), ' iva-item-descriptionStep ')]
 
         #www.olx.ua
         #path = './/table[@id="offers_table"]//td[@class="offer  "]'
@@ -75,6 +81,10 @@ class OlxParser:
         #offers = html_tree.xpath('.//table[@id="offers_table"]//td[@class="offer promoted "]')
         #offers = html_tree.xpath('.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div//div//a')
         offers = html_tree.xpath(path)
+        #for offer in offers:
+        # //*[@id="i2269555802"]/div/div[2]/div[6]/div/text()
+        #print(offers[1].text)
+        #print(etree.tostring(offers))
  #############################################################
         #Пробуем BeautifulSoup
         soup = BeautifulSoup(html,features="lxml")
@@ -82,21 +92,18 @@ class OlxParser:
         #for lnk in soup.find_all('a'):
         #    print("prn lnk ", lnk.get('href'))
 
-        #for lnk2 in soup.find_all(path):
-         #   print("prn lnk ", lnk2.text)
-
-
-        print("prn text ", soup.get_text())
-
+        #print("prn text ", soup.get_text())
 
 ##############################################################
         last_offer = str(offers[1]) #last_offer.text_content()
+        #last_offer_text_content = last_offer.text_content()
+        #print(f'LastOffer {last_offer}   last_offer_text_content')
         #url_last=html_tree.xpath(path).get('href')
 
         url_last = str('https://www.avito.ru')+html_tree.xpath(path)[1].get('href')
 
         #print(f'Offers {len(offers)},{html_tree}, {url_last}') # offers)
-        print(len(offers),html_tree, url_last)  # offers)
+        print(len(offers), html_tree, url_last)  # offers)
 
         try:
             last_offer = html_tree.xpath(path)[1]
@@ -119,6 +126,7 @@ class OlxParser:
     def run(self): # https://youtu.be/n6x1pzlRK8A?t=2651
         while True:
             page = self.get_page()
+            #print(f'page  {page}')
             index = randint(2, 150)
             print(f'index = {index}')
             if page is None:
