@@ -1,17 +1,16 @@
-#URL https://youtu.be/n6x1pzlRK8A
 import time
 import requests
 import lxml.html
 from bs4 import BeautifulSoup
 from random import randint
 import threading
-
+#index = 1
 #БЕЗ BeautifulSoup
 
 # Debag part 2 переменные https://youtu.be/HpJYVIRuQbU
 # Debag part 3 изменение брекпоинтов на принт https://youtu.be/QA_aGDIHakA
-# DEBAG Condition условие остановки если (переменная >= )
-# DEBAG Evaluate and log вывод в консоль строки формата f" текст {переменная}  "
+# Condition условие остановки если (переменная >= )
+# Evaluate and log вывод в консоль строки формата f" текст {переменная}  "
 #https://youtu.be/n6x1pzlRK8A?t=1784 (30:43)
 class OlxParser:
 
@@ -37,7 +36,6 @@ class OlxParser:
         path = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[2]//a[@itemprop="url"]'
         #path = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id and @id]'
 
-
         #www.olx.ua
         #path = './/table[@id="offers_table"]//td[@class="offer  "]'
         #path = './/table[@id="offers_table"]//td[@class="offer  "]'
@@ -51,23 +49,22 @@ class OlxParser:
         offers = html_tree.xpath(path)
  #############################################################
         #Пробуем BeautifulSoup
-        soup = BeautifulSoup(html, features="lxml")
+        soup = BeautifulSoup(html,features="lxml")
         #print(soup.prettify())
-        #for lnk in soup.find_all('a'):
-        #    print("prn lnk ", lnk.get('href'))
+        for lnk in soup.find_all('a'):
+            print("prn lnk ", lnk.get('href'))
 
         print("prn text ", soup.get_text())
-        print("КОНЕЦ КОНЕЦ КОНЕЦ prn text ")
 
 
 ##############################################################
-        last_offer = str(offers[1])
-        #print(last_offer.text_content())
+        last_offer = str(offers[1]) #last_offer.text_content()
         #url_last=html_tree.xpath(path).get('href')
 
         url_last = str('https://www.avito.ru')+html_tree.xpath(path)[1].get('href')
 
-        print(len(offers),html_tree, url_last) # offers)
+        #print(f'Offers {len(offers)},{html_tree}, {url_last}') # offers)
+        print(len(offers),html_tree, url_last)  # offers)
 
         try:
             last_offer = html_tree.xpath(path)[1]
@@ -90,14 +87,17 @@ class OlxParser:
     def run(self): # https://youtu.be/n6x1pzlRK8A?t=2651
         while True:
             page = self.get_page()
-            index = 1
+            index = randint(2, 150)
+            print(f'index = {index}')
             if page is None:
                 time.sleep(2)
                 continue
 
             self.get_last_offer(page)
             time.sleep(1)
-            time.sleep((randint(6, 14)) if index % 10 != 0 else 20)
+            time.sleep((randint(6, 14)) if index % 10 != 0 else randint(10, 20))
+            #index += 1
+
 
 if __name__=="__main__":
 

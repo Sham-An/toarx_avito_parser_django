@@ -62,12 +62,28 @@ class OlxParser:
         html_tree = lxml.html.fromstring(html)
         #Из окна с таблицей элементов выбор элементов
         #AVITO дерево группы
-        path = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[2]//a[@itemprop="url"]'
+        #path =  './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[2]//a[@itemprop="url"]'
         #path = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id and @id]'
+        path =            './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]'
         path_title ='.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@class = "iva-item-descriptionStep-QGE8Y"]//text()'
         #//li[@class ^='ajax_block_product']
+        #substring('123456', 1, 3) = '123' substring()='iva-item-content'
         path_description = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="description"]'
-        path_price = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="price"]'
+        #preceding-sibling
+        path_name = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="description"]'
+        path_price =       './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="price"]'
+        path_trader =      './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@data-marker="item-line"]//a'
+        path_descrip_full = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@data-marker="item-line"]//preceding-sibling::div[1]//div'
+
+        ##!!!!!!!####!!!!!!###!!!!#БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА
+        path_descrip_full ='.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[substring(@class,1,13) ="iva-item-text"]'
+        path_descrip_full_text ='.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[substring(@class,1,13) ="iva-item-text"]//text()'
+        #preceding-sibling
+        #following-sibling
+
+        path_time_old =    './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@data-marker="item-date"]'
+        path_location =    './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@data-marker="item-line"]//following-sibling::div[2]//span'
+
         #//div[contains(concat(' ', normalize-space(@class), ' '), ' iva-item-descriptionStep ')]
 
         #www.olx.ua
