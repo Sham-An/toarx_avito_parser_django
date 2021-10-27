@@ -9,6 +9,8 @@ import threading
 #index = 1
 ################ VARNING!!!!!!!!!!!!!!
 
+#какой скрипт отрабатывает Elements → Right Click на элементе → Break On... → Attributes Modifications. Дальше вызвать поворот, и посмотреть какой скрипт полезет менять аттрибуты элемента.
+#функции https://xsltdev.ru/xpath/
     # #       Beautiful Soup
     # soup = BeautifulSoup(text)
     # film_list = soup.find('div', {'class': 'profileFilmsList'})
@@ -76,8 +78,11 @@ class OlxParser:
         path_descrip_full = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@data-marker="item-line"]//preceding-sibling::div[1]//div'
 
         ##!!!!!!!####!!!!!!###!!!!#БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА ## БОМБА
+        #substring(@class,1,13) ="iva-item-text"
         path_descrip_full ='.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[substring(@class,1,13) ="iva-item-text"]'
-        path_descrip_full_text ='.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[substring(@class,1,13) ="iva-item-text"]//text()'
+        #path_descrip_full_text ='.//div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[substring(@class,1,13) ="iva-item-text"]//text()'
+        # starts-with(string, string)
+        path_descrip_full_text = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[starts-with(@class,"iva-item-text")]//text()'
         #preceding-sibling
         #following-sibling
 
