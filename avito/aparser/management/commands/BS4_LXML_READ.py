@@ -20,12 +20,18 @@ from lxml import html
     #Еще небольшой хинт для debug'a: для того, чтобы посмотреть,
     # что внутри выбранной ноды в BeautifulSoup можно просто распечатать ее,
     # а в lxml воспользоваться функцией tostring() модуля etree.
+
     # BeatifulSoup
     #print item
 
     #lxml
     #from lxml import etree
     #print etree.tostring(item_lxml)
+    # ИЛИ
+    #text = etree.tostring(element, method='text', encoding='utf-8')
+    #if strip:
+    #    text = text.strip()
+    #return str(text, encoding='utf-8')
 
 s = requests.Session()
 s.headers.update({
