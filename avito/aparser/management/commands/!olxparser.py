@@ -2,7 +2,7 @@ import time
 import io
 import requests
 from urllib.request import urlopen
-#import lxml.html
+import lxml.html
 from lxml import html
 from lxml import etree
 from bs4 import BeautifulSoup
@@ -57,8 +57,10 @@ def parse_from_stars(url):
     url = 'https://www.starwars.com/news/15-star-wars-quotes-to-use-in-everyday-life'
     headers = {'Content-Type': 'text/html', }
     response = requests.get(url, headers=headers)
-    html = response.text
-    #print(html)
+    html = requests.get(url, headers=headers)
+    html_lxml = lxml.html.fromstring(html.content)
+    #html = response.text
+    print(f'html_lxml  {html_lxml}')
     # s = 'C:/tmp/star_wars_html.html'
     # local = s.encode('UTF-8')
     # with open(local, 'w',) as f:
@@ -97,7 +99,22 @@ def parse_xml(url):
     headers = {'Content-Type': 'text/html', }
     response = requests.get(url, headers=headers)
     html_txt = response.text
-    # print(html)
+    doc = lxml.html.fromstring(response.content)
+    print(doc)
+    new_releases = doc.xpath('//div[@elementtiming="bx.catalog.container"]')[0]
+    print(new_releases)
+
+    items_id = new_releases.xpath('.//div[@data-item-id]')  # , smart_strings=False) #.decode('utf8')
+    meta_items_id = new_releases.xpath('.//meta[@itemprop="description"]/@content')  # , smart_strings=False)
+
+    print(f'meta_items_id {meta_items_id[0]}')
+    print(f'ВСЕГО {len(items_id)} В {items_id}')
+    titles = new_releases.xpath('.//div[substring(@class,1,13) ="iva-item-desc"]//text()')
+    prices = new_releases.xpath('.//div[@data-item-id]//meta[@itemprop="price"]/@content')
+    ##all_in_one = new_releases.xpath('//*[//div[@data-item-id]//div[@data-marker="item-date"]//preceding::div[@data-marker="item-line"]]')
+    print(len(titles))
+    print(len(prices))
+
     # results = []
     # resp = requests.get(url, headers=headers)
     # text = resp.text
@@ -148,33 +165,39 @@ def parse_xml(url):
 
     #tree = etree.fromstring(html, etree.HTMLParser())
     #tree = etree.fromstring(html_txt, etree.HTMLParser())
+    #print(html_txt)
     tree = html.fromstring(html_txt)
     #tree = etree.fromstring(html)
     index = 1
     list_lxml = tree.xpath(path_container)[0]
+    #list_lxml = tree.xpath(path_container)[0:9]
     #print(list_lxml)
     items = list_lxml.xpath(path_item)
     #print(items)
     #print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!etree.tostring(tree) {etree.tostring(tree)}')
     #for item in items:
-    for item in tree.xpath(path):
+    for item in tree.xpath(path): #.getall():
 
-        #print(f'ITEM_ID {item.xpath("//@id")}')
+
+        print(item)
+
+        print(f'ITEM_ID {item.xpath(".//@id")}')
         #print(f'ITEM_ID {etree.tostring(item.xpath("//@id"))}')
         name = "NAME"
         #name = item.xpath(path_title)
         index += 1
         description =""
         #description = item.xpath('//div[substring(@class,1,13) ="iva-item-text"]//text()')
-        title = item.xpath('//div[@class="iva-item-descriptionStep-QGE8Y"]//text()')
+        title = item.xpath('.//div[@class="iva-item-descriptionStep-QGE8Y"]//text()')
 
-        #name = item.xpath('./div[@class="name"]/text()')
+        name = item.xpath('./div[@class="name"]/text()')
         #description = item.xpath('./div[@class="description"]/text()')
         if index < 10:
             #print(etree.tostring(item), name, description)
             print(title)
+            print(name)
             #index +=1
-            print(index)
+            #print(index)
 
 
     # list_lxml = tree.xpath(path)[0]
@@ -222,7 +245,6 @@ class OlxParser:
         #//li[@class ^='ajax_block_product']  #substring('123456', 1, 3) = '123' substring()='iva-item-content'
         path_description = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="description"]'
         #preceding-sibling
-        path_name = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="description"]'
         path_price =       './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="price"]'
         path_trader =      './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//div[@data-marker="item-line"]//a'
         # preceding-sibling
