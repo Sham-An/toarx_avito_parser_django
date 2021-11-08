@@ -91,7 +91,6 @@ def parse_from_stars(url):
     #print(tree2)
     return
 
-
 def parse_xml(url):
     #https://habr.com/ru/post/280238/
 
