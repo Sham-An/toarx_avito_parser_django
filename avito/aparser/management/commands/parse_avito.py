@@ -167,7 +167,7 @@ class AvitoParser:
         logger.info(f'Работаем над заданием {self.task}')
 
     def finish_task(self):
-        #self.task.status = STATUS_READY
+        self.task.status = STATUS_READY
         self.task.save()
         logger.info(f'Завершили задание')
 
@@ -324,6 +324,7 @@ class AvitoParser:
         #print(f'SOUP   {soup}')
 
         # Запрос CSS-селектора, состоящего из множества классов, производится через select
+        #container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
         container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
         print(f'КОНТЕЙНЕР  {container}')
         for item in container:
@@ -352,14 +353,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #reg = RegionGet()
         #reg.list_region()
-        city = CityGet()
-        city.list_city()
+        #city = CityGet()
+        #city.list_city()
         #cat = CategoryGet()
         #cat.find_category()
         #cat.list_category()
 
-        #p = AvitoParser()
-        #p.parse_all()
+        p = AvitoParser()
+        p.parse_all()
 
 #def main():
     #p = AvitoParser()
