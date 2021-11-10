@@ -150,7 +150,7 @@ class CategoryGet:
 class AvitoParserXPath:
     def __init__(self):
         print('ParserXPath222222222')
-        #self.session = requests.Session()
+        self.session = requests.Session()
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
             'Accept-Language': 'ru',
@@ -161,6 +161,17 @@ class AvitoParserXPath:
 
     def find_task(self):
         obj = Task.objects.filter(status=STATUS_NEW).first()
+        tasks = Task.objects.filter(status=STATUS_NEW).all()
+        #obj = Task.objects.filter(status=STATUS_NEW).all()
+        print(f'tasks.query {tasks.query} \n {tasks}')
+        # for ts in tasks:
+        #     print(ts.title)
+        #     obj = ts
+        #     if not obj:
+        #         raise CommandError('ParserXPath no tasks found!!!!')
+        #     self.task = obj
+        #     logger.info(f'ParserXPath Работаем над заданием {self.task}')
+
         # print(self)
         if not obj:
             raise CommandError('ParserXPath no tasks found!!!!')
@@ -187,7 +198,7 @@ class AvitoParserXPath:
 
         url = self.task.url
         #r = self.session.get(url, params=params)
-        response = requests.get(url, headers=headers)
+        response = requests.get(url,  params=params, headers=headers)
         r = response #.text
         #r.raise_for_status()
         #print('!!!!!!!!!!!!!!!!!!!!!!! get_page')
@@ -211,7 +222,7 @@ class AvitoParserXPath:
         # r = urllib.parse.urlparse(href)
         # params = urllib.parse.parse_qs(r.query)
         # return min(int(params['p'][0]), self.PAGE_LIMIT)
-        return 1
+        return 2
 
     def get_blocks(self, page: int = None):
 
@@ -237,11 +248,14 @@ class AvitoParserXPath:
             item_id = item.xpath(path_id)[0]
             print(f'ITEM_ID {item_id}') #{item.xpath(".//@id")[0]} type{type(item_id)} {item.xpath(path_id)[0]}')
             # name = item.xpath(path_title)[0]
-            name = item.xpath(path_name)[0]
-            print(f'!!!!!!!!!!!!NAME {name}')
+            name = str(item.xpath(path_name)[-1])
+            print(f'{index}!!!!!!!!!!!!NAME {name}')
             #index += 1
-            description_div = item.xpath(path_description_div)[0]
-            print(f' {index} description_div = {description_div}')
+            description_div = "".join(item.xpath(path_description_div)) #join - список в строку
+            LenDesk = len(description_div)
+            #description_div = item.xpath(path_description_div)
+
+            print(f' {index} description_div len = {LenDesk} \n  = {description_div}')
             index +=1
     #
         # # Запрос CSS-селектора, состоящего из множества классов, производится через select
