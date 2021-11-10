@@ -2,6 +2,12 @@ import datetime
 import urllib.parse
 from logging import getLogger
 
+import lxml.html
+from lxml import html
+from lxml import etree
+from bs4 import BeautifulSoup
+from random import randint
+
 import bs4
 import requests
 from django.core.management.base import BaseCommand
@@ -141,19 +147,140 @@ class CategoryGet:
            #except AttributeError:
 
 
+class AvitoParserXPath:
+    def __init__(self):
+        print('ParserXPath222222222')
+        #self.session = requests.Session()
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
+            'Accept-Language': 'ru',
+            'Content-Type': 'text/html',
+        }
+        print('ParserXPath 3')
+        self.task = None
+
+    def find_task(self):
+        obj = Task.objects.filter(status=STATUS_NEW).first()
+        # print(self)
+        if not obj:
+            raise CommandError('ParserXPath no tasks found!!!!')
+        self.task = obj
+        logger.info(f'ParserXPath Работаем над заданием {self.task}')
+
+    def finish_task(self):
+        self.task.status = STATUS_READY
+        #self.task.save()
+        logger.info(f'ParserXPath Завершили задание')
+
+    def get_page(self, page: int = None):
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
+            'Accept-Language': 'ru',
+            'Content-Type': 'text/html',
+        }
+        params = {
+            'radius': 0,
+            'user': 1,
+        }
+        if page and page > 1:
+            params['p'] = page
+
+        url = self.task.url
+        #r = self.session.get(url, params=params)
+        response = requests.get(url, headers=headers)
+        r = response #.text
+        #r.raise_for_status()
+        #print('!!!!!!!!!!!!!!!!!!!!!!! get_page')
+        return r #.text
+
+
+
+    def get_pagination_limit(self):
+        text = self.get_page()
+        #print(text)
+        ##soup = bs4.BeautifulSoup(text, 'lxml')
+        #
+        # container = soup.select('a.pagination-page')
+        # if not container:
+        #     return 1
+        # last_button = container[-1]
+        # href = last_button.get('href')
+        # if not href:
+        #    return 1
+
+        # r = urllib.parse.urlparse(href)
+        # params = urllib.parse.parse_qs(r.query)
+        # return min(int(params['p'][0]), self.PAGE_LIMIT)
+        return 1
+
+    def get_blocks(self, page: int = None):
+
+        headers = {'Content-Type': 'text/html', }
+        response = self.get_page(page=page)
+        html_txt = response.text
+        tree = html.fromstring(html_txt)
+
+        path_item = '//div[@data-marker="item"]'
+        path_id = ".//@id"
+        path_name = './/h3[@itemprop="name"]/text()'
+        #path_name_long = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//h3[@itemprop="name"]'
+
+        path_description_meta = './/meta[@itemprop="description"]/@content'
+        #//div[@data-marker="item"]//meta[@itemprop="description"]/@content
+        #path_description_div = './div[@class="description"]/text()'
+        path_description_div = './/div[substring(@class ,1, 13) ="iva-item-text"]//text()'
+
+        index = 1
+
+        for item in tree.xpath(path_item):  # .getall():
+            #print(item)
+            item_id = item.xpath(path_id)[0]
+            print(f'ITEM_ID {item_id}') #{item.xpath(".//@id")[0]} type{type(item_id)} {item.xpath(path_id)[0]}')
+            # name = item.xpath(path_title)[0]
+            name = item.xpath(path_name)[0]
+            print(f'!!!!!!!!!!!!NAME {name}')
+            #index += 1
+            description_div = item.xpath(path_description_div)[0]
+            print(f' {index} description_div = {description_div}')
+            index +=1
+    #
+        # # Запрос CSS-селектора, состоящего из множества классов, производится через select
+        # #container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
+        # container = soup.select('div.item.item_table.clearfix.js-catalog-item-enum.item-with-contact.js-item-extended')
+        # print(f'КОНТЕЙНЕР  {container}')
+        # for item in container:
+        #     self.parse_block(item=item)
+
+
+    def parse_all(self):
+        # Выбрать какое-нибудь задание
+        #print('4')
+        self.find_task()
+
+        limit = self.get_pagination_limit()
+        logger.info(f'ParserXPath !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Всего страниц: {limit}')
+
+        for i in range(1, limit + 1):
+             logger.info(f'XPath Работаем над страницей {i}')
+             self.get_blocks(page=i)
+        #
+        # # Завершить задание
+        # self.finish_task()
+
+
 
 class AvitoParser:
     PAGE_LIMIT = 10
-    print('1111111111111111111')
+    print('NoXpath1111111111111111111')
 
     def __init__(self):
-        print('222222222')
+        print('NoXpath222222222')
         self.session = requests.Session()
         self.session.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15',
             'Accept-Language': 'ru',
         }
-        print('3')
+        print('NoXpath3')
         self.task = None
 
     def find_task(self):
@@ -233,7 +360,7 @@ class AvitoParser:
                 return datetime.datetime(day=day, month=month, year=year.year)
 
         else:
-            logger.error('Не смогли разобрать формат:', item)
+            logger.error('NoXpath Не смогли разобрать формат:', item)
             return
 
     def parse_block(self, item):
@@ -287,7 +414,7 @@ class AvitoParser:
             p.title = title
             p.price = price
             p.currency = currency
-            print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try: p.save()')
+            print(f'NoXpath!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! try: p.save()')
             p.save()
         except Product.DoesNotExist:
             p = Product(
@@ -298,7 +425,7 @@ class AvitoParser:
                 currency=currency,
                 published_date=date,
             ).save()
-            print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! except Product.DoesNotExist:')
+            print(f'NoXpath!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! except Product.DoesNotExist:')
 
         logger.debug(f'product {p}')
 
@@ -359,8 +486,12 @@ class Command(BaseCommand):
         #cat.find_category()
         #cat.list_category()
 
-        p = AvitoParser()
+        # p = AvitoParser()
+        # p.parse_all()
+
+        p = AvitoParserXPath()
         p.parse_all()
+
 
 #def main():
     #p = AvitoParser()

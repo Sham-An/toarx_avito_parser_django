@@ -98,7 +98,7 @@ def parse_xml(url):
     response = requests.get(url, headers=headers)
     html_txt = response.text
     doc = lxml.html.fromstring(response.content)
-#    print(doc)
+#   print(doc)
     new_releases = doc.xpath('//div[@elementtiming="bx.catalog.container"]')[0]
 #   print(new_releases)
     items_id = new_releases.xpath('.//div[@data-item-id]')  # , smart_strings=False) #.decode('utf8')
@@ -130,7 +130,7 @@ def parse_xml(url):
     path_description = './/meta[@itemprop="description"]'
     # preceding-sibling
     path_name_long        = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//h3[@itemprop="name"]'
-    path_name = './/h3[@itemprop="name"]'
+    path_name = './/h3[@itemprop="name"]/text()'
 
     path_price_long = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//meta[@itemprop="price"]'
     path_price = './/meta[@itemprop="price"]'
@@ -164,7 +164,9 @@ def parse_xml(url):
     # items_lxml = film_list_lxml.xpath('//div[@class = "item even" or @class = "item"]')
     # for item_lxml in items_lxml:
     path_container = './/div[@elementtiming="bx.catalog.container"]//div[@data-marker="catalog-serp"]'
-    path_item = './/div[@data-marker="item"]'
+
+    path_item_full = './/div[@elementtiming="bx.catalog.container"]//div[@data-marker="catalog-serp"]//div[@data-marker="item"]'
+    path_item = '//div[@data-marker="item"]'
 
     #tree = etree.fromstring(html, etree.HTMLParser())
     #tree = etree.fromstring(html_txt, etree.HTMLParser())
@@ -175,19 +177,23 @@ def parse_xml(url):
     list_lxml = tree.xpath(path_container)[0]
     #list_lxml = tree.xpath(path_container)[0:9]
     #print(list_lxml)
+    #items = list_lxml.xpath(path_item_full)
     items = list_lxml.xpath(path_item)
     #print(items)
     #print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!etree.tostring(tree) {etree.tostring(tree)}')
     #for item in items:
-    for item in tree.xpath(path): #.getall():
+    #for item in tree.xpath(path): #.getall():
+    for item in tree.xpath(path_item):  # .getall():
 
         print(item)
         item_id=item.xpath(".//@id")
+        path_id = ".//@id"
 
-        print(f'ITEM_ID {item.xpath(".//@id")[0]} type{type(item_id)}')
+        print(f'ITEM_ID {item.xpath(".//@id")[0]} type{type(item_id)} {item.xpath(path_id)[0]}')
         #print(f'ITEM_ID {etree.tostring(item.xpath("//@id"))}')
         name = "NAME"
-        name = item.xpath(path_title)[0]
+        #name = item.xpath(path_title)[0]
+        name = item.xpath(path_name)[0]
         print(f'!!!!!!!!!!!!NAME {name}')
         index += 1
         description =""
@@ -195,9 +201,9 @@ def parse_xml(url):
         title = item.xpath('.//div[@class="iva-item-descriptionStep-QGE8Y"]//text()')[0]
 
         #description = item.xpath('./div[@class="description"]/text()')
-        if index < 10:
+#        if index < 10:
             #print(etree.tostring(item), name, description)
-            print(f' title = {title}')
+        print(f' {index} title = {title}')
             #index +=1
             #print(index)
 
