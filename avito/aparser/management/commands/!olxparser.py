@@ -167,6 +167,7 @@ def parse_xml(url):
 
     path_item_full = './/div[@elementtiming="bx.catalog.container"]//div[@data-marker="catalog-serp"]//div[@data-marker="item"]'
     path_item = '//div[@data-marker="item"]'
+    path_item_url = '//a[@href]'
 
     #tree = etree.fromstring(html, etree.HTMLParser())
     #tree = etree.fromstring(html_txt, etree.HTMLParser())
