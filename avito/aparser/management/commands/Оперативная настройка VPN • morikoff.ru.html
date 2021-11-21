@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+
+<html lang="ru-RU" prefix="og: https://ogp.me/ns#">
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+
+	<link rel="pingback" href="https://morikoff.ru/xmlrpc.php">
+
+	<!-- Jetpack Site Verification Tags -->
+<meta name="google-site-verification" content="vMQosObRvtMjo8mSmTSJ7JfU5YYvAnaujokdbkhrHc0" />
+
+<!-- SEO от Rank Math - https://s.rankmath.com/home -->
+<title>Оперативная настройка VPN &bull; morikoff.ru</title>
+<meta name="description" content="Заметка о том как быстро получит доступ к своим сайтам, в то время когда какой-то засранец блокирует работу re:CAPCHA. Надеюсь вы понимаете, что пройти"/>
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+<link rel="canonical" href="https://morikoff.ru/quick-setup-vpn.html" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Оперативная настройка VPN &bull; morikoff.ru" />
+<meta property="og:description" content="Заметка о том как быстро получит доступ к своим сайтам, в то время когда какой-то засранец блокирует работу re:CAPCHA. Надеюсь вы понимаете, что пройти" />
+<meta property="og:url" content="https://morikoff.ru/quick-setup-vpn.html" />
+<meta property="og:site_name" content="morikoff.ru" />
+<meta property="article:publisher" content="https://www.facebook.com/morikoff.ru" />
+<meta property="article:author" content="https://www.facebook.com/morikoff.ru" />
+<meta property="article:tag" content="ubuntu" />
+<meta property="article:tag" content="vpn" />
+<meta property="article:tag" content="как" />
+<meta property="article:tag" content="совет" />
+<meta property="article:section" content="UBUNTU" />
+<meta property="og:updated_time" content="2018-04-25T02:17:17+03:00" />
+<meta property="fb:admins" content="100001527612930" />
+<meta property="og:image" content="https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png" />
+<meta property="og:image:secure_url" content="https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png" />
+<meta property="og:image:width" content="660" />
+<meta property="og:image:height" content="391" />
+<meta property="og:image:alt" content="Оперативная настройка VPN" />
+<meta property="og:image:type" content="image/png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Оперативная настройка VPN &bull; morikoff.ru" />
+<meta name="twitter:description" content="Заметка о том как быстро получит доступ к своим сайтам, в то время когда какой-то засранец блокирует работу re:CAPCHA. Надеюсь вы понимаете, что пройти" />
+<meta name="twitter:site" content="@morikoff" />
+<meta name="twitter:creator" content="@morikoff" />
+<meta name="twitter:image" content="https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png" />
+<script type="application/ld+json" class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":["Person","Organization"],"@id":"https://morikoff.ru/#person","name":"morikoff","logo":{"@type":"ImageObject","@id":"https://morikoff.ru/#logo","url":"https://morikoff.ru/wp-content/uploads/logo-morikoff_256x256.png","caption":"morikoff","inLanguage":"ru-RU","width":"256","height":"256"},"image":{"@type":"ImageObject","@id":"https://morikoff.ru/#logo","url":"https://morikoff.ru/wp-content/uploads/logo-morikoff_256x256.png","caption":"morikoff","inLanguage":"ru-RU","width":"256","height":"256"}},{"@type":"WebSite","@id":"https://morikoff.ru/#website","url":"https://morikoff.ru","name":"morikoff","publisher":{"@id":"https://morikoff.ru/#person"},"inLanguage":"ru-RU"},{"@type":"ImageObject","@id":"https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png","url":"https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png","width":"660","height":"391","inLanguage":"ru-RU"},{"@type":"Person","@id":"https://morikoff.ru/quick-setup-vpn.html#author","name":"morikoff","image":{"@type":"ImageObject","@id":"https://secure.gravatar.com/avatar/80d6e9df9434ce6556c9ebadb82bda47?s=96&amp;r=g","url":"https://secure.gravatar.com/avatar/80d6e9df9434ce6556c9ebadb82bda47?s=96&amp;r=g","caption":"morikoff","inLanguage":"ru-RU"}},{"@type":"WebPage","@id":"https://morikoff.ru/quick-setup-vpn.html#webpage","url":"https://morikoff.ru/quick-setup-vpn.html","name":"\u041e\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u0430\u044f \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 VPN &bull; morikoff.ru","datePublished":"2018-04-25T02:17:16+03:00","dateModified":"2018-04-25T02:17:17+03:00","author":{"@id":"https://morikoff.ru/quick-setup-vpn.html#author"},"isPartOf":{"@id":"https://morikoff.ru/#website"},"primaryImageOfPage":{"@id":"https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png"},"inLanguage":"ru-RU"},{"@type":"BlogPosting","headline":"\u041e\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u0430\u044f \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 VPN &bull; morikoff.ru","datePublished":"2018-04-25T02:17:16+03:00","dateModified":"2018-04-25T02:17:17+03:00","author":{"@id":"https://morikoff.ru/quick-setup-vpn.html#author"},"publisher":{"@id":"https://morikoff.ru/#person"},"description":"\u0417\u0430\u043c\u0435\u0442\u043a\u0430 \u043e \u0442\u043e\u043c \u043a\u0430\u043a \u0431\u044b\u0441\u0442\u0440\u043e \u043f\u043e\u043b\u0443\u0447\u0438\u0442 \u0434\u043e\u0441\u0442\u0443\u043f \u043a \u0441\u0432\u043e\u0438\u043c \u0441\u0430\u0439\u0442\u0430\u043c, \u0432 \u0442\u043e \u0432\u0440\u0435\u043c\u044f \u043a\u043e\u0433\u0434\u0430 \u043a\u0430\u043a\u043e\u0439-\u0442\u043e \u0437\u0430\u0441\u0440\u0430\u043d\u0435\u0446 \u0431\u043b\u043e\u043a\u0438\u0440\u0443\u0435\u0442 \u0440\u0430\u0431\u043e\u0442\u0443 re:CAPCHA. \u041d\u0430\u0434\u0435\u044e\u0441\u044c \u0432\u044b \u043f\u043e\u043d\u0438\u043c\u0430\u0435\u0442\u0435, \u0447\u0442\u043e \u043f\u0440\u043e\u0439\u0442\u0438","name":"\u041e\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u0430\u044f \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 VPN &bull; morikoff.ru","@id":"https://morikoff.ru/quick-setup-vpn.html#richSnippet","isPartOf":{"@id":"https://morikoff.ru/quick-setup-vpn.html#webpage"},"image":{"@id":"https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png"},"inLanguage":"ru-RU","mainEntityOfPage":{"@id":"https://morikoff.ru/quick-setup-vpn.html#webpage"}}]}</script>
+<!-- /Rank Math WordPress SEO плагин -->
+
+<link rel='dns-prefetch' href='//connect.facebook.net' />
+<link rel='dns-prefetch' href='//platform.twitter.com' />
+<link rel='dns-prefetch' href='//apis.google.com' />
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='dns-prefetch' href='//v0.wordpress.com' />
+<link rel='dns-prefetch' href='//widgets.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//0.gravatar.com' />
+<link rel='dns-prefetch' href='//1.gravatar.com' />
+<link rel='dns-prefetch' href='//2.gravatar.com' />
+<link rel='dns-prefetch' href='//pagead2.googlesyndication.com' />
+<link rel="alternate" type="application/rss+xml" title="morikoff.ru &raquo; Лента" href="https://morikoff.ru/feed" />
+<link rel="alternate" type="application/rss+xml" title="morikoff.ru &raquo; Лента комментариев" href="https://morikoff.ru/comments/feed" />
+<link rel="alternate" type="application/rss+xml" title="morikoff.ru &raquo; Лента комментариев к &laquo;Оперативная настройка VPN&raquo;" href="https://morikoff.ru/quick-setup-vpn.html/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/morikoff.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.2"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://morikoff.ru/wp-includes/css/dist/block-library/style.min.css?ver=5.8.2' type='text/css' media='all' />
+<style id='wp-block-library-inline-css' type='text/css'>
+.has-text-align-justify{text-align:justify;}
+</style>
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+#start-resizable-editor-section{display:none}.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}#end-resizable-editor-section{display:none}
+</style>
+<link rel='stylesheet' id='mediaelement-css'  href='https://morikoff.ru/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.16' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-mediaelement-css'  href='https://morikoff.ru/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=5.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='fancybox-for-wp-css'  href='https://morikoff.ru/wp-content/plugins/fancybox-for-wordpress/assets/css/fancybox.css?ver=1.3.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-pagenavi-css'  href='https://morikoff.ru/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70' type='text/css' media='all' />
+<link rel='stylesheet' id='spu-public-css-css'  href='https://morikoff.ru/wp-content/plugins/popups/public/assets/css/public.css?ver=1.9.3.8' type='text/css' media='all' />
+<link rel='stylesheet' id='ascension-css'  href='https://morikoff.ru/wp-content/themes/ascension/style.css?ver=1.1.5' type='text/css' media='all' />
+<style id='ascension-inline-css' type='text/css'>
+.hero{background-image:url(https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png);}
+.site-title a,.site-title a:visited{color:#5d5179;}.site-title a:hover,.site-title a:visited:hover{color:rgba(93, 81, 121, 0.8);}
+.site-description{color:#686868;}
+.hero,.hero .widget h1,.hero .widget h2,.hero .widget h3,.hero .widget h4,.hero .widget h5,.hero .widget h6,.hero .widget p,.hero .widget blockquote,.hero .widget cite,.hero .widget table,.hero .widget ul,.hero .widget ol,.hero .widget li,.hero .widget dd,.hero .widget dt,.hero .widget address,.hero .widget code,.hero .widget pre,.hero .widget .widget-title,.hero .page-header h1{color:#ffffff;}
+.main-navigation ul li a,.main-navigation ul li a:visited,.main-navigation ul li a:hover,.main-navigation ul li a:focus,.main-navigation ul li a:visited:hover{color:#5d5179;}.main-navigation .sub-menu .menu-item-has-children > a::after{border-right-color:#5d5179;border-left-color:#5d5179;}.menu-toggle div{background-color:#5d5179;}.main-navigation ul li a:hover,.main-navigation ul li a:focus{color:rgba(93, 81, 121, 0.8);}
+h1,h2,h3,h4,h5,h6,label,legend,table th,dl dt,.entry-title,.entry-title a,.entry-title a:visited,.widget-title{color:#353535;}.entry-title a:hover,.entry-title a:visited:hover,.entry-title a:focus,.entry-title a:visited:focus,.entry-title a:active,.entry-title a:visited:active{color:rgba(53, 53, 53, 0.8);}
+body,input,select,textarea,input[type="text"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="search"]:focus,input[type="number"]:focus,input[type="tel"]:focus,input[type="range"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="color"]:focus,textarea:focus,.navigation.pagination .paging-nav-text{color:#252525;}hr{background-color:rgba(37, 37, 37, 0.1);border-color:rgba(37, 37, 37, 0.1);}input[type="text"],input[type="email"],input[type="url"],input[type="password"],input[type="search"],input[type="number"],input[type="tel"],input[type="range"],input[type="date"],input[type="month"],input[type="week"],input[type="time"],input[type="datetime"],input[type="datetime-local"],input[type="color"],textarea,.select2-container .select2-choice{color:rgba(37, 37, 37, 0.5);border-color:rgba(37, 37, 37, 0.1);}select,fieldset,blockquote,pre,code,abbr,acronym,.hentry table th,.hentry table td{border-color:rgba(37, 37, 37, 0.1);}.hentry table tr:hover td{background-color:rgba(37, 37, 37, 0.05);}
+blockquote,.entry-meta,.entry-footer,.comment-meta .says,.logged-in-as,.wp-block-coblocks-author__heading{color:#686868;}
+.site-footer .widget-title,.site-footer h1,.site-footer h2,.site-footer h3,.site-footer h4,.site-footer h5,.site-footer h6{color:#353535;}
+.site-footer .widget,.site-footer .widget form label{color:#252525;}
+.footer-menu ul li a,.footer-menu ul li a:visited{color:#5d5179;}.site-info-wrapper .social-menu a{background-color:#5d5179;}.footer-menu ul li a:hover,.footer-menu ul li a:visited:hover{color:rgba(93, 81, 121, 0.8);}
+.site-info-wrapper .site-info-text{color:#5d5179;}
+a,a:visited,.entry-title a:hover,.entry-title a:visited:hover{color:#5d5179;}.navigation.pagination .nav-links .page-numbers.current,.social-menu a:hover{background-color:#5d5179;}a:hover,a:visited:hover,a:focus,a:visited:focus,a:active,a:visited:active{color:rgba(93, 81, 121, 0.8);}.comment-list li.bypostauthor{border-color:rgba(93, 81, 121, 0.2);}
+button,a.button,a.button:visited,input[type="button"],input[type="reset"],input[type="submit"],.wp-block-button__link,.site-info-wrapper .social-menu a:hover{background-color:#5d5179;border-color:#5d5179;}button:hover,button:active,button:focus,a.button:hover,a.button:active,a.button:focus,a.button:visited:hover,a.button:visited:active,a.button:visited:focus,input[type="button"]:hover,input[type="button"]:active,input[type="button"]:focus,input[type="reset"]:hover,input[type="reset"]:active,input[type="reset"]:focus,input[type="submit"]:hover,input[type="submit"]:active,input[type="submit"]:focus{background-color:rgba(93, 81, 121, 0.8);border-color:rgba(93, 81, 121, 0.8);}
+button,button:hover,button:active,button:focus,a.button,a.button:hover,a.button:active,a.button:focus,a.button:visited,a.button:visited:hover,a.button:visited:active,a.button:visited:focus,input[type="button"],input[type="button"]:hover,input[type="button"]:active,input[type="button"]:focus,input[type="reset"],input[type="reset"]:hover,input[type="reset"]:active,input[type="reset"]:focus,input[type="submit"],input[type="submit"]:hover,input[type="submit"]:active,input[type="submit"]:focus,.wp-block-button__link{color:#ffffff;}
+body{background-color:#ffffff;}.navigation.pagination .nav-links .page-numbers.current{color:#ffffff;}
+.hero{background-color:#252525;}.hero{-webkit-box-shadow:inset 0 0 0 9999em;-moz-box-shadow:inset 0 0 0 9999em;box-shadow:inset 0 0 0 9999em;color:rgba(37, 37, 37, 0.50);}
+.main-navigation-container,.main-navigation.open,.main-navigation ul ul,.main-navigation .sub-menu{background-color:#ffffff;}.site-header{background-color:#ffffff;}
+.site-footer{background-color:#f5f5f5;}
+.site-info-wrapper{background-color:#ffffff;}.site-info-wrapper .social-menu a,.site-info-wrapper .social-menu a:visited,.site-info-wrapper .social-menu a:hover,.site-info-wrapper .social-menu a:visited:hover{color:#ffffff;}
+.has-primary-color{color:#03263B;}.has-primary-background-color{background-color:#03263B;}
+.has-secondary-color{color:#0b3954;}.has-secondary-background-color{background-color:#0b3954;}
+.has-tertiary-color{color:#bddae6;}.has-tertiary-background-color{background-color:#bddae6;}
+.has-quaternary-color{color:#ff6663;}.has-quaternary-background-color{background-color:#ff6663;}
+.has-quinary-color{color:#ffffff;}.has-quinary-background-color{background-color:#ffffff;}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='ascension-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans%3A300%2C400%2C700&#038;subset=latin&#038;ver=1.8.9' type='text/css' media='all' />
+<style id='ascension-fonts-inline-css' type='text/css'>
+.site-title{font-family:"Open Sans", sans-serif;}
+.main-navigation ul li a,.main-navigation ul li a:visited,button,a.button,a.fl-button,input[type="button"],input[type="reset"],input[type="submit"]{font-family:"Open Sans", sans-serif;}
+h1,h2,h3,h4,h5,h6,label,legend,table th,dl dt,.entry-title,.widget-title{font-family:"Open Sans", sans-serif;}
+body,p,ol li,ul li,dl dd,.fl-callout-text{font-family:"Open Sans", sans-serif;}
+blockquote,.entry-meta,.entry-footer,.comment-list li .comment-meta .says,.comment-list li .comment-metadata,.comment-reply-link,#respond .logged-in-as{font-family:"Open Sans", sans-serif;}
+</style>
+<link rel='stylesheet' id='jetpack_css-css'  href='https://morikoff.ru/wp-content/plugins/jetpack/css/jetpack.css?ver=10.3' type='text/css' media='all' />
+<script type='text/javascript' id='jetpack_related-posts-js-extra'>
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://morikoff.ru/wp-content/plugins/jetpack/_inc/build/related-posts/related-posts.min.js?ver=20210930' id='jetpack_related-posts-js'></script>
+<script type='text/javascript' src='https://morikoff.ru/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://morikoff.ru/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://morikoff.ru/wp-content/plugins/fancybox-for-wordpress/assets/js/jquery.fancybox.js?ver=1.3.4' id='fancybox-for-wp-js'></script>
+<script type='text/javascript' src='//connect.facebook.net/ru_RU/sdk.js#xfbml=1&#038;version=v2.3' id='spu-facebook-js'></script>
+<script type='text/javascript' src='//platform.twitter.com/widgets.js?ver=1.9.3.8' id='spu-twitter-js'></script>
+<script type='text/javascript' src='//apis.google.com/js/platform.js?ver=1.9.3.8' id='spu-google-js'></script>
+
+<!-- Google Analytics snippet added by Site Kit -->
+<script type='text/javascript' src='https://www.googletagmanager.com/gtag/js?id=UA-2930632-10' id='google_gtagjs-js' async></script>
+<script type='text/javascript' id='google_gtagjs-js-after'>
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag('set', 'linker', {"domains":["morikoff.ru"]} );
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "UA-2930632-10", {"anonymize_ip":true});
+</script>
+
+<!-- End Google Analytics snippet added by Site Kit -->
+<link rel="https://api.w.org/" href="https://morikoff.ru/wp-json/" /><link rel="alternate" type="application/json" href="https://morikoff.ru/wp-json/wp/v2/posts/1999" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://morikoff.ru/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://morikoff.ru/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.8.2" />
+<link rel='shortlink' href='https://wp.me/p4G5jg-wf' />
+<link rel="alternate" type="application/json+oembed" href="https://morikoff.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmorikoff.ru%2Fquick-setup-vpn.html" />
+<link rel="alternate" type="text/xml+oembed" href="https://morikoff.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmorikoff.ru%2Fquick-setup-vpn.html&#038;format=xml" />
+
+<!-- Fancybox for WordPress v3.3.3 -->
+<style type="text/css">
+	.fancybox-slide--image .fancybox-content{background-color: #FFFFFF}div.fancybox-caption{display:none !important;}
+	
+	img.fancybox-image{border-width:10px;border-color:#FFFFFF;border-style:solid;}
+	div.fancybox-bg{background-color:rgba(102,102,102,0.3);opacity:1 !important;}div.fancybox-content{border-color:#FFFFFF}
+	div#fancybox-title{background-color:#FFFFFF}
+	div.fancybox-content{background-color:#FFFFFF}
+	div#fancybox-title-inside{color:#333333}
+	
+	
+	
+	div.fancybox-caption p.caption-title{display:inline-block}
+	div.fancybox-caption p.caption-title{font-size:14px}
+	div.fancybox-caption p.caption-title{color:#333333}
+	div.fancybox-caption {color:#333333}div.fancybox-caption p.caption-title {background:#fff; width:auto;padding:10px 30px;}div.fancybox-content p.caption-title{color:#333333;margin: 0;padding: 5px 0;}body.fancybox-active .fancybox-container .fancybox-stage .fancybox-content .fancybox-close-small{display:block;}
+</style><script type="text/javascript">
+	jQuery(function () {
+
+		var mobileOnly = false;
+		
+		if (mobileOnly) {
+			return;
+		}
+
+		jQuery.fn.getTitle = function () { // Copy the title of every IMG tag and add it to its parent A so that fancybox can show titles
+			var arr = jQuery("a[data-fancybox]");
+									jQuery.each(arr, function() {
+										var title = jQuery(this).children("img").attr("title");
+										 var caption = jQuery(this).next("figcaption").html();
+                                        if(caption && title){jQuery(this).attr("title",title+" " + caption)}else if(title){ jQuery(this).attr("title",title);}else if(caption){jQuery(this).attr("title",caption);}
+									});			}
+
+		// Supported file extensions
+
+				var thumbnails = jQuery("a:has(img)").not(".nolightbox").not('.envira-gallery-link').not('.ngg-simplelightbox').filter(function () {
+			return /\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href'))
+		});
+		
+
+		// Add data-type iframe for links that are not images or videos.
+		var iframeLinks = jQuery('.fancyboxforwp').filter(function () {
+			return !/\.(jpe?g|png|gif|mp4|webp|bmp|pdf)(\?[^/]*)*$/i.test(jQuery(this).attr('href'))
+		}).filter(function () {
+			return !/vimeo|youtube/i.test(jQuery(this).attr('href'))
+		});
+		iframeLinks.attr({"data-type": "iframe"}).getTitle();
+
+				// Gallery All
+		thumbnails.addClass("fancyboxforwp").attr("data-fancybox", "gallery").getTitle();
+		iframeLinks.attr({"data-fancybox": "gallery"}).getTitle();
+
+		// Gallery type NONE
+		
+		// Call fancybox and apply it on any link with a rel atribute that starts with "fancybox", with the options set on the admin panel
+		jQuery("a.fancyboxforwp").fancyboxforwp({
+			loop: false,
+			smallBtn: true,
+			zoomOpacity: "auto",
+			animationEffect: "fade",
+			animationDuration: 500,
+			transitionEffect: "fade",
+			transitionDuration: "300",
+			overlayShow: true,
+			overlayOpacity: "0.3",
+			titleShow: true,
+			titlePosition: "inside",
+			keyboard: true,
+			showCloseButton: true,
+			arrows: true,
+			clickContent:"close",
+			clickSlide: "close",
+			mobile: {
+				clickContent: function (current, event) {
+					return current.type === "image" ? "close" : false;
+				},
+				clickSlide: function (current, event) {
+					return current.type === "image" ? "close" : "close";
+				},
+			},
+			wheel: false,
+			toolbar: true,
+			preventCaptionOverlap: true,
+			onInit: function() { },			onDeactivate
+	: function() { },		beforeClose: function() { },			afterShow: function(instance) { jQuery( ".fancybox-image" ).on("click", function( ){ ( instance.isScaledDown() ) ? instance.scaleToActual() : instance.scaleToFit() }) },				afterClose: function() { },					caption : function( instance, item ) {var title ="";if("undefined" != typeof jQuery(this).context ){var title = jQuery(this).context.title;} else { var title = ("undefined" != typeof jQuery(this).attr("title")) ? jQuery(this).attr("title") : false;}var caption = jQuery(this).data('caption') || '';if ( item.type === 'image' && title.length ) {caption = (caption.length ? caption + '<br />' : '') + '<p class="caption-title">'+title+'</p>' ;}return caption;},
+		afterLoad : function( instance, current ) {current.$content.append('<div class=\"fancybox-custom-caption inside-caption\" style=\" position: absolute;left:0;right:0;color:#000;margin:0 auto;bottom:0;text-align:center;background-color:#FFFFFF \">' + current.opts.caption + '</div>');},
+			})
+		;
+
+			})
+</script>
+<!-- END Fancybox for WordPress -->
+<meta name="generator" content="Site Kit by Google 1.45.0" /><meta name="follow_it-verification-code" content="SeDBVfzd6QY2rUhKnEQu"/>
+<meta property="fb:admins" content="100001527612930" />
+<meta name='wmail-verification' content='911926270b57efa7' />
+<link rel="shortcut icon" href="https://morikoff.ru/favicon.ico" type="image/x-icon" />
+<!-- ниже линк на ико рекомендовано яндухом-->
+<link rel="icon" href="https://morikoff.ru/favicon.ico" type="image/x-icon">
+
+<style>
+@font-face {
+	font-family: "proxima_nova";
+	src: url("https://www.dropbox.com/static/fonts/proximanova/proxima-nova-regular.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+a {
+	color: #007ee6;
+	text-decoration: none;
+}
+</style>
+
+<script data-ad-client="ca-pub-1824887024164138" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-2930632-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-2930632-10');
+</script>
+<!-- /Global site tag (gtag.js) - Google Analytics -->
+<!-- Rating Mail.ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2763796", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = "https://top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "topmailru-code");
+</script><noscript><div>
+<img src="https://top-fwz1.mail.ru/counter?id=2763796;js=na" style="border:0;position:absolute;left:-9999px;" alt="Top.Mail.Ru" />
+</div></noscript>
+<!-- /Rating Mail.ru counter -->
+<!-- MailChimp -->
+<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/edbf4dc2814b1ef384222b5fb/6fa815be8334f314d3335e1a0.js");</script>
+<!-- /MailChimp -->
+<!-- Google AdSense snippet added by Site Kit -->
+<meta name="google-adsense-platform-account" content="ca-host-pub-2644536267352236">
+<meta name="google-adsense-platform-domain" content="sitekit.withgoogle.com">
+<!-- End Google AdSense snippet added by Site Kit -->
+<!-- Yandex.Metrika counter by Yandex Metrica Plugin -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(316642, "init", {
+        id:316642,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:false,
+        webvisor:true,
+	        });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/316642" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<style type='text/css'>
+.site-title a,.site-title a:visited{color:5d5179;}
+</style><link rel="amphtml" href="https://morikoff.ru/quick-setup-vpn.html/amp"><script id="google_gtagjs" src="https://www.googletagmanager.com/gtag/js?id=UA-2930632-10" async="async" type="text/javascript"></script>
+<script id="google_gtagjs-inline" type="text/javascript">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('set', 'linker', {"domains":["morikoff.ru"]} );gtag('js', new Date());gtag('config', 'UA-2930632-10', {} );
+</script>
+
+<!-- Google AdSense snippet added by Site Kit -->
+<script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1824887024164138" crossorigin="anonymous" type="text/javascript"></script>
+
+<!-- End Google AdSense snippet added by Site Kit -->
+<link rel="icon" href="https://morikoff.ru/wp-content/uploads/logo1-54e2fa69v1_site_icon-50x50.png" sizes="32x32" />
+<link rel="icon" href="https://morikoff.ru/wp-content/uploads/logo1-54e2fa69v1_site_icon-230x230.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://morikoff.ru/wp-content/uploads/logo1-54e2fa69v1_site_icon-230x230.png" />
+<meta name="msapplication-TileImage" content="https://morikoff.ru/wp-content/uploads/logo1-54e2fa69v1_site_icon-404x404.png" />
+
+</head>
+
+<body class="post-template-default single single-post postid-1999 single-format-standard custom-header-image layout-two-column-default">
+
+	
+	<div id="page" class="hfeed site">
+
+		<a class="skip-link screen-reader-text" href="#content">Перейти к контенту</a>
+
+		
+		<header id="masthead" class="site-header" role="banner">
+
+			
+			<div class="site-header-wrapper">
+
+				
+<div class="site-title-wrapper">
+
+	
+	<div class="site-title"><a href="https://morikoff.ru/" rel="home">morikoff.ru</a></div>
+	<div class="site-description">Не бойся первой ошибки, избегай второй</div>
+</div><!-- .site-title-wrapper -->
+
+<div class="main-navigation-container">
+
+	
+<div class="menu-toggle" id="menu-toggle" role="button" tabindex="0"
+	>
+	<div></div>
+	<div></div>
+	<div></div>
+</div><!-- #menu-toggle -->
+
+	<nav id="site-navigation" class="main-navigation">
+
+		<div class="menu-menyu-sayta-container"><ul id="menu-menyu-sayta" class="menu"><li id="menu-item-265" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-265"><a title="Начало сайта" href="/">/  БЛОГ</a></li>
+<li id="menu-item-639" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-639"><a title="Всё, что мне понравилось и стало известно про OS Ubuntu/Linux &#8212; я пишу сюда" href="https://morikoff.ru/ubuntu">/  UBUNTU</a></li>
+<li id="menu-item-2145" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2145"><a href="https://morikoff.ru/internet">/  ИНТЕРНЕТ</a></li>
+<li id="menu-item-1589" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1589"><a title="Про электронную читалку Kindle от Amazon" href="https://morikoff.ru/kindle">/  KINDLE</a></li>
+<li id="menu-item-1588" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1588"><a title="Пишу только про то, чем сам пользуюсь и, что могу порекомендовать" href="https://morikoff.ru/android">/  ANDROID</a></li>
+<li id="menu-item-2151" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2151"><a href="https://morikoff.ru/pr">/  проPRь</a></li>
+<li id="menu-item-638" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-638"><a title="Мне приснилось, что я художник!" href="https://morikoff.ru/art">/  АРТ</a></li>
+<li id="menu-item-191" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-191"><a title="Коротко про этот сайт и про меня" href="https://morikoff.ru/about.html">/  О САЙТЕ</a>
+<span  class="expand" role="button" tabindex="0"></span>
+
+<ul class="sub-menu">
+	<li id="menu-item-776" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-776"><a title="Не пишите про меня плохо! Пишите только хорошее!" href="https://morikoff.ru/guestbook.html">ГОСТЕВАЯ КНИГА</a></li>
+	<li id="menu-item-169" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-169"><a title="Подписаться и получать сводку новостей этого сайта на Email" href="https://feedburner.google.com/fb/a/mailverify?uri=morikoff&#038;loc=ru_RU">ПОДПИСАТЬСЯ</a></li>
+	<li id="menu-item-1808" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1808"><a href="https://t.me/morikoff_ru">В ТЕЛЕГРАМ</a></li>
+	<li id="menu-item-2019" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2019"><a href="https://zen.yandex.ru/id/5b004a9d1410c3e49332e410">Я.ДЗЕН</a></li>
+</ul>
+</li>
+</ul></div>
+	</nav><!-- #site-navigation -->
+
+	
+</div>
+
+			</div><!-- .site-header-wrapper -->
+
+			
+		</header><!-- #masthead -->
+
+		
+<div class="hero">
+
+	
+	<div class="hero-inner">
+
+		
+<div class="page-title-container">
+
+	<header class="page-header">
+
+		<h2 class="page-title">Записи</h2>
+	</header><!-- .entry-header -->
+
+</div><!-- .page-title-container -->
+
+	</div>
+
+</div>
+
+		<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+
+	<main id="main" class="site-main" role="main">
+
+	
+<article id="post-1999" class="post-1999 post type-post status-publish format-standard has-post-thumbnail hentry category-ubuntu tag-ubuntu tag-vpn tag-howto tag-sovet">
+
+	
+	
+	
+<header class="entry-header">
+
+	<div class="entry-header-row">
+
+		<div class="entry-header-column">
+
+			
+			
+				<h1 class="entry-title">Оперативная настройка VPN</h1>
+
+			
+			
+		</div><!-- .entry-header-column -->
+
+	</div><!-- .entry-header-row -->
+
+</header><!-- .entry-header -->
+
+	
+<div class="entry-meta">
+
+	
+		<span class="posted-date">2018-04-25</span>
+
+	
+	<span class="posted-author"><a href="https://morikoff.ru/author/morikoff" title="Записи morikoff" rel="author">morikoff</a></span>
+
+	
+		<span class="comments-number">
+
+			<a href="https://morikoff.ru/quick-setup-vpn.html#respond" class="comments-link" ><span class="dsq-postid" data-dsqidentifier="1999 https://morikoff.ru/?p=1999">Оставить комментарий</span></a>
+		</span>
+
+	
+</div><!-- .entry-meta -->
+
+	
+		
+<div class="entry-content">
+
+	<p><img loading="lazy" class="alignnone size-full wp-image-2000" src="https://morikoff.ru/wp-content/uploads/2018-04-25_l01.png" alt="2018 04 25 l01" width="660" height="391" title="Оперативная настройка VPN 1"></p>
+<p>Заметка о том как быстро получит доступ к своим сайтам, в то время когда какой-то засранец блокирует работу re:CAPCHA. Надеюсь вы понимаете, что пройти регистрацию в административную часть своего сайта невозможно если не подгружаются библиотеки модуля re:CAPCHA, ведь она у вас установлена в борьбе против ботов, не так ли? Рекомендую простой сервис, работает быстро из консоли (командной строки). Достаточно просто: включил, сделал, выключил. Ну нормально так я думаю.</p>
+<h2>Создание VPN соединения по шагам</h2>
+<p>1. И так, идём и регистрируем аккаунт в сервисе <a href="https://windscribe.com" target="_blank" rel="noopener nofollow">https://windscribe.com</a></p>
+<p>2. Устанавливает дистрибутив для своей версии операционной системы (первоисточник тут: <a href="https://windscribe.com/guides/linux" target="_blank" rel="noopener nofollow">https://windscribe.com/guides/linux</a>). Всё далее пишу для Ubuntu 16.04. Добавляем ключи APP:</p>
+<pre>sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key FDC247B7</pre>
+<p>3. добавляем источники:</p>
+<pre class="ubuntu-repo">echo 'deb https://repo.windscribe.com/ubuntu <span class="release">xenial</span> main' | sudo tee /etc/apt/sources.list.d/windscribe-repo.lis</pre>
+<p>4. обновляем источники</p>
+<pre>sudo apt-get update</pre>
+<p>5. устанавливаем приложение</p>
+<pre>sudo apt-get install windscribe-cli</pre>
+<p>6. осуществляем вход в свой аккаунт ранее зарегистрированный и подтверждённый email</p>
+<pre>windscribe login</pre>
+<p>7. включаем VPN</p>
+<pre>windscribe connect</pre>
+<p><a href="https://morikoff.ru/wp-content/uploads/2018-04-25_l02.png"><img loading="lazy" class="alignnone size-full wp-image-2001" src="https://morikoff.ru/wp-content/uploads/2018-04-25_l02.png" alt="2018 04 25 l02" width="660" height="391" title="Оперативная настройка VPN 2"></a></p>
+<p>ПОЛУЧАЕМ ДОСТУП К СВОЕМУ САЙТУ. ФУФ, СТАРЫЙ ЛЫСЫЙ ХРЕН.</p>
+<p>ПОЛЬЗУЕМСЯ В СВОЁ УДОВОЛЬСТВИЕ И БЕСПЛАТНО 10GB В МЕСЯЦ</p>
+<p>8. выключаем VPN</p>
+<pre>windscribe disconnect</pre>
+<p><a href="https://morikoff.ru/wp-content/uploads/2018-04-25_l03.png"><img loading="lazy" class="alignnone size-full wp-image-2002" src="https://morikoff.ru/wp-content/uploads/2018-04-25_l03.png" alt="2018 04 25 l03" width="660" height="391" title="Оперативная настройка VPN 3"></a></p>
+<p>9. нужно больше информации, тогда читаем справку</p>
+<pre>windscribe --help</pre>
+<p>вуаля!</p>
+<p>p.s. хотите что-то доброе мне сказать, в телеграм плиз <a href="https://t.me/morikoff" target="_blank" rel="noopener nofollow">https://t.me/morikoff</a></p>
+
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Похожее</em></h3>
+</div>
+</div><!-- .entry-content -->
+
+	
+	
+<footer class="entry-footer">
+
+	<div class="entry-footer-right">
+
+		
+	</div>
+
+	
+		
+		
+			<span class="cat-links">
+
+				Опубликовано в категории: <a href="https://morikoff.ru/ubuntu" rel="category tag">UBUNTU</a>
+			</span>
+
+		
+		
+		
+			<span class="tags-links">
+
+				Рубрика: <a href="https://morikoff.ru/tag/ubuntu" rel="tag">ubuntu</a>, <a href="https://morikoff.ru/tag/vpn" rel="tag">vpn</a>, <a href="https://morikoff.ru/tag/howto" rel="tag">как</a>, <a href="https://morikoff.ru/tag/sovet" rel="tag">совет</a>
+			</span>
+
+		
+	
+</footer><!-- .entry-footer -->
+
+	
+</article><!-- #post-## -->
+
+	<nav class="navigation post-navigation" role="navigation" aria-label="Записи">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://morikoff.ru/how-to-upgrade-virtualbox.html" rel="prev">&larr; Как обновлять VirtualBox</a></div><div class="nav-next"><a href="https://morikoff.ru/how-to-disable-protected-from-the-vulnerability-spectre-and-meltdown.html" rel="next">Как отключить защиту от уязвимости Spectre и Meltdown &rarr;</a></div></div>
+	</nav>
+<div id="disqus_thread"></div>
+<script>
+    var embedVars = {"disqusConfig":{"integration":"wordpress 3.0.22"},"disqusIdentifier":"1999 https:\/\/morikoff.ru\/?p=1999","disqusShortname":"morikoff","disqusTitle":"\u041e\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u0430\u044f \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 VPN","disqusUrl":"https:\/\/morikoff.ru\/quick-setup-vpn.html","postId":1999};
+    var disqus_url = embedVars.disqusUrl;
+var disqus_identifier = embedVars.disqusIdentifier;
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = embedVars.disqusShortname;
+var disqus_title = embedVars.disqusTitle;
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    var dsqConfig = embedVars.disqusConfig;
+    this.page.integration = dsqConfig.integration;
+    this.page.remote_auth_s3 = dsqConfig.remote_auth_s3;
+    this.page.api_key = dsqConfig.api_key;
+    this.sso = dsqConfig.sso;
+    this.language = dsqConfig.language;
+
+    if (disqus_config_custom)
+        disqus_config_custom.call(this);
+};
+
+(function() {
+    if (document.getElementById(disqus_container_id)) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }
+})();
+</script>
+
+	</main><!-- #main -->
+
+</div><!-- #primary -->
+
+
+<div id="secondary" class="widget-area" role="complementary">
+
+	<aside id="search-2" class="widget widget_search"><h4 class="widget-title">ПОИСК ПО САЙТУ</h4><form role="search" method="get" class="search-form" action="https://morikoff.ru/">
+				<label>
+					<span class="screen-reader-text">Найти:</span>
+					<input type="search" class="search-field" placeholder="Поиск&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Поиск" />
+			</form></aside><aside id="text-8" class="widget widget_text"><h4 class="widget-title">РЕКОМЕНДУЮ</h4>			<div class="textwidget"><p><strong>Использую с 2019 года</strong>. Рекомендую.<br />
+Выгодный хостинг серверов <a href="https://hetzner.cloud/?ref=hS9NFWkgSNki" target="_blank" rel="nofollow noopener">Hetzner</a>. Регистрируйся по моей <a href="https://hetzner.cloud/?ref=hS9NFWkgSNki" target="_blank" rel="nofollow noopener">ссылке</a>, и получи 20 евро облачных кредитов.</p>
+<p><strong>Использую с 2012 года</strong>. Рекомендую.<br />
+Для ваших Linux-серверов отличный сервис <a href="http://www.digitalocean.com/?refcode=eba082c5c103" target="_blank" rel="nofollow noopener">DigitalOcean</a></p>
+<p><strong>Использую с 2011 года</strong>. Рекомендую.<br />
+Облачный диск <a href="https://db.tt/yxptLykA" target="_blank" rel="nofollow noopener">DropBox</a> удобный для совместной работы или переноса документов дом-работа-дом.</p>
+</div>
+		</aside><aside id="custom_html-2" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><a target="_blank" rel="nofollow noopener" href="https://knx-trade.ru/5-zennio-touch-switches?prestaff=morikoff">
+<img width="320" height="533" border="0" src="https://morikoff.ru/wp-content/uploads/knxtrade1.jpg" alt="KNX·TRADE™"/></a></div></aside><aside id="rss-2" class="widget widget_rss"><h4 class="widget-title"><a class="rsswidget" href="https://knx-trade.ru/modules/feeder/rss.php"><img class="rss-widget-icon" style="border:0" width="14" height="14" src="https://morikoff.ru/wp-includes/images/rss.png" alt="RSS" /></a> <a class="rsswidget" href="https://knx-trade.ru/">KNX для Умного Дома</a></h4><ul><li><a class='rsswidget' href='https://knx-trade.ru/zennio-sensors/101-zac-ntc68.html'>Temperature probes / Датчик температуры NTC68 E/F/S - 1 426,08 ₽</a></li><li><a class='rsswidget' href='https://knx-trade.ru/zennio-actuators/591-zpr1612v2.html'>ALLinBOX 1612 v2 / Устройство KNX многофункциональное с источником питания, интерфейсом KNX-IP, 16 выходов, 12 входов - 84 091,84 ₽</a></li><li><a class='rsswidget' href='https://knx-trade.ru/zennio-system/576-zsyusbsc.html'>KNX USB SC / Интерфейс KNX-USB - 21 893,73 ₽</a></li></ul></aside>
+</div><!-- #secondary -->
+
+		</div><!-- #content -->
+
+		
+		<footer id="colophon" class="site-footer">
+
+			<div class="site-footer-inner">
+
+					<div class="footer-widget-area columns-4">
+
+	
+		<div class="footer-widget">
+
+			<aside id="top-posts-4" class="widget widget_top-posts"><h4 class="widget-title">Популярное</h4><ul class='widgets-list-layout no-grav'>
+					<li>
+						<a href="https://morikoff.ru/kindle-and-easy-way-to-download-books-for-reading.html" title="Kindle и простой способ загрузить книги для чтения" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://i2.wp.com/morikoff.ru/wp-content/uploads/kindle4_size.jpg?resize=40%2C40&#038;ssl=1" alt="Kindle и простой способ загрузить книги для чтения" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://morikoff.ru/kindle-and-easy-way-to-download-books-for-reading.html" title="Kindle и простой способ загрузить книги для чтения" class="bump-view" data-bump-view="tp">Kindle и простой способ загрузить книги для чтения</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://morikoff.ru/e-sub-process-usr-bin-dpkg-returned-error-code.html" title="Как исправить ошибку: E: Sub-process /usr/bin/dpkg returned an error code" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://i0.wp.com/morikoff.ru/wp-content/uploads/wget_output-e1435346543562.jpg?resize=40%2C40&#038;ssl=1" alt="Как исправить ошибку: E: Sub-process /usr/bin/dpkg returned an error code" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://morikoff.ru/e-sub-process-usr-bin-dpkg-returned-error-code.html" title="Как исправить ошибку: E: Sub-process /usr/bin/dpkg returned an error code" class="bump-view" data-bump-view="tp">Как исправить ошибку: E: Sub-process /usr/bin/dpkg returned an error code</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://morikoff.ru/disabling-snap-in-ubuntu-20-04.html" title="Отключение Snap в Ubuntu 20.04" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://i2.wp.com/morikoff.ru/wp-content/uploads/centerapps.png?resize=40%2C40&#038;ssl=1" alt="Отключение Snap в Ubuntu 20.04" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://morikoff.ru/disabling-snap-in-ubuntu-20-04.html" title="Отключение Snap в Ubuntu 20.04" class="bump-view" data-bump-view="tp">Отключение Snap в Ubuntu 20.04</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://morikoff.ru/how-to-download-and-upload-to-your-android-device.html" title="Как скачать и загрузить книгу на Android устройство" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://i1.wp.com/morikoff.ru/wp-content/uploads/2016-03-23-025452-01.png?resize=40%2C40&#038;ssl=1" alt="Как скачать и загрузить книгу на Android устройство" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://morikoff.ru/how-to-download-and-upload-to-your-android-device.html" title="Как скачать и загрузить книгу на Android устройство" class="bump-view" data-bump-view="tp">Как скачать и загрузить книгу на Android устройство</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://morikoff.ru/how-to-remove-duplicate-rows-in-calc-libreoffice.html" title="Как удалить дубликаты строк в Calc.LibreOffice" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://i0.wp.com/morikoff.ru/wp-content/uploads/2016-01-19_02.png?resize=40%2C40&#038;ssl=1" alt="Как удалить дубликаты строк в Calc.LibreOffice" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://morikoff.ru/how-to-remove-duplicate-rows-in-calc-libreoffice.html" title="Как удалить дубликаты строк в Calc.LibreOffice" class="bump-view" data-bump-view="tp">Как удалить дубликаты строк в Calc.LibreOffice</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://morikoff.ru/error-does-not-support-i386-architecture.html" title="Ошибка: Не поддерживает архитектуру «i386»" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://i1.wp.com/morikoff.ru/wp-content/uploads/2019-05-06_001.png?resize=40%2C40&#038;ssl=1" alt="Ошибка: Не поддерживает архитектуру «i386»" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://morikoff.ru/error-does-not-support-i386-architecture.html" title="Ошибка: Не поддерживает архитектуру «i386»" class="bump-view" data-bump-view="tp">Ошибка: Не поддерживает архитектуру «i386»</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://morikoff.ru/how-to-install-php-7-4-on-ubuntu.html" title="Как установить PHP 7.4 на Ubuntu" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://i2.wp.com/morikoff.ru/wp-content/uploads/php.png?resize=40%2C40&#038;ssl=1" alt="Как установить PHP 7.4 на Ubuntu" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://morikoff.ru/how-to-install-php-7-4-on-ubuntu.html" title="Как установить PHP 7.4 на Ubuntu" class="bump-view" data-bump-view="tp">Как установить PHP 7.4 на Ubuntu</a>
+							</div>
+													</li>
+					</ul>
+</aside>
+		</div>
+
+	
+		<div class="footer-widget">
+
+			<aside id="tag_cloud-4" class="widget widget_tag_cloud"><h4 class="widget-title">Облако меток</h4><div class="tagcloud"><a href="https://morikoff.ru/tag/android" class="tag-cloud-link tag-link-68 tag-link-position-1" style="font-size: 13.167785234899pt;" aria-label="android (6 элементов)">android</a>
+<a href="https://morikoff.ru/tag/art" class="tag-cloud-link tag-link-96 tag-link-position-2" style="font-size: 13.167785234899pt;" aria-label="art (6 элементов)">art</a>
+<a href="https://morikoff.ru/tag/bitcoin" class="tag-cloud-link tag-link-109 tag-link-position-3" style="font-size: 8pt;" aria-label="bitcoin (1 элемент)">bitcoin</a>
+<a href="https://morikoff.ru/tag/bittorrent" class="tag-cloud-link tag-link-71 tag-link-position-4" style="font-size: 9.6912751677852pt;" aria-label="bittorrent (2 элемента)">bittorrent</a>
+<a href="https://morikoff.ru/tag/btsync" class="tag-cloud-link tag-link-72 tag-link-position-5" style="font-size: 11.758389261745pt;" aria-label="btsync (4 элемента)">btsync</a>
+<a href="https://morikoff.ru/tag/fbreader" class="tag-cloud-link tag-link-80 tag-link-position-6" style="font-size: 9.6912751677852pt;" aria-label="fbreader (2 элемента)">fbreader</a>
+<a href="https://morikoff.ru/tag/featured" class="tag-cloud-link tag-link-70 tag-link-position-7" style="font-size: 11.758389261745pt;" aria-label="featured (4 элемента)">featured</a>
+<a href="https://morikoff.ru/tag/gimp" class="tag-cloud-link tag-link-75 tag-link-position-8" style="font-size: 13.637583892617pt;" aria-label="gimp (7 элементов)">gimp</a>
+<a href="https://morikoff.ru/tag/google" class="tag-cloud-link tag-link-77 tag-link-position-9" style="font-size: 13.167785234899pt;" aria-label="google (6 элементов)">google</a>
+<a href="https://morikoff.ru/tag/hdmi" class="tag-cloud-link tag-link-65 tag-link-position-10" style="font-size: 8pt;" aria-label="HDMI (1 элемент)">HDMI</a>
+<a href="https://morikoff.ru/tag/internet" class="tag-cloud-link tag-link-92 tag-link-position-11" style="font-size: 10.818791946309pt;" aria-label="internet (3 элемента)">internet</a>
+<a href="https://morikoff.ru/tag/kindle" class="tag-cloud-link tag-link-82 tag-link-position-12" style="font-size: 13.167785234899pt;" aria-label="kindle (6 элементов)">kindle</a>
+<a href="https://morikoff.ru/tag/libreoffice" class="tag-cloud-link tag-link-83 tag-link-position-13" style="font-size: 14.577181208054pt;" aria-label="LibreOffice (9 элементов)">LibreOffice</a>
+<a href="https://morikoff.ru/tag/linux" class="tag-cloud-link tag-link-90 tag-link-position-14" style="font-size: 17.020134228188pt;" aria-label="linux (17 элементов)">linux</a>
+<a href="https://morikoff.ru/tag/mac-os-x" class="tag-cloud-link tag-link-76 tag-link-position-15" style="font-size: 11.758389261745pt;" aria-label="mac-os-x (4 элемента)">mac-os-x</a>
+<a href="https://morikoff.ru/tag/mypaint" class="tag-cloud-link tag-link-97 tag-link-position-16" style="font-size: 10.818791946309pt;" aria-label="mypaint (3 элемента)">mypaint</a>
+<a href="https://morikoff.ru/tag/nautilus" class="tag-cloud-link tag-link-104 tag-link-position-17" style="font-size: 9.6912751677852pt;" aria-label="nautilus (2 элемента)">nautilus</a>
+<a href="https://morikoff.ru/tag/office" class="tag-cloud-link tag-link-84 tag-link-position-18" style="font-size: 9.6912751677852pt;" aria-label="Office (2 элемента)">Office</a>
+<a href="https://morikoff.ru/tag/photoshop" class="tag-cloud-link tag-link-74 tag-link-position-19" style="font-size: 13.167785234899pt;" aria-label="photoshop (6 элементов)">photoshop</a>
+<a href="https://morikoff.ru/tag/server" class="tag-cloud-link tag-link-121 tag-link-position-20" style="font-size: 8pt;" aria-label="server (1 элемент)">server</a>
+<a href="https://morikoff.ru/tag/sync" class="tag-cloud-link tag-link-85 tag-link-position-21" style="font-size: 9.6912751677852pt;" aria-label="sync (2 элемента)">sync</a>
+<a href="https://morikoff.ru/tag/syncthing" class="tag-cloud-link tag-link-86 tag-link-position-22" style="font-size: 10.818791946309pt;" aria-label="syncthing (3 элемента)">syncthing</a>
+<a href="https://morikoff.ru/tag/telegram" class="tag-cloud-link tag-link-120 tag-link-position-23" style="font-size: 9.6912751677852pt;" aria-label="telegram (2 элемента)">telegram</a>
+<a href="https://morikoff.ru/tag/tts" class="tag-cloud-link tag-link-81 tag-link-position-24" style="font-size: 9.6912751677852pt;" aria-label="tts+ (2 элемента)">tts+</a>
+<a href="https://morikoff.ru/tag/ubuntu" class="tag-cloud-link tag-link-64 tag-link-position-25" style="font-size: 21.248322147651pt;" aria-label="ubuntu (50 элементов)">ubuntu</a>
+<a href="https://morikoff.ru/tag/ubuntu-12-04" class="tag-cloud-link tag-link-124 tag-link-position-26" style="font-size: 8pt;" aria-label="ubuntu 12.04 (1 элемент)">ubuntu 12.04</a>
+<a href="https://morikoff.ru/tag/ubuntu-13-04" class="tag-cloud-link tag-link-63 tag-link-position-27" style="font-size: 11.758389261745pt;" aria-label="ubuntu 13.04 (4 элемента)">ubuntu 13.04</a>
+<a href="https://morikoff.ru/tag/ubuntu-13-10" class="tag-cloud-link tag-link-69 tag-link-position-28" style="font-size: 8pt;" aria-label="ubuntu 13.10 (1 элемент)">ubuntu 13.10</a>
+<a href="https://morikoff.ru/tag/ubuntu-14-04" class="tag-cloud-link tag-link-73 tag-link-position-29" style="font-size: 14.107382550336pt;" aria-label="ubuntu 14.04 (8 элементов)">ubuntu 14.04</a>
+<a href="https://morikoff.ru/tag/ubuntu-16-04" class="tag-cloud-link tag-link-98 tag-link-position-30" style="font-size: 16.268456375839pt;" aria-label="ubuntu 16.04 (14 элементов)">ubuntu 16.04</a>
+<a href="https://morikoff.ru/tag/ubuntu-18-04" class="tag-cloud-link tag-link-116 tag-link-position-31" style="font-size: 13.167785234899pt;" aria-label="ubuntu 18.04 (6 элементов)">ubuntu 18.04</a>
+<a href="https://morikoff.ru/tag/ubuntu-20-04" class="tag-cloud-link tag-link-123 tag-link-position-32" style="font-size: 12.510067114094pt;" aria-label="ubuntu 20.04 (5 элементов)">ubuntu 20.04</a>
+<a href="https://morikoff.ru/tag/virtualbox" class="tag-cloud-link tag-link-66 tag-link-position-33" style="font-size: 14.107382550336pt;" aria-label="VirtualBox (8 элементов)">VirtualBox</a>
+<a href="https://morikoff.ru/tag/windows" class="tag-cloud-link tag-link-91 tag-link-position-34" style="font-size: 13.167785234899pt;" aria-label="windows (6 элементов)">windows</a>
+<a href="https://morikoff.ru/tag/yandex" class="tag-cloud-link tag-link-110 tag-link-position-35" style="font-size: 9.6912751677852pt;" aria-label="yandex (2 элемента)">yandex</a>
+<a href="https://morikoff.ru/tag/youtube" class="tag-cloud-link tag-link-117 tag-link-position-36" style="font-size: 8pt;" aria-label="youtube (1 элемент)">youtube</a>
+<a href="https://morikoff.ru/tag/bezopasnost" class="tag-cloud-link tag-link-106 tag-link-position-37" style="font-size: 10.818791946309pt;" aria-label="безопасность (3 элемента)">безопасность</a>
+<a href="https://morikoff.ru/tag/howto" class="tag-cloud-link tag-link-62 tag-link-position-38" style="font-size: 22pt;" aria-label="как (61 элемент)">как</a>
+<a href="https://morikoff.ru/tag/noutbuk" class="tag-cloud-link tag-link-78 tag-link-position-39" style="font-size: 13.637583892617pt;" aria-label="ноутбук (7 элементов)">ноутбук</a>
+<a href="https://morikoff.ru/tag/risunok" class="tag-cloud-link tag-link-103 tag-link-position-40" style="font-size: 10.818791946309pt;" aria-label="рисунок (3 элемента)">рисунок</a>
+<a href="https://morikoff.ru/tag/sovet" class="tag-cloud-link tag-link-79 tag-link-position-41" style="font-size: 20.590604026846pt;" aria-label="совет (43 элемента)">совет</a>
+<a href="https://morikoff.ru/tag/%d1%83%d1%82%d0%b8%d0%bb%d0%b8%d1%82%d1%8b" class="tag-cloud-link tag-link-118 tag-link-position-42" style="font-size: 8pt;" aria-label="утилиты (1 элемент)">утилиты</a>
+<a href="https://morikoff.ru/tag/hobbi" class="tag-cloud-link tag-link-100 tag-link-position-43" style="font-size: 10.818791946309pt;" aria-label="хобби (3 элемента)">хобби</a>
+<a href="https://morikoff.ru/tag/yuzayu" class="tag-cloud-link tag-link-122 tag-link-position-44" style="font-size: 8pt;" aria-label="юзаю (1 элемент)">юзаю</a>
+<a href="https://morikoff.ru/tag/humor" class="tag-cloud-link tag-link-88 tag-link-position-45" style="font-size: 13.167785234899pt;" aria-label="юмор (6 элементов)">юмор</a></div>
+</aside>
+		</div>
+
+	
+		<div class="footer-widget">
+
+			<aside id="search-3" class="widget widget_search"><h4 class="widget-title">Поиск</h4><form role="search" method="get" class="search-form" action="https://morikoff.ru/">
+				<label>
+					<span class="screen-reader-text">Найти:</span>
+					<input type="search" class="search-field" placeholder="Поиск&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Поиск" />
+			</form></aside><aside id="blog-stats-2" class="widget blog-stats"><h4 class="widget-title">Статистика блога</h4><ul><li>832&nbsp;677 просмотров</li></ul></aside>
+		</div>
+
+	
+		<div class="footer-widget">
+
+			<aside id="jetpack_display_posts_widget-2" class="widget widget_jetpack_display_posts_widget"><h4 class="widget-title">Новое от: KNX·TRADE</h4><div class="jetpack-display-remote-posts"><h4><a href="https://blog.knx-trade.ru/blog/led-lifespan.html" target="_blank" rel="noopener">Срок жизни светодиодов</a></h4>
+<a title="Срок жизни светодиодов" href="https://blog.knx-trade.ru/blog/led-lifespan.html" target="_blank" rel="noopener"><img src="https://i0.wp.com/blog.knx-trade.ru/wp-content/uploads/blog_electric-light.jpg?ssl=1" alt="Срок жизни светодиодов"/></a><h4><a href="https://blog.knx-trade.ru/blog/how-to-compare-knx-dali-gateways.html" target="_blank" rel="noopener">Как сравнивать шлюзы KNX-DALI</a></h4>
+<a title="Как сравнивать шлюзы KNX-DALI" href="https://blog.knx-trade.ru/blog/how-to-compare-knx-dali-gateways.html" target="_blank" rel="noopener"><img src="https://i0.wp.com/blog.knx-trade.ru/wp-content/uploads/blog_compare_dali-knx_870.jpg?ssl=1" alt="Как сравнивать шлюзы KNX-DALI"/></a><h4><a href="https://blog.knx-trade.ru/blog/how-to-professionally-choose-dimmer.html" target="_blank" rel="noopener">Как профессионально выбрать диммер</a></h4>
+<a title="Как профессионально выбрать диммер" href="https://blog.knx-trade.ru/blog/how-to-professionally-choose-dimmer.html" target="_blank" rel="noopener"><img src="https://i0.wp.com/blog.knx-trade.ru/wp-content/uploads/lamp-ed.jpg?ssl=1" alt="Как профессионально выбрать диммер"/></a><h4><a href="https://blog.knx-trade.ru/blog/motion-detection-technologies.html" target="_blank" rel="noopener">Технологии детекторов движения</a></h4>
+<a title="Технологии детекторов движения" href="https://blog.knx-trade.ru/blog/motion-detection-technologies.html" target="_blank" rel="noopener"><img src="https://i2.wp.com/blog.knx-trade.ru/wp-content/uploads/promo-presentia-c_870x435.jpg?ssl=1" alt="Технологии детекторов движения"/></a><h4><a href="https://blog.knx-trade.ru/blog/using-knx-over-ip.html" target="_blank" rel="noopener">Использование KNXoverIP</a></h4>
+<a title="Использование KNXoverIP" href="https://blog.knx-trade.ru/blog/using-knx-over-ip.html" target="_blank" rel="noopener"><img src="https://i1.wp.com/blog.knx-trade.ru/wp-content/uploads/Zennio-KNX-IP-Router-PLess-870x435.jpg?ssl=1" alt="Использование KNXoverIP"/></a></div><!-- .jetpack-display-remote-posts --></aside>
+		</div>
+
+	
+	</div>
+	
+			</div><!-- .site-footer-inner -->
+
+		</footer><!-- #colophon -->
+
+		
+<div class="site-info-wrapper">
+
+	<div class="site-info">
+
+		<div class="site-info-inner">
+
+			
+<nav class="footer-menu">
+
+	<div class="menu-amp-footer-menu-container"><ul id="menu-amp-footer-menu" class="menu"><li id="menu-item-2152" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2152"><a href="https://morikoff.ru/about.html">О сайте</a></li>
+<li id="menu-item-2221" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2221"><a href="https://morikoff.ru/guestbook.html">Гостевая книга</a></li>
+<li id="menu-item-2147" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2147"><a href="https://morikoff.ru/compliment.html">Комплимент</a></li>
+<li id="menu-item-2227" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-2227"><a href="https://morikoff.ru/privacy.html">Политика конфиденциальности</a></li>
+</ul></div>
+</nav><!-- .footer-menu -->
+
+<nav class="social-menu">
+
+	<div class="menu-menyu-socialka-container"><ul id="menu-menyu-socialka" class="menu"><li id="menu-item-1081" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1081"><a href="https://www.facebook.com/morikoff.ru">facebook</a></li>
+<li id="menu-item-1187" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1187"><a href="https://twitter.com/morikoff">twitter</a></li>
+<li id="menu-item-1810" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1810"><a href="https://tglink.me/morikoff_ru">telegram</a></li>
+</ul></div>
+</nav><!-- .social-menu -->
+<a class="privacy-policy-link" href="https://morikoff.ru/privacy.html">Приватность</a>
+<div class="site-info-text">
+
+	Авторское право &copy; 2021 morikoff.ru &mdash; Тема Ascension для WordPress от <a href="https://www.godaddy.com/" rel="author nofollow">GoDaddy</a>
+</div>
+
+		</div><!-- .site-info-inner -->
+
+	</div><!-- .site-info -->
+
+</div><!-- .site-info-wrapper -->
+
+	</div><!-- #page -->
+
+	<!-- Popups v1.9.3.8 - https://wordpress.org/plugins/popups/ --><style type="text/css">
+#spu-1182 .spu-close{
+	font-size: 30px;
+	color:#666;
+	text-shadow: 0 1px 0 #fff;
+}
+#spu-1182 .spu-close:hover{
+	color:#000;
+}
+#spu-1182 {
+	background-color: #f7f7f7;
+	background-color: rgba(247,247,247,1);
+	color: #606060;
+	padding: 30px;
+		border-radius: 0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-moz-box-shadow:  0px 0px 10px 1px #666;
+	-webkit-box-shadow:  0px 0px 10px 1px #666;
+	box-shadow:  0px 0px 10px 1px #666;
+	width: 720px;
+
+}
+#spu-bg-1182 {
+	opacity: 0.5;
+	background-color: #000;
+}
+/*
+		* Add custom CSS for this popup
+		* Be sure to start your rules with #spu-1182 { } and use !important when needed to override plugin rules
+		*/</style>
+<div class="spu-bg" id="spu-bg-1182"></div>
+<div class="spu-box  spu-centered spu-total-2 " id="spu-1182"
+ data-box-id="1182" data-trigger="percentage"
+ data-trigger-number="75"
+ data-spuanimation="fade" data-tconvert-cookie="d" data-tclose-cookie="d" data-dconvert-cookie="999" data-dclose-cookie="30" data-nconvert-cookie="spu_conversion_1182" data-nclose-cookie="spu_closing_1182" data-test-mode="0"
+ data-auto-hide="0" data-close-on-conversion="1" data-bgopa="0.5" data-total="2"
+ style="left:-99999px !important;right:auto;" data-width="720" >
+	<div class="spu-content"><h1 style="text-align: center;"><span style="color: #ff6600;">В знак благодарности!</span></h1>
+<h2 style="text-align: center;">Если вам принесли пользу материалы этого сайта, то окажите мне знак внимания и нажмите кнопочки ниже</h2>
+<h3 style="text-align: center;"> <div class="spu-facebook spu-shortcode"><div class="fb-like" data-width="" data-href="https://www.facebook.com/morikoff.ru" data-layout="button_count" data-action="like" data-show-faces="true" data-share="morikoff.ru"></div></div> </h3>
+<h3 style="text-align: center;"> <div class="spu-twitter spu-shortcode"><a href="https://twitter.com/morikoff" class="twitter-follow-button" data-show-count="false" data-size="" data-lang="RU"></a></div> </h3>
+<h3 style="text-align: center;"> <a href="https://www.google.ru">Не благодарить и закрыть!</a> </h3>
+</div>
+	<span class="spu-close spu-close-popup top_right"><i class="spu-icon spu-icon-close"></i></span>
+	<span class="spu-timer"></span>
+	</div>
+<!-- / Popups Box -->
+<div id="fb-root" class=" fb_reset"></div><center>
+
+<!-- Yandex.Metrika informer -->
+<a href="https://metrika.yandex.ru/stat/?id=316642&from=informer"
+target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/316642/3_0_868686FF_666666FF_1_pageviews"
+style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="316642" data-lang="ru" /></a>
+<!-- /Yandex.Metrika informer -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter316642 = new Ya.Metrika({
+                    id:316642,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    trackHash:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/316642" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Rating Mail.ru logo -->
+<a href="https://top.mail.ru/jump?from=2763796">
+<img src="https://top-fwz1.mail.ru/counter?id=2763796;t=479;l=1" style="border:0;" height="31" width="88" alt="Top.Mail.Ru" /></a>
+<!-- //Rating Mail.ru logo -->
+
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t18.2;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,80))+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border='0' width='88' height='31'><\/a>")
+//--></script><!--/LiveInternet-->
+
+</center><script type='text/javascript' id='disqus_count-js-extra'>
+/* <![CDATA[ */
+var countVars = {"disqusShortname":"morikoff"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://morikoff.ru/wp-content/plugins/disqus-comment-system/public/js/comment_count.js?ver=3.0.22' id='disqus_count-js'></script>
+<script type='text/javascript' id='spu-public-js-extra'>
+/* <![CDATA[ */
+var spuvar = {"is_admin":"","disable_style":"","ajax_mode":"","ajax_url":"https:\/\/morikoff.ru\/wp-admin\/admin-ajax.php","ajax_mode_url":"https:\/\/morikoff.ru\/?spu_action=spu_load","pid":"1999","is_front_page":"","is_category":"","site_url":"https:\/\/morikoff.ru","is_archive":"","is_search":"","is_preview":"","seconds_confirmation_close":"5"};
+var spuvar_social = {"facebook":"1","twitter":"1","google":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://morikoff.ru/wp-content/plugins/popups/public/assets/js/public.js?ver=1.9.3.8' id='spu-public-js'></script>
+<script type='text/javascript' src='https://morikoff.ru/wp-content/themes/primer/assets/js/navigation.min.js?ver=1.8.9' id='primer-navigation-js'></script>
+<script type='text/javascript' src='https://morikoff.ru/wp-includes/js/comment-reply.min.js?ver=5.8.2' id='comment-reply-js'></script>
+<script type='text/javascript' src='https://morikoff.ru/wp-includes/js/wp-embed.min.js?ver=5.8.2' id='wp-embed-js'></script>
+	<script>
+	/* IE11 skip link focus fix */
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<script src='https://stats.wp.com/e-202146.js' defer></script>
+<script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:10.3',blog:'69135534',post:'1999',tz:'3',srv:'morikoff.ru'} ]);
+	_stq.push([ 'clickTrackerInit', '69135534', '1999' ]);
+</script>
+
+</body>
+
+</html>
