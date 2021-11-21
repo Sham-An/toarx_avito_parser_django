@@ -110,6 +110,7 @@ if __name__=="__main__":
     parser.run() #выключил для многопоточности
 
     # https://youtu.be/n6x1pzlRK8A?t=3264 многопоточность
+    #https://www.youtube.com/watch?v=gNonoLUF5N0 МНОГОПОТОЧНОСТЬ НА PYTHON | МОДУЛЬ THREADING
     #t1 = threading.Thread(target=parser.run)
     #t2 = threading.Thread(target=parser_2.run)
 

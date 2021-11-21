@@ -235,7 +235,9 @@ class AvitoParserXPath:
         path_item_url = ".//div[2]//a[@itemprop='url']/@href" #'.//a[@href]' #//div/a[@itemprop='url']
         path_item_user_url ='.//div/a[@data-marker="item-link"]/@href'
         path_id = ".//@id"
+        path_id2 = ".//@data-item-id"
         path_name = './/h3[@itemprop="name"]/text()'
+        path_price = './/meta[@itemprop="price"]/@content'
         #path_name_long = './/div[@elementtiming="bx.catalog.container"]//div[@data-item-id]//h3[@itemprop="name"]'
 
         path_description_meta = './/meta[@itemprop="description"]/@content'
@@ -247,14 +249,15 @@ class AvitoParserXPath:
 
         for item in tree.xpath(path_item):  # .getall():
             #print(item)
-            item_id = item.xpath(path_id)[0]
+            item_id = item.xpath(path_id2)[0]
             print(f'ITEM_ID {item_id}') #{item.xpath(".//@id")[0]} type{type(item_id)} {item.xpath(path_id)[0]}')
             # name = item.xpath(path_title)[0]
             #name = str(item.xpath(path_name)[-1])
             name = "".join(item.xpath(path_name))
             item_url=item.xpath(path_item_url)
-            item_user_url = item.xpath(path_item_user_url)
-            print(f'{index}!!!!!!!!!!!!NAME {name} \n url = {item_url}')
+            item_user_url = "".join(item.xpath(path_item_user_url))
+            item_price = "".join(item.xpath(path_price))
+            print(f'{index}!!!!!!!!!!!!NAME {name} \n {item_price}\n url = {item_url}')
             #index += 1
             description_div = "".join(item.xpath(path_description_div)) #join - список в строку
             LenDesk = len(description_div)
