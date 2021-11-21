@@ -1,5 +1,5 @@
 import requests
-import  multiprocessing
+import multiprocessing
 
 from bs4 import BeautifulSoup
 
@@ -12,13 +12,22 @@ def handler(proxy):
         'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0'
     }
 
+    # proxies = {
+    #     'http': f'http://{proxy}',
+    #     'https': f'http://{proxy}',
+    # }
+    # proxies = {
+    #     'http': f'http://{proxy}',
+    #     'https': f'https://{proxy}',
+    #     }
     proxies = {
-        'http': f'http//{proxy}',
-        'https': f'http//{proxy}',
-    }
+        'http': 'http://202.43.190.10:53128',
+        'https': 'https://202.43.190.10:53128',
+    } #РАБОТАЕТ! ТИП HTPS https://hidemy.name/ru/proxy-list/?start=64#list
+
 
     try:
-        response = requests.get(link, proxies=proxies, timeout=4).text
+        response = requests.get(link, proxies=proxies, timeout=7).text
         print(f'IP: {response.strip()}')
     except:
         print(f'Прокси не валидный! {proxies}')

@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from proxy_info import login, password
+#from proxy_info import login, password
 #requirements.txt
 # beautifulsoup4==4.10.0
 # bs4==0.0.1
@@ -12,18 +12,32 @@ from proxy_info import login, password
 # soupsieve==2.3.1
 # urllib3==1.26.7
 #https://youtu.be/_12U6Zfi5ik?list=PLb6u5SDfkuWmEp7KT9RU5SrR483vGuFoF
-headers = {
-    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0'
-}
+# headers = {
+#     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0'
+# }
 
-proxies = {
-    # 'https': 'http://proxy_ip:proxy_port'
-    'https': f'http://{login}:{password}@proxy_ip:proxy_port'
-}
+# proxies = {
+#     # 'https': 'http://proxy_ip:proxy_port'
+#     'https': f'http://{login}:{password}@proxy_ip:proxy_port'
+# }
+# proxies = {
+#     'http': 'http://174.77.111.196:4145',
+#     'https': 'https://174.77.111.196:4145',
+# }
 
 
 def get_location(url):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0'
+    }
+
+    proxies = {
+        'http': 'http://202.43.190.10:53128',
+        'https': 'https://202.43.190.10:53128',
+    } #РАБОТАЕТ! ТИП HTPS https://hidemy.name/ru/proxy-list/?start=64#list
+
     response = requests.get(url=url, headers=headers, proxies=proxies)
+
     soup = BeautifulSoup(response.text, 'lxml')
 
     ip = soup.find('div', class_='ip').text.strip()
