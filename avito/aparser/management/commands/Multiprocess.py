@@ -17,29 +17,43 @@ def handler(proxy):
     #     'https': f'http://{proxy}',
     # }
     # proxies = {
-    #     'http': f'http://{proxy}',
     #     'https': f'https://{proxy}',
     #     }
+
     proxies = {
         'http': 'http://202.43.190.10:53128',
         'https': 'https://202.43.190.10:53128',
     } #РАБОТАЕТ! ТИП HTPS https://hidemy.name/ru/proxy-list/?start=64#list
-
+    url_today = 'https://2ip.ru'
 
     try:
-        response = requests.get(link, proxies=proxies, timeout=7).text
-        print(f'IP: {response.strip()}')
+        response = requests.get(link, proxies=proxies, timeout=3).text
+        print(f'IP: {response.strip()}\n {proxies}')
     except:
-        print(f'Прокси не валидный! {proxies}')
 
-    url_today = 'https://2ip.ru'
-    response = requests.get(url=url_today, headers=headers, proxies=proxies)
-    soup = BeautifulSoup(response.text, 'lxml')
+        print(f'Прокси не валидный! {proxies} \n {proxies}')
 
-    ip = soup.find('div', class_='ip').text.strip()
-    location = soup.find('div', class_='value-country').text.strip()
+    # try:
+    #     response2 = requests.get(url=url_today, proxies=proxies, timeout=3)
+    #     soup = BeautifulSoup(response2.text, 'lxml')
+    #
+    #     ip = soup.find('div', class_='ip').text.strip()
+    #     location = soup.find('div', class_='value-country').text.strip()
+    #
+    #     print(f'IP_Today: {ip}\nLocation: {location}')
+    #
+    # except:
+    #     print(f'TODAY Прокси не валидный! {proxies} \n {proxies}')
 
-    print(f'IP_Today: {ip}\nLocation: {location}')
+
+    #url_today = 'https://2ip.ru'
+    #response2 = requests.get(url=url_today, headers=headers, proxies=proxies)
+    # soup = BeautifulSoup(response.text, 'lxml')
+    #
+    # ip = soup.find('div', class_='ip').text.strip()
+    # location = soup.find('div', class_='value-country').text.strip()
+    #
+    # print(f'IP_Today: {ip}\nLocation: {location}')
 
 
 
@@ -47,7 +61,7 @@ def handler(proxy):
 
 with open('proxy') as file:
     proxy_base = "".join(file.readlines()).strip().split('\n')
-    print(f'PROXY {proxy_base}')
+    print(f'PROXY base {proxy_base}')
     #PROXY https://hideip.me/ru/proxy/socks5list
 
 #with multiprocessing.Poll(multiprocessing.cpu_count()) as process: #Запускайте не через Pool, а через Process
