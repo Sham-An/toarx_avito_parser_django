@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+#chrome-extension://hjocpjdeacglfchomobaagbmipeggnjg/options.html
 #from proxy_info import login, password
 #requirements.txt
 # beautifulsoup4==4.10.0
