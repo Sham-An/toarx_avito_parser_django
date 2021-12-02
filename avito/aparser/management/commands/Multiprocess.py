@@ -14,21 +14,25 @@ def handler(proxy):
 
     # proxies = {
     #     'http': f'http://{proxy}',
-    #     'https': f'http://{proxy}',
+    #     'https': f'https://{proxy}',
     # }
     # proxies = {
     #     'https': f'https://{proxy}',
     #     }
 
     proxies = {
-        'http': 'http://202.43.190.10:53128',
-        'https': 'https://202.43.190.10:53128',
-    } #РАБОТАЕТ! ТИП HTPS https://hidemy.name/ru/proxy-list/?start=64#list
+    'http': 'http://104.21.83.215:80',
+    'https': 'https://104.21.83.215:80',
+    }
+    # proxies = {
+    #     'http': 'http://202.43.190.10:53128',
+    #     'https': 'https://202.43.190.10:53128',
+    # } #РАБОТАЕТ! ТИП HTPS https://hidemy.name/ru/proxy-list/?start=64#list
     url_today = 'https://2ip.ru'
 
     try:
-        response = requests.get(link, proxies=proxies, timeout=3).text
-        print(f'IP: {response.strip()}\n {proxies}')
+        response = requests.get(link, proxies=proxies, timeout=5).text
+        print(f'IP: {response.strip()}\n " ПРОКСИ СРАБОТАЛ " {proxies}')
     except:
 
         print(f'Прокси не валидный! {proxies} \n {proxies}')
